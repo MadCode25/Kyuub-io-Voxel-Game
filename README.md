@@ -27,7 +27,7 @@
 <br>
 <h1>Example code (backend):</h1>
 <p>
-  ```
+  ```python
   # The code sends full world data to the frontend player screen
   def full_world_message():
     return json.dumps({
@@ -40,6 +40,7 @@
 <p>You can also mark dirty chunks. Like this:</p>
 <br>
 <p>
+  ```python
   # This one ONLY marks the dirty chunk to false if the player just joined or hasn't been interacted with
   async def autosave_loop():
     global dirty
@@ -102,5 +103,6 @@
             await broadcast(json.dumps({
                 "type": "BLOCK_UPDATE", "x": x, "y": y, "z": z, "block": new_type,
             }))
+        ```
 
 </p>

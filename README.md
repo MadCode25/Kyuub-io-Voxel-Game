@@ -1,5 +1,5 @@
 # Kyuub Voxel Engine
-<p>This repository is what contains the backend files and frontend files of Kyuub.io.<br>Made in 2026, the game mimics the mechanics<br>and has a lightweight server.</p>
+<p>This repository is what contains the backend files and frontend files of Kyuub.io.<br>Made in 2026, the game mimics the mechanics of a real voxel engine<br>and has a lightweight server.</p>
 <hr></hr>
 
 # How to fork

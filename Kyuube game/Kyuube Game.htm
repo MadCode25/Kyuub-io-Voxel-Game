@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kyuub | JS Voxel Game</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        #ui { position: absolute; color: white; padding: 10px; font-family: sans-serif;
+              text-shadow: 1px 1px 2px #000; pointer-events: none; user-select: none; }
+        #crosshair { position: absolute; top: 50%; left: 50%; width: 20px; height: 20px;
+                     margin: -10px 0 0 -10px; pointer-events: none; }
+        #crosshair::before, #crosshair::after { content: ""; position: absolute; background: white;
+                     mix-blend-mode: difference; }
+        #crosshair::before { left: 9px; top: 0; width: 2px; height: 20px; }
+        #crosshair::after  { top: 9px; left: 0; height: 2px; width: 20px; }
+        #hint { position: absolute; top: 50%; width: 100%; text-align: center; color: white;
+                font-family: sans-serif; font-size: 22px; text-shadow: 1px 1px 3px #000;
+                pointer-events: none; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <div id="ui">
+        <h2>Kyuub Engine</h2>
+        <p id="status">Connecting to game server... (server_ip:8765)</p>
+        <p>Click the game to start<br>
+           WASD: Move | Space: Up | Shift: Down | Mouse: Look<br>
+           Left Click: Break | Right Click: Place<br>
+           1-4: Choose block (Grass, TNT, Stone, Wood)</p>
+        <p id="selected">Selected: Grass</p>
+    </div>
+    <div id="crosshair"></div>
+    <div id="hint">Click to play</div>
+
+    <script>
+        // --- 1. THREE.JS SETUP ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x87ceeb);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.rotation.order = "YXZ";
+        camera.position.set(8, 20, 25);
+        let yaw = 0;
+        let pitch = -Math.atan2(20, 17);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        const statusEl = document.getElementById("status");
+
+        const materials = {
+            1: new THREE.MeshBasicMaterial({ color: 0x559933 }), // Grass
+            2: new THREE.MeshBasicMaterial({ color: 0xcc3333 }), // TNT
+            3: new THREE.MeshBasicMaterial({ color: 0x888888 }), // Stone
+            4: new THREE.MeshBasicMaterial({ color: 0x775533 })  // Wood
+        };
+        const blockNames = { 1: "Grass", 2: "TNT", 3: "Stone", 4: "Wood" };
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+
+        // Blocks displayed, keyed by "x,y,z". The SERVER decides what exists;
+        // this map just mirrors it so we can draw and raycast.
+        const blocks = new Map();
+        const keyOf = (x, y, z) => `${x},${y},${z}`;
+
+        function setBlock(x, y, z, type) {
+            const key = keyOf(x, y, z);
+            const old = blocks.get(key);
+            if (old) { scene.remove(old); blocks.delete(key); }
+            if (type > 0 && materials[type]) {
+                const mesh = new THREE.Mesh(geometry, materials[type]);
+                mesh.position.set(x, y, z);
+                scene.add(mesh);
+                blocks.set(key, mesh);
+            }
+        }
+
+        function clearWorld() {
+            blocks.forEach(m => scene.remove(m));
+            blocks.clear();
+        }
+
+        // --- 2. PLAYER SKINS (other players) ---
+        const EYE_HEIGHT = 1.6;            // camera sits this high above the player's feet
+        const remotePlayers = new Map();   // id -> { group, target, targetYaw, hasPos }
+        let myId = null;
+
+        function makeNameTag(text) {
+            const c = document.createElement("canvas");
+            c.width = 256; c.height = 64;
+            const ctx = c.getContext("2d");
+            ctx.fillStyle = "rgba(0,0,0,0.5)";
+            ctx.fillRect(0, 0, 256, 64);
+            ctx.fillStyle = "#fff";
+            ctx.font = "bold 32px sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(text, 128, 34);
+            const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+                map: new THREE.CanvasTexture(c), depthTest: false
+            }));
+            sprite.scale.set(1.6, 0.4, 1);
+            sprite.position.set(0, 2.2, 0);
+            return sprite;
+        }
+
+        // Blocky humanoid built from boxes. Origin = feet, front faces -Z (same as the camera at yaw 0).
+        function buildPlayerModel(skin, name) {
+            const group = new THREE.Group();
+            const part = (w, h, d, color, x, y, z) => {
+                const m = new THREE.Mesh(
+                    new THREE.BoxGeometry(w, h, d),
+                    new THREE.MeshBasicMaterial({ color })
+                );
+                m.position.set(x, y, z);
+                group.add(m);
+            };
+            part(0.25, 0.7, 0.25, skin.legs, -0.125, 0.35, 0);   // legs
+            part(0.25, 0.7, 0.25, skin.legs,  0.125, 0.35, 0);
+            part(0.5,  0.7, 0.25, skin.body,  0,     1.05, 0);   // body
+            part(0.2,  0.7, 0.2,  skin.arms, -0.35,  1.05, 0);   // arms
+            part(0.2,  0.7, 0.2,  skin.arms,  0.35,  1.05, 0);
+            part(0.4,  0.4, 0.4,  skin.head,  0,     1.6,  0);   // head
+            part(0.08, 0.08, 0.02, skin.eyes, -0.1,  1.63, -0.205); // eyes (front = -Z)
+            part(0.08, 0.08, 0.02, skin.eyes,  0.1,  1.63, -0.205);
+            group.add(makeNameTag(name));
+            return group;
+        }
+
+        function addRemotePlayer(p) {
+            if (p.id === myId) return;
+            removeRemotePlayer(p.id);
+            const group = buildPlayerModel(p.skin, p.name);
+            group.visible = false;                 // hidden until we know where they are
+            scene.add(group);
+            remotePlayers.set(p.id, { group, target: new THREE.Vector3(), targetYaw: 0, hasPos: false });
+            if (p.x != null) updateRemotePlayer(p);
+        }
+
+        function updateRemotePlayer(s) {
+            const r = remotePlayers.get(s.id);
+            if (!r || s.x == null) return;
+            r.target.set(s.x, s.y - EYE_HEIGHT, s.z);
+            r.targetYaw = s.yaw;
+            if (!r.hasPos) {                       // first position: snap, don't glide in from the origin
+                r.group.position.copy(r.target);
+                r.group.rotation.y = s.yaw;
+                r.group.visible = true;
+                r.hasPos = true;
+            }
+        }
+
+        function removeRemotePlayer(id) {
+            const r = remotePlayers.get(id);
+            if (!r) return;
+            scene.remove(r.group);
+            r.group.traverse(o => {
+                if (o.geometry) o.geometry.dispose();
+                if (o.material) {
+                    if (o.material.map) o.material.map.dispose();
+                    o.material.dispose();
+                }
+            });
+            remotePlayers.delete(id);
+        }
+
+        function clearRemotePlayers() {
+            Array.from(remotePlayers.keys()).forEach(removeRemotePlayer);
+        }
+
+        // Tell the server where we are (about 15 times a second, only when we moved)
+        const lastSent = { x: 0, y: 0, z: 0, yaw: 0, time: 0 };
+        function sendPosition(force = false) {
+            if (socket.readyState !== WebSocket.OPEN || myId === null) return;
+            const now = performance.now();
+            if (!force && now - lastSent.time < 66) return;
+            const p = camera.position;
+            const moved = Math.abs(p.x - lastSent.x) > 0.01 || Math.abs(p.y - lastSent.y) > 0.01 ||
+                          Math.abs(p.z - lastSent.z) > 0.01 || Math.abs(yaw - lastSent.yaw) > 0.01;
+            if (!force && !moved) return;
+            socket.send(JSON.stringify({ action: "PLAYER_MOVE", x: p.x, y: p.y, z: p.z, yaw }));
+            lastSent.x = p.x; lastSent.y = p.y; lastSent.z = p.z; lastSent.yaw = yaw; lastSent.time = now;
+        }
+
+        // --- 3. WEBSOCKET CONNECTION ---
+        const serverIP = "192.168.254.101"; // change to your server laptop's IP if needed
+        const socket = new WebSocket(`ws://${serverIP}:8765`);
+
+        function sendEdit(action, x, y, z, type) {
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify({ action, x, y, z, type }));
+            }
+        }
+
+        socket.onopen = () => {
+            console.log("server connection was successful. requesting chunk and player skin...");
+            statusEl.textContent = "Connected";
+            socket.send(JSON.stringify({ action: "GENERATE_CHUNK" }));
+            socket.send(JSON.stringify({ action: "CREATE_PLAYER_SKIN" }));
+        };
+        socket.onclose = () => {
+            statusEl.textContent = "Disconnected - refresh to reconnect";
+            clearRemotePlayers();
+        };
+        socket.onerror = () => {
+            console.error(`failed to reach ws://${serverIP}:8765`);
+            statusEl.textContent = "Failed to reach Kyuube's game server. Please report to MadGuy25 if this keeps happening.";
+        };
+
+        socket.onmessage = (event) => {
+            const msg = JSON.parse(event.data);
+            switch (msg.type) {
+                case "RENDER_DATA":
+                    clearWorld();
+                    msg.blocks.forEach(b => setBlock(b.x, b.y, b.z, b.type));
+                    break;
+                case "BLOCK_UPDATE":
+                    setBlock(msg.x, msg.y, msg.z, msg.block);   // block 0 = removed
+                    break;
+                case "PLAYER_INIT":
+                    myId = msg.id;
+                    statusEl.textContent = `Connected as ${msg.name}`;
+                    msg.players.forEach(addRemotePlayer);
+                    sendPosition(true);                        // announce where we are right away
+                    break;
+                case "PLAYER_JOIN":
+                    addRemotePlayer(msg);
+                    break;
+                case "PLAYER_STATE":
+                    updateRemotePlayer(msg);
+                    break;
+                case "PLAYER_LEAVE":
+                    removeRemotePlayer(msg.id);
+                    break;
+            }
+        };
+
+        // --- 4. CONTROLS ---
+        const hint = document.getElementById("hint");
+        const selectedLabel = document.getElementById("selected");
+        let selectedType = 1;
+
+        renderer.domElement.addEventListener("click", () => {
+            if (document.pointerLockElement !== renderer.domElement) {
+                renderer.domElement.requestPointerLock();
+            }
+        });
+        document.addEventListener("pointerlockchange", () => {
+            hint.style.display = document.pointerLockElement === renderer.domElement ? "none" : "block";
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (document.pointerLockElement !== renderer.domElement) return;
+            yaw   -= e.movementX * 0.002;
+            pitch -= e.movementY * 0.002;
+            pitch = Math.max(-Math.PI / 2 + 0.01, Math.min(Math.PI / 2 - 0.01, pitch));
+        });
+
+        const keys = {};
+        document.addEventListener("keydown", (e) => {
+            keys[e.code] = true;
+            if (e.code >= "Digit1" && e.code <= "Digit4") {
+                selectedType = Number(e.code.slice(-1));
+                selectedLabel.textContent = "Selected: " + blockNames[selectedType];
+            }
+            if (e.code === "Space") e.preventDefault();
+        });
+        document.addEventListener("keyup", (e) => { keys[e.code] = false; });
+
+        const raycaster = new THREE.Raycaster();
+        raycaster.far = 10;
+
+        function getTargetedBlock() {
+            raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+            const hits = raycaster.intersectObjects(Array.from(blocks.values()));
+            return hits.length ? hits[0] : null;
+        }
+
+        // Clicks only SEND a request; the block changes when the server confirms it
+        renderer.domElement.addEventListener("mousedown", (e) => {
+            if (document.pointerLockElement !== renderer.domElement) return;
+            const hit = getTargetedBlock();
+            if (!hit) return;
+
+            if (e.button === 0) {                       // break
+                const p = hit.object.position;
+                sendEdit("BREAK_BLOCK", p.x, p.y, p.z, 0);
+            } else if (e.button === 2) {                // place
+                const p = hit.object.position.clone().add(hit.face.normal);
+                if (p.distanceTo(camera.position) < 1.2) return;
+                sendEdit("PLACE_BLOCK", p.x, p.y, p.z, selectedType);
+            }
+        });
+        document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+        // --- 5. GAME LOOP ---
+        const clock = new THREE.Clock();
+        const speed = 10;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const dt = Math.min(clock.getDelta(), 0.1);
+
+            camera.rotation.set(pitch, yaw, 0);
+
+            const forward = new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
+            const right   = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
+            const move = new THREE.Vector3();
+            if (keys["KeyW"]) move.add(forward);
+            if (keys["KeyS"]) move.sub(forward);
+            if (keys["KeyD"]) move.add(right);
+            if (keys["KeyA"]) move.sub(right);
+            if (keys["Space"]) move.y += 1;
+            if (keys["ShiftLeft"] || keys["ShiftRight"]) move.y -= 1;
+            if (move.lengthSq() > 0) camera.position.addScaledVector(move.normalize(), speed * dt);
+
+            sendPosition();
+
+            // Smoothly glide other players toward their latest reported position
+            const k = 1 - Math.exp(-dt * 15);
+            remotePlayers.forEach(r => {
+                if (!r.hasPos) return;
+                r.group.position.lerp(r.target, k);
+                let d = r.targetYaw - r.group.rotation.y;
+                d = Math.atan2(Math.sin(d), Math.cos(d));   // shortest way around
+                r.group.rotation.y += d * k;
+            });
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener("resize", () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

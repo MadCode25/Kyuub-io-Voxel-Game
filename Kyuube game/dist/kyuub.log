@@ -1,0 +1,4 @@
+2026-10-12 14:52:22 [INFO   ] === Kyuub server starting ===
+2026-10-12 14:52:22 [INFO   ] No save found - generated new world (seed 1337, 6664 blocks)
+2026-10-12 14:52:22 [INFO   ] World saved (6664 blocks) to world.json
+2026-10-12 14:52:22 [INFO   ] Listening on 0.0.0.0:8765

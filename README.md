@@ -27,12 +27,14 @@
 <br>
 <h1>Example code (backend):</h1>
 <p>
+  ```
   # The code sends full world data to the frontend player screen
   def full_world_message():
     return json.dumps({
         "type": "RENDER_DATA",
         "blocks": [{"x": x, "y": y, "z": z, "type": t} for (x, y, z), t in world.items()],
     })
+  ```
 </p>
 <br>
 <p>You can also mark dirty chunks. Like this:</p>

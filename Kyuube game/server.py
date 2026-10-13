@@ -25,8 +25,8 @@ import websockets
 HOST, PORT = "0.0.0.0", 8765
 SAVE_FILE = "world.json"
 LOG_FILE = "kyuub.log"
-SEED = 1337
-SIZE_X, SIZE_Z = 32, 32
+SEED = 6767
+SIZE_X, SIZE_Z = 128, 64
 
 # Block types: 0 = air, 1 = grass, 2 = tnt, 3 = stone, 4 = wood
 BLOCK_NAMES = {0: "air", 1: "grass", 2: "tnt", 3: "stone", 4: "wood"}
@@ -36,8 +36,8 @@ MIN_Y, MAX_Y = 0, 64
 
 # Skin palettes (colors are sent to the browser as hex strings)
 SKIN_TONES = ["#f1c27d", "#e0ac69", "#c68642", "#8d5524", "#ffdbac"]
-SHIRT_COLORS = ["#3b82f6", "#ef4444", "#22c55e", "#eab308", "#a855f7", "#f97316", "#ec4899", "#14b8a6"]
-PANTS_COLORS = ["#1e3a8a", "#374151", "#4b5563", "#78350f", "#111827"]
+SHIRT_COLORS = ["#3b82f6", "#ef4444", "#22c55e", "#eab308", "#a855f7", "#f97316", "#ec4899", "#14b8a6", "FF0000"]
+PANTS_COLORS = ["#1e3a8a", "#374151", "#4b5563", "#78350f", "#111827", "#996155"]
 
 
 # ---------------------------------------------------------------- logging
@@ -267,6 +267,32 @@ async def handle_client(websocket):
                 del world[pos]
                 new_type = 0
                 log.info("BREAK %s broke %s", label, desc(pos, old))
+                log.info("DEBUG: %s", old)
+                if old == 2 or old == "2":
+                    log.info("ACTION %s broke tnt, centered 17x17 'explosion' update sent to client(s).", label)
+                    x, y, z = pos
+                    
+                    # Loop from -8 to +8 to perfectly center the explosion on the TNT block
+                    for dx in range(-8, 9):
+                        for dz in range(-8, 9):
+                            # Skip the exact center block because the default break logic handles it
+                            if dx == 0 and dz == 0:
+                                continue
+                                
+                            target_pos = (x + dx, y, z + dz)
+                            
+                            if target_pos in world:
+                                del world[target_pos]
+                                
+                                await broadcast(json.dumps({
+                                    "type": "BLOCK_UPDATE", 
+                                    "x": x + dx, 
+                                    "y": y, 
+                                    "z": z + dz, 
+                                    "block": 0,
+                                }))
+
+
             else:  # PLACE_BLOCK
                 t = as_int(data.get("type"))
                 if t not in VALID_TYPES:
@@ -278,6 +304,7 @@ async def handle_client(websocket):
                 world[pos] = t
                 new_type = t
                 log.info("PLACE %s placed %s", label, desc(pos, t))
+                log.info("DEBUG: %s", t)
 
             dirty = True
             await broadcast(json.dumps({

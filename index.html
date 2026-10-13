@@ -1,354 +1,675 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <title>Kyuub.io | A Voxel Game engine</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
-        body { margin: 0; overflow: hidden; }
-        #ui { position: absolute; color: white; padding: 10px; font-family: sans-serif;
-              text-shadow: 1px 1px 2px #000; pointer-events: none; user-select: none; }
-        #crosshair { position: absolute; top: 50%; left: 50%; width: 20px; height: 20px;
-                     margin: -10px 0 0 -10px; pointer-events: none; }
-        #crosshair::before, #crosshair::after { content: ""; position: absolute; background: white;
-                     mix-blend-mode: difference; }
-        #crosshair::before { left: 9px; top: 0; width: 2px; height: 20px; }
-        #crosshair::after  { top: 9px; left: 0; height: 2px; width: 20px; }
-        #hint { position: absolute; top: 50%; width: 100%; text-align: center; color: white;
-                font-family: sans-serif; font-size: 22px; text-shadow: 1px 1px 3px #000;
-                pointer-events: none; margin-top: 40px; }
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      #ui {
+        position: absolute;
+        color: white;
+        padding: 10px;
+        font-family: sans-serif;
+        text-shadow: 1px 1px 2px #000;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      #crosshair {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 -10px;
+        pointer-events: none;
+      }
+
+      #crosshair::before,
+      #crosshair::after {
+        content: "";
+        position: absolute;
+        background: white;
+        mix-blend-mode: difference;
+      }
+
+      #crosshair::before {
+        left: 9px;
+        top: 0;
+        width: 2px;
+        height: 20px;
+      }
+
+      #crosshair::after {
+        top: 9px;
+        left: 0;
+        height: 2px;
+        width: 20px;
+      }
+
+      #hint {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        text-align: center;
+        color: white;
+        font-family: sans-serif;
+        font-size: 22px;
+        text-shadow: 1px 1px 3px #000;
+        pointer-events: none;
+        margin-top: 40px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="ui">
-        <h2>Kyuub Engine</h2>
-        <p id="status">Connecting to game server... (server_ip:8765)</p>
-        <p>Click the game to start<br>
-           WASD: Move | Space: Up | Shift: Down | Mouse: Look<br>
-           Left Click: Break | Right Click: Place<br>
-           1-4: Choose block (Grass, TNT, Stone, Wood)</p>
-        <p id="selected">Selected: Grass</p>
+      <h2>Kyuub Engine</h2>
+      <p id="status">Connecting to game server... (server_ip:8765)</p>
+      <p>Click the game to start <br> WASD: Move | Space: Up | Shift: Down | Mouse: Look <br> Left Click: Break | Right Click: Place <br> 1-4: Choose block (Grass, TNT, Stone, Wood) </p>
+      <p id="selected">Selected: Grass</p>
     </div>
     <div id="crosshair"></div>
     <div id="hint">Click to play</div>
-
     <script>
-        // --- 1. THREE.JS SETUP ---
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x87ceeb);
+      // --- 1. THREE.JS SETUP ---
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x87ceeb);
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.rotation.order = "YXZ";
+      camera.position.set(8, 20, 25);
+      let yaw = 0;
+      let pitch = -Math.atan2(20, 17);
+      // If you're editing the file for server failures, change this to your device's IP address.
+      const serverIP = "192.168.254.104";
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+      const statusEl = document.getElementById("status");
+      const blockColors = {
+        1: new THREE.Color(0x559933), // Grass
+        2: new THREE.Color(0xcc3333), // TNT
+        3: new THREE.Color(0x888888), // Stone
+        4: new THREE.Color(0x775533) // Wood
+      };
+      const blockNames = {
+        1: "Grass",
+        2: "TNT",
+        3: "Stone",
+        4: "Wood"
+      };
+      const CHUNK = 16;
+      const voxels = new Map(); // "x,y,z" -> block type  (the actual world data)
+      const chunks = new Map(); // "cx,cy,cz" -> one merged mesh
+      const dirtyChunks = new Set(); // chunks that need rebuilding
+      const chunkMaterial = new THREE.MeshBasicMaterial({
+        vertexColors: true
+      });
+      const keyOf = (x, y, z) => `${x},${y},${z}`;
+      const getVoxel = (x, y, z) => voxels.get(keyOf(x, y, z)) || 0;
+      // The 6 faces of a cube: neighbor direction, 4 corners, and a brightness so blocks aren't flat
+      const FACES = [{
+        dir: [1, 0, 0],
+        shade: 0.8,
+        c: [
+          [.5, -.5, -.5],
+          [.5, .5, -.5],
+          [.5, .5, .5],
+          [.5, -.5, .5]
+        ]
+      }, {
+        dir: [-1, 0, 0],
+        shade: 0.8,
+        c: [
+          [-.5, -.5, .5],
+          [-.5, .5, .5],
+          [-.5, .5, -.5],
+          [-.5, -.5, -.5]
+        ]
+      }, {
+        dir: [0, 1, 0],
+        shade: 1.0,
+        c: [
+          [-.5, .5, .5],
+          [.5, .5, .5],
+          [.5, .5, -.5],
+          [-.5, .5, -.5]
+        ]
+      }, {
+        dir: [0, -1, 0],
+        shade: 0.5,
+        c: [
+          [-.5, -.5, -.5],
+          [.5, -.5, -.5],
+          [.5, -.5, .5],
+          [-.5, -.5, .5]
+        ]
+      }, {
+        dir: [0, 0, 1],
+        shade: 0.7,
+        c: [
+          [-.5, -.5, .5],
+          [.5, -.5, .5],
+          [.5, .5, .5],
+          [-.5, .5, .5]
+        ]
+      }, {
+        dir: [0, 0, -1],
+        shade: 0.7,
+        c: [
+          [.5, -.5, -.5],
+          [-.5, -.5, -.5],
+          [-.5, .5, -.5],
+          [.5, .5, -.5]
+        ]
+      }, ];
+      let worldLoaded = false;
 
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.rotation.order = "YXZ";
-        camera.position.set(8, 20, 25);
-        let yaw = 0;
-        let pitch = -Math.atan2(20, 17);
+      function markDirty(x, y, z) {
+        const cx = Math.floor(x / CHUNK),
+          cy = Math.floor(y / CHUNK),
+          cz = Math.floor(z / CHUNK);
+        dirtyChunks.add(`${cx},${cy},${cz}`);
+        // a block on a chunk edge also changes which faces the neighbor chunk needs
+        const lx = x - cx * CHUNK,
+          ly = y - cy * CHUNK,
+          lz = z - cz * CHUNK;
+        if (lx === 0) dirtyChunks.add(`${cx - 1},${cy},${cz}`);
+        if (lx === CHUNK - 1) dirtyChunks.add(`${cx + 1},${cy},${cz}`);
+        if (ly === 0) dirtyChunks.add(`${cx},${cy - 1},${cz}`);
+        if (ly === CHUNK - 1) dirtyChunks.add(`${cx},${cy + 1},${cz}`);
+        if (lz === 0) dirtyChunks.add(`${cx},${cy},${cz - 1}`);
+        if (lz === CHUNK - 1) dirtyChunks.add(`${cx},${cy},${cz + 1}`);
+      }
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
-        const statusEl = document.getElementById("status");
+      function setBlock(x, y, z, type) {
+        if (type > 0 && blockColors[type]) voxels.set(keyOf(x, y, z), type);
+        else voxels.delete(keyOf(x, y, z));
+        markDirty(x, y, z);
+      }
 
-        const materials = {
-            1: new THREE.MeshBasicMaterial({ color: 0x559933 }), // Grass
-            2: new THREE.MeshBasicMaterial({ color: 0xcc3333 }), // TNT
-            3: new THREE.MeshBasicMaterial({ color: 0x888888 }), // Stone
-            4: new THREE.MeshBasicMaterial({ color: 0x775533 })  // Wood
-        };
-        const blockNames = { 1: "Grass", 2: "TNT", 3: "Stone", 4: "Wood" };
-        const geometry = new THREE.BoxGeometry(1, 1, 1);
+      function clearWorld() {
+        voxels.clear();
+        dirtyChunks.clear();
+        chunks.forEach(m => {
+          scene.remove(m);
+          m.geometry.dispose();
+        });
+        chunks.clear();
+      }
 
-        // Blocks displayed, keyed by "x,y,z". The SERVER decides what exists;
-        // this map just mirrors it so we can draw and raycast.
-        const blocks = new Map();
-        const keyOf = (x, y, z) => `${x},${y},${z}`;
-
-        function setBlock(x, y, z, type) {
-            const key = keyOf(x, y, z);
-            const old = blocks.get(key);
-            if (old) { scene.remove(old); blocks.delete(key); }
-            if (type > 0 && materials[type]) {
-                const mesh = new THREE.Mesh(geometry, materials[type]);
-                mesh.position.set(x, y, z);
-                scene.add(mesh);
-                blocks.set(key, mesh);
-            }
+      function rebuildChunk(key) {
+        const old = chunks.get(key);
+        if (old) {
+          scene.remove(old);
+          old.geometry.dispose();
+          chunks.delete(key);
         }
-
-        function clearWorld() {
-            blocks.forEach(m => scene.remove(m));
-            blocks.clear();
-        }
-
-        // --- 2. PLAYER SKINS (other players) ---
-        const EYE_HEIGHT = 1.6;            // camera sits this high above the player's feet
-        const remotePlayers = new Map();   // id -> { group, target, targetYaw, hasPos }
-        let myId = null;
-
-        function makeNameTag(text) {
-            const c = document.createElement("canvas");
-            c.width = 256; c.height = 64;
-            const ctx = c.getContext("2d");
-            ctx.fillStyle = "rgba(0,0,0,0.5)";
-            ctx.fillRect(0, 0, 256, 64);
-            ctx.fillStyle = "#fff";
-            ctx.font = "bold 32px sans-serif";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(text, 128, 34);
-            const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
-                map: new THREE.CanvasTexture(c), depthTest: false
-            }));
-            sprite.scale.set(1.6, 0.4, 1);
-            sprite.position.set(0, 2.2, 0);
-            return sprite;
-        }
-
-        // Blocky humanoid built from boxes. Origin = feet, front faces -Z (same as the camera at yaw 0).
-        function buildPlayerModel(skin, name) {
-            const group = new THREE.Group();
-            const part = (w, h, d, color, x, y, z, axisX = 0, axisY = 0, axisZ = 0) => {
-            const geo = new THREE.BoxGeometry(w, h, d);
-            geo.translate(-axisX, -axisY, -axisZ);
-            const m = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color }));
-            m.position.set(x + axisX, y + axisY, z + axisZ);
-            group.add(m);
-            return m;                                      
-            
-            };
-            part(0.25, 0.7, 0.25, skin.legs, -0.125, 0.35, 0);   // legs
-            part(0.25, 0.7, 0.25, skin.legs,  0.125, 0.35, 0);
-            part(0.5,  0.7, 0.25, skin.body,  0,     1.05, 0);   // body
-            part(0.2,  0.7, 0.2,  skin.arms, -0.35,  1.05, 0);   // arms
-            part(0.2,  0.7, 0.2,  skin.arms,  0.35,  1.05, 0);
-            const head = part(0.4, 0.4, 0.4, skin.head, 0, 1.6, 0);   // head
-            const eyeL = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.02), new THREE.MeshBasicMaterial({ color: skin.eyes }));
-            const eyeR = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.02), new THREE.MeshBasicMaterial({ color: skin.eyes }));
-            eyeL.position.set(-0.1, 0.03, -0.205);                     // relative to the head's center
-            eyeR.position.set(0.1, 0.03, -0.205);
-            head.add(eyeL, eyeR);
-            movePivot(head, 0, -0.2, 0);                               // pivot at the neck; eyes stay on the face
-            group.userData.head = head;                                // keep a handle so we can tilt it later
-            //part(0.08, 0.08, 0.02, skin.eyes,  0.1,  1.63, -0.205);
-            group.add(makeNameTag(name));
-            return group;
-        }
-
-        function movePivot(mesh, dx, dy, dz) {
-        mesh.geometry.translate(-dx, -dy, -dz);                       
-        mesh.position.add(new THREE.Vector3(dx, dy, dz).applyQuaternion(mesh.quaternion));     // move the origin to the pivot (works even if already rotated)
-        mesh.children.forEach(c => c.position.sub(new THREE.Vector3(dx, dy, dz)));
-        }
-
-        function addRemotePlayer(p) {
-            if (p.id === myId) return;
-            removeRemotePlayer(p.id);
-            const group = buildPlayerModel(p.skin, p.name);
-            group.visible = false;                 // hidden until we know where they are
-            scene.add(group);
-            remotePlayers.set(p.id, { group, target: new THREE.Vector3(), targetYaw: 0, targetPitch: 0, hasPos: false });
-            if (p.x != null) updateRemotePlayer(p);
-        }
-
-        function updateRemotePlayer(s) {
-            const r = remotePlayers.get(s.id);
-            if (!r || s.x == null) return;
-            r.target.set(s.x, s.y - EYE_HEIGHT, s.z);
-            r.targetYaw = s.yaw;
-            r.targetPitch = s.pitch || 0;
-            if (!r.hasPos) {                       // first position: snap, don't glide in from the origin
-                r.group.position.copy(r.target);
-                r.group.rotation.y = s.yaw;
-                r.group.visible = true;
-                r.hasPos = true;
-            }
-        }
-
-        function removeRemotePlayer(id) {
-            const r = remotePlayers.get(id);
-            if (!r) return;
-            scene.remove(r.group);
-            r.group.traverse(o => {
-                if (o.geometry) o.geometry.dispose();
-                if (o.material) {
-                    if (o.material.map) o.material.map.dispose();
-                    o.material.dispose();
+        const [cx, cy, cz] = key.split(",").map(Number);
+        const positions = [],
+          colors = [],
+          indices = [];
+        for (let x = cx * CHUNK; x < (cx + 1) * CHUNK; x++)
+          for (let y = cy * CHUNK; y < (cy + 1) * CHUNK; y++)
+            for (let z = cz * CHUNK; z < (cz + 1) * CHUNK; z++) {
+              const type = voxels.get(keyOf(x, y, z));
+              if (!type) continue;
+              const col = blockColors[type];
+              for (const f of FACES) {
+                if (getVoxel(x + f.dir[0], y + f.dir[1], z + f.dir[2])) continue; // hidden face, skip
+                const base = positions.length / 3;
+                for (const c of f.c) {
+                  positions.push(x + c[0], y + c[1], z + c[2]);
+                  colors.push(col.r * f.shade, col.g * f.shade, col.b * f.shade);
                 }
-            });
-            remotePlayers.delete(id);
-        }
-
-        function clearRemotePlayers() {
-            Array.from(remotePlayers.keys()).forEach(removeRemotePlayer);
-        }
-
-        const lastSent = { x: 0, y: 0, z: 0, yaw: 0, pitch: 0, time: 0 };
-        function sendPosition(force = false) {
-            if (socket.readyState !== WebSocket.OPEN || myId === null) return;
-            const now = performance.now();
-            if (!force && now - lastSent.time < 66) return;
-            const p = camera.position;
-            const moved = Math.abs(p.x - lastSent.x) > 0.01 || Math.abs(p.y - lastSent.y) > 0.01 ||Math.abs(p.z - lastSent.z) > 0.01 || Math.abs(yaw - lastSent.yaw) > 0.01 ||Math.abs(pitch - lastSent.pitch) > 0.01;
-            if (!force && !moved) return;
-            socket.send(JSON.stringify({ action: "PLAYER_MOVE", x: p.x, y: p.y, z: p.z, yaw, pitch }));
-            lastSent.x = p.x; lastSent.y = p.y; lastSent.z = p.z;
-            lastSent.yaw = yaw; lastSent.pitch = pitch; lastSent.time = now;
-        }
-
-        // --- 3. WEBSOCKET CONNECTION ---
-        const serverIP = "192.168.254.101";
-        const socket = new WebSocket(`ws://${serverIP}:8765`);
-
-        function sendEdit(action, x, y, z, type) {
-            if (socket.readyState === WebSocket.OPEN) {
-                socket.send(JSON.stringify({ action, x, y, z, type }));
+                indices.push(base, base + 1, base + 2, base, base + 2, base + 3);
+              }
             }
-        }
+        if (!positions.length) return;
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+        geo.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+        geo.setIndex(indices);
+        geo.computeBoundingSphere(); // lets the GPU skip chunks you're not looking at
+        const mesh = new THREE.Mesh(geo, chunkMaterial);
+        scene.add(mesh);
+        chunks.set(key, mesh);
+      }
+      // --- 2. PLAYER SKINS (other players) ---
+      const EYE_HEIGHT = 1.6; // camera sits this high above the player's feet
+      const remotePlayers = new Map(); // id -> { group, target, targetYaw, hasPos }
+      let myId = null;
 
-        socket.onopen = () => {
-            console.log("server connection was successful. requesting chunk and player skin...");
-            statusEl.textContent = "Connected";
-            socket.send(JSON.stringify({ action: "GENERATE_CHUNK" }));
-            socket.send(JSON.stringify({ action: "CREATE_PLAYER_SKIN" }));
+      function makeNameTag(text) {
+        const c = document.createElement("canvas");
+        c.width = 256;
+        c.height = 64;
+        const ctx = c.getContext("2d");
+        ctx.fillStyle = "rgba(0,0,0,0.5)";
+        ctx.fillRect(0, 0, 256, 64);
+        ctx.fillStyle = "#fff";
+        ctx.font = "bold 32px sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(text, 128, 34);
+        const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+          map: new THREE.CanvasTexture(c),
+          depthTest: false
+        }));
+        sprite.scale.set(1.6, 0.4, 1);
+        sprite.position.set(0, 2.2, 0);
+        return sprite;
+      }
+      // Blocky humanoid built from boxes. Origin = feet, front faces -Z (same as the camera at yaw 0).
+      function buildPlayerModel(skin, name) {
+        const group = new THREE.Group();
+        const part = (w, h, d, color, x, y, z, axisX = 0, axisY = 0, axisZ = 0) => {
+          const geo = new THREE.BoxGeometry(w, h, d);
+          geo.translate(-axisX, -axisY, -axisZ);
+          const m = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({
+            color
+          }));
+          m.position.set(x + axisX, y + axisY, z + axisZ);
+          group.add(m);
+          return m;
         };
-        socket.onclose = () => {
-            statusEl.textContent = "Disconnected - refresh to reconnect";
-            clearRemotePlayers();
-        };
-        socket.onerror = () => {
-            console.error(`failed to reach ws://${serverIP}:8765`);
-            statusEl.textContent = "Failed to reach Kyuube's game server. Please report to MadGuy25 if this keeps happening.";
-        };
+        part(0.25, 0.7, 0.25, skin.legs, -0.125, 0.35, 0); // legs
+        part(0.25, 0.7, 0.25, skin.legs, 0.125, 0.35, 0);
+        part(0.5, 0.7, 0.25, skin.body, 0, 1.05, 0); // body
+        part(0.2, 0.7, 0.2, skin.arms, -0.35, 1.05, 0); // arms
+        part(0.2, 0.7, 0.2, skin.arms, 0.35, 1.05, 0);
+        const head = part(0.4, 0.4, 0.4, skin.head, 0, 1.6, 0); // head
+        const eyeL = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.02), new THREE.MeshBasicMaterial({
+          color: skin.eyes
+        }));
+        const eyeR = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.02), new THREE.MeshBasicMaterial({
+          color: skin.eyes
+        }));
+        eyeL.position.set(-0.1, 0.03, -0.205); // relative to the head's center
+        eyeR.position.set(0.1, 0.03, -0.205);
+        head.add(eyeL, eyeR);
+        movePivot(head, 0, -0.2, 0); // pivot at the neck; eyes stay on the face
+        group.userData.head = head; // keep a handle so we can tilt it later
+        //part(0.08, 0.08, 0.02, skin.eyes,  0.1,  1.63, -0.205);
+        group.add(makeNameTag(name));
+        return group;
+      }
 
-        socket.onmessage = (event) => {
-            const msg = JSON.parse(event.data);
-            switch (msg.type) {
-                case "RENDER_DATA":
-                    clearWorld();
-                    msg.blocks.forEach(b => setBlock(b.x, b.y, b.z, b.type));
-                    break;
-                case "BLOCK_UPDATE":
-                    setBlock(msg.x, msg.y, msg.z, msg.block);   // block 0 = removed
-                    break;
-                case "PLAYER_INIT":
-                    myId = msg.id;
-                    statusEl.textContent = `Connected as ${msg.name}`;
-                    msg.players.forEach(addRemotePlayer);
-                    sendPosition(true);                        // announce where we are right away
-                    break;
-                case "PLAYER_JOIN":
-                    addRemotePlayer(msg);
-                    break;
-                case "PLAYER_STATE":
-                    updateRemotePlayer(msg);
-                    break;
-                case "PLAYER_LEAVE":
-                    removeRemotePlayer(msg.id);
-                    break;
-            }
-        };
+      function movePivot(mesh, dx, dy, dz) {
+        mesh.geometry.translate(-dx, -dy, -dz);
+        mesh.position.add(new THREE.Vector3(dx, dy, dz).applyQuaternion(mesh.quaternion)); // move the origin to the pivot (works even if already rotated)
+        mesh.children.forEach(c => c.position.sub(new THREE.Vector3(dx, dy, dz)));
+      }
 
-        // --- 4. CONTROLS ---
-        const hint = document.getElementById("hint");
-        const selectedLabel = document.getElementById("selected");
-        let selectedType = 1;
-
-        renderer.domElement.addEventListener("click", () => {
-            if (document.pointerLockElement !== renderer.domElement) {
-                renderer.domElement.requestPointerLock();
-            }
+      function addRemotePlayer(p) {
+        if (p.id === myId) return;
+        removeRemotePlayer(p.id);
+        const group = buildPlayerModel(p.skin, p.name);
+        group.visible = false; // hidden until we know where they are
+        scene.add(group);
+        remotePlayers.set(p.id, {
+          group,
+          target: new THREE.Vector3(),
+          targetYaw: 0,
+          targetPitch: 0,
+          hasPos: false
         });
-        document.addEventListener("pointerlockchange", () => {
-            hint.style.display = document.pointerLockElement === renderer.domElement ? "none" : "block";
-        });
+        if (p.x != null) updateRemotePlayer(p);
+      }
 
-        document.addEventListener("mousemove", (e) => {
-            if (document.pointerLockElement !== renderer.domElement) return;
-            yaw   -= e.movementX * 0.002;
-            pitch -= e.movementY * 0.002;
-            pitch = Math.max(-Math.PI / 2 + 0.01, Math.min(Math.PI / 2 - 0.01, pitch));
-        });
-
-        const keys = {};
-        document.addEventListener("keydown", (e) => {
-            keys[e.code] = true;
-            if (e.code >= "Digit1" && e.code <= "Digit4") {
-                selectedType = Number(e.code.slice(-1));
-                selectedLabel.textContent = "Selected: " + blockNames[selectedType];
-            }
-            if (e.code === "Space") e.preventDefault();
-        });
-        document.addEventListener("keyup", (e) => { keys[e.code] = false; });
-
-        const raycaster = new THREE.Raycaster();
-        raycaster.far = 10;
-
-        function getTargetedBlock() {
-            raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
-            const hits = raycaster.intersectObjects(Array.from(blocks.values()));
-            return hits.length ? hits[0] : null;
+      function updateRemotePlayer(s) {
+        const r = remotePlayers.get(s.id);
+        if (!r || s.x == null) return;
+        r.target.set(s.x, s.y - EYE_HEIGHT, s.z);
+        r.targetYaw = s.yaw;
+        r.targetPitch = s.pitch || 0;
+        if (!r.hasPos) { // first position: snap, don't glide in from the origin
+          r.group.position.copy(r.target);
+          r.group.rotation.y = s.yaw;
+          r.group.visible = true;
+          r.hasPos = true;
         }
+      }
 
-        // Clicks only SEND a request; the block changes when the server confirms it
-        renderer.domElement.addEventListener("mousedown", (e) => {
-            if (document.pointerLockElement !== renderer.domElement) return;
-            const hit = getTargetedBlock();
-            if (!hit) return;
-
-            if (e.button === 0) {                       // break
-                const p = hit.object.position;
-                sendEdit("BREAK_BLOCK", p.x, p.y, p.z, 0);
-            } else if (e.button === 2) {                // place
-                const p = hit.object.position.clone().add(hit.face.normal);
-                if (p.distanceTo(camera.position) < 1.2) return;
-                sendEdit("PLACE_BLOCK", p.x, p.y, p.z, selectedType);
-            }
+      function removeRemotePlayer(id) {
+        const r = remotePlayers.get(id);
+        if (!r) return;
+        scene.remove(r.group);
+        r.group.traverse(o => {
+          if (o.geometry) o.geometry.dispose();
+          if (o.material) {
+            if (o.material.map) o.material.map.dispose();
+            o.material.dispose();
+          }
         });
-        document.addEventListener("contextmenu", (e) => e.preventDefault());
+        remotePlayers.delete(id);
+      }
 
-        // --- 5. GAME LOOP ---
-        const clock = new THREE.Clock();
-        const speed = 10;
+      function clearRemotePlayers() {
+        Array.from(remotePlayers.keys()).forEach(removeRemotePlayer);
+      }
+      const lastSent = {
+        x: 0,
+        y: 0,
+        z: 0,
+        yaw: 0,
+        pitch: 0,
+        time: 0
+      };
 
-        function animate() {
-            requestAnimationFrame(animate);
-            const dt = Math.min(clock.getDelta(), 0.1);
+      function sendPosition(force = false) {
+        if (socket.readyState !== WebSocket.OPEN || myId === null) return;
+        const now = performance.now();
+        if (!force && now - lastSent.time < 66) return;
+        const p = camera.position;
+        const moved = Math.abs(p.x - lastSent.x) > 0.01 || Math.abs(p.y - lastSent.y) > 0.01 || Math.abs(p.z - lastSent.z) > 0.01 || Math.abs(yaw - lastSent.yaw) > 0.01 || Math.abs(pitch - lastSent.pitch) > 0.01;
+        if (!force && !moved) return;
+        socket.send(JSON.stringify({
+          action: "PLAYER_MOVE",
+          x: p.x,
+          y: p.y,
+          z: p.z,
+          yaw,
+          pitch
+        }));
+        lastSent.x = p.x;
+        lastSent.y = p.y;
+        lastSent.z = p.z;
+        lastSent.yaw = yaw;
+        lastSent.pitch = pitch;
+        lastSent.time = now;
+      }
+      // --- 3. WEBSOCKET CONNECTION ---
+      const socket = new WebSocket(`ws://${serverIP}:8765`);
 
-            camera.rotation.set(pitch, yaw, 0);
-
-            const forward = new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
-            const right   = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
-            const move = new THREE.Vector3();
-            if (keys["KeyW"]) move.add(forward);
-            if (keys["KeyS"]) move.sub(forward);
-            if (keys["KeyD"]) move.add(right);
-            if (keys["KeyA"]) move.sub(right);
-            if (keys["Space"]) move.y += 1;
-            if (keys["ShiftLeft"] || keys["ShiftRight"]) move.y -= 1;
-            if (move.lengthSq() > 0) camera.position.addScaledVector(move.normalize(), speed * dt);
-
-            sendPosition();
-
-            // Smoothly glide other players toward their latest reported position
-            const k = 1 - Math.exp(-dt * 15);
-            remotePlayers.forEach(r => {
-                if (!r.hasPos) return;
-                r.group.position.lerp(r.target, k);
-                let d = r.targetYaw - r.group.rotation.y;
-                const head = r.group.userData.head;
-                head.rotation.x += (r.targetPitch - head.rotation.x) * k;   // + is looking up, same as the camera  
-                d = Math.atan2(Math.sin(d), Math.cos(d));   // shortest way around
-                r.group.rotation.y += d * k;
-            });
-
-            renderer.render(scene, camera);
+      function sendEdit(action, x, y, z, type) {
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.send(JSON.stringify({
+            action,
+            x,
+            y,
+            z,
+            type
+          }));
         }
-        animate();
+      }
+      socket.onopen = () => {
+        console.log("server connection was successful. requesting chunk and player skin...");
+        statusEl.textContent = "Connected";
+        socket.send(JSON.stringify({
+          action: "GENERATE_CHUNK"
+        }));
+        socket.send(JSON.stringify({
+          action: "CREATE_PLAYER_SKIN"
+        }));
+      };
+      socket.onclose = () => {
+        statusEl.textContent = "Disconnected - refresh to reconnect";
+        clearRemotePlayers();
+      };
+      socket.onerror = () => {
+        console.error(`failed to reach ws://${serverIP}:8765`);
+        statusEl.textContent = "Failed to reach Kyuube's game server. Please report to MadGuy25 if this keeps happening.";
+      };
+      socket.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+        switch (msg.type) {
+          case "RENDER_DATA":
+            clearWorld();
+            msg.blocks.forEach(b => setBlock(b.x, b.y, b.z, b.type));
+            worldLoaded = true;
+            break;
+          case "BLOCK_UPDATE":
+            setBlock(msg.x, msg.y, msg.z, msg.block); // block 0 = removed
+            break;
+          case "PLAYER_INIT":
+            myId = msg.id;
+            statusEl.textContent = `Connected as ${msg.name}`;
+            msg.players.forEach(addRemotePlayer);
+            sendPosition(true); // announce where we are right away
+            break;
+          case "PLAYER_JOIN":
+            addRemotePlayer(msg);
+            break;
+          case "PLAYER_STATE":
+            updateRemotePlayer(msg);
+            break;
+          case "PLAYER_LEAVE":
+            removeRemotePlayer(msg.id);
+            break;
+        }
+      };
+      // --- 4. CONTROLS ---
+      const hint = document.getElementById("hint");
+      const selectedLabel = document.getElementById("selected");
+      let selectedType = 1;
+      renderer.domElement.addEventListener("click", () => {
+        if (document.pointerLockElement !== renderer.domElement) {
+          renderer.domElement.requestPointerLock();
+        }
+      });
+      document.addEventListener("pointerlockchange", () => {
+        hint.style.display = document.pointerLockElement === renderer.domElement ? "none" : "block";
+      });
+      document.addEventListener("mousemove", (e) => {
+        if (document.pointerLockElement !== renderer.domElement) return;
+        yaw -= e.movementX * 0.002;
+        pitch -= e.movementY * 0.002;
+        pitch = Math.max(-Math.PI / 2 + 0.01, Math.min(Math.PI / 2 - 0.01, pitch));
+      });
+      const keys = {};
+      document.addEventListener("keydown", (e) => {
+        keys[e.code] = true;
+        if (e.code >= "Digit1" && e.code <= "Digit4") {
+          selectedType = Number(e.code.slice(-1));
+          selectedLabel.textContent = "Selected: " + blockNames[selectedType];
+        }
+        if (e.code === "Space") e.preventDefault();
+      });
+      document.addEventListener("keyup", (e) => {
+        keys[e.code] = false;
+      });
+      const raycaster = new THREE.Raycaster();
+      raycaster.far = 10;
+      // Walk along the ray one block at a time (no meshes involved). Blocks are centered on whole numbers.
+      function raycastVoxels(origin, dir, maxDist) {
+        let x = Math.floor(origin.x + 0.5),
+          y = Math.floor(origin.y + 0.5),
+          z = Math.floor(origin.z + 0.5);
+        const sx = dir.x > 0 ? 1 : -1,
+          sy = dir.y > 0 ? 1 : -1,
+          sz = dir.z > 0 ? 1 : -1;
+        const tDx = dir.x !== 0 ? Math.abs(1 / dir.x) : Infinity;
+        const tDy = dir.y !== 0 ? Math.abs(1 / dir.y) : Infinity;
+        const tDz = dir.z !== 0 ? Math.abs(1 / dir.z) : Infinity;
+        let tMx = dir.x !== 0 ? ((sx > 0 ? x + 0.5 : x - 0.5) - origin.x) / dir.x : Infinity;
+        let tMy = dir.y !== 0 ? ((sy > 0 ? y + 0.5 : y - 0.5) - origin.y) / dir.y : Infinity;
+        let tMz = dir.z !== 0 ? ((sz > 0 ? z + 0.5 : z - 0.5) - origin.z) / dir.z : Infinity;
+        let t = 0,
+          normal = null;
+        while (t <= maxDist) {
+          if (normal && getVoxel(x, y, z)) return {
+            x,
+            y,
+            z,
+            normal
+          };
+          if (tMx < tMy && tMx < tMz) {
+            x += sx;
+            t = tMx;
+            tMx += tDx;
+            normal = [-sx, 0, 0];
+          } else if (tMy < tMz) {
+            y += sy;
+            t = tMy;
+            tMy += tDy;
+            normal = [0, -sy, 0];
+          } else {
+            z += sz;
+            t = tMz;
+            tMz += tDz;
+            normal = [0, 0, -sz];
+          }
+        }
+        return null;
+      }
+      renderer.domElement.addEventListener("mousedown", (e) => {
+        if (document.pointerLockElement !== renderer.domElement) return;
+        const hit = raycastVoxels(camera.position, camera.getWorldDirection(new THREE.Vector3()), 10);
+        if (!hit) return;
+        if (e.button === 0) { // break
+          sendEdit("BREAK_BLOCK", hit.x, hit.y, hit.z, 0);
+        } else if (e.button === 2) { // place on the face you're looking at
+          const px = hit.x + hit.normal[0],
+            py = hit.y + hit.normal[1],
+            pz = hit.z + hit.normal[2];
+          const d = Math.hypot(px - camera.position.x, py - camera.position.y, pz - camera.position.z);
+          if (d < 1.2) return; // not inside the player
+          sendEdit("PLACE_BLOCK", px, py, pz, selectedType);
+        }
+      });
+      // Clicks only SEND a request; the block changes when the server confirms it
+      renderer.domElement.addEventListener("mousedown", (e) => {
+        if (document.pointerLockElement !== renderer.domElement) return;
+        const hit = getTargetedBlock();
+        if (!hit) return;
+        if (e.button === 0) { // break
+          const p = hit.object.position;
+          sendEdit("BREAK_BLOCK", p.x, p.y, p.z, 0);
+        } else if (e.button === 2) { // place
+          const p = hit.object.position.clone().add(hit.face.normal);
+          if (p.distanceTo(camera.position) < 1.2) return;
+          sendEdit("PLACE_BLOCK", p.x, p.y, p.z, selectedType);
+        }
+      });
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+      // --- 5. GAME LOOP ---
+      const clock = new THREE.Clock();
+      const speed = 10;
+      // --- PHYSICS ---
+      const PLAYER_HALF_W = 0.3; // player is 0.6 wide
+      const PLAYER_H = 1.8; // and 1.8 tall (feet to top of head)
+      const WALK_SPEED = 6; // blocks per second
+      const FLY_SPEED = 8;
+      const GRAVITY = 28;
+      const JUMP_SPEED = 8.5; // about 1.3 blocks high
+      const MAX_FALL = 30;
+      // "feet" is the real player position; the camera sits EYE_HEIGHT above it
+      const feet = new THREE.Vector3(camera.position.x, camera.position.y - EYE_HEIGHT, camera.position.z);
+      let vy = 0;
+      let onGround = false;
+      // Does a player standing with feet at (px, py, pz) overlap any block?
+      // (a block at whole number i fills i-0.5 to i+0.5)
+      function collides(px, py, pz) {
+        const x0 = Math.floor(px - PLAYER_HALF_W + 0.5),
+          x1 = Math.floor(px + PLAYER_HALF_W + 0.5 - 1e-4);
+        const y0 = Math.floor(py + 0.5),
+          y1 = Math.floor(py + PLAYER_H + 0.5 - 1e-4);
+        const z0 = Math.floor(pz - PLAYER_HALF_W + 0.5),
+          z1 = Math.floor(pz + PLAYER_HALF_W + 0.5 - 1e-4);
+        for (let x = x0; x <= x1; x++)
+          for (let y = y0; y <= y1; y++)
+            for (let z = z0; z <= z1; z++)
+              if (getVoxel(x, y, z)) return true;
+        return false;
+      }
+      // Move along one axis in small steps so fast falls can't skip through a block.
+      // Returns true if something blocked the movement.
+      function moveAxis(axis, delta) {
+        if (!delta) return false;
+        const steps = Math.ceil(Math.abs(delta) / 0.2);
+        const step = delta / steps;
+        for (let i = 0; i < steps; i++) {
+          feet[axis] += step;
+          if (collides(feet.x, feet.y, feet.z)) {
+            feet[axis] -= step;
+            return true;
+          }
+        }
+        return false;
+      }
 
-        window.addEventListener("resize", () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+      function blockOverlapsPlayer(bx, by, bz) {
+        return bx + 0.5 > feet.x - PLAYER_HALF_W && bx - 0.5 < feet.x + PLAYER_HALF_W && by + 0.5 > feet.y && by - 0.5 < feet.y + PLAYER_H && bz + 0.5 > feet.z - PLAYER_HALF_W && bz - 0.5 < feet.z + PLAYER_HALF_W;
+      }
+
+      function updatePhysics(dt) {
+        // if we somehow ended up inside a block, pop up out of it
+        for (let i = 0; i < 20 && collides(feet.x, feet.y, feet.z); i++) feet.y += 1;
+        // horizontal movement (each axis separately, so you slide along walls)
+        const forward = new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
+        const right = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
+        const move = new THREE.Vector3();
+        if (keys["KeyW"]) move.add(forward);
+        if (keys["KeyS"]) move.sub(forward);
+        if (keys["KeyD"]) move.add(right);
+        if (keys["KeyA"]) move.sub(right);
+        if (move.lengthSq() > 0) move.normalize().multiplyScalar(WALK_SPEED * dt);
+        moveAxis("x", move.x);
+        moveAxis("z", move.z);
+        // vertical movement
+        const flying = keys["Space"] && keys["KeyF"];
+        if (flying) {
+          vy = FLY_SPEED; // Space + F together: no gravity, go up
+        } else {
+          vy = Math.max(vy - GRAVITY * dt, -MAX_FALL); // otherwise gravity pulls you down
+          if (keys["Space"] && onGround) vy = JUMP_SPEED; // Space alone: jump
+        }
+        const blocked = moveAxis("y", vy * dt);
+        if (blocked) {
+          onGround = vy < 0;
+          vy = 0;
+        } // landed (or bonked your head)
+        else onGround = false;
+        // fell out of the world: back to spawn
+        if (feet.y < -30) {
+          feet.set(8, 20, 25);
+          vy = 0;
+        }
+        camera.position.set(feet.x, feet.y + EYE_HEIGHT, feet.z);
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        const dt = Math.min(clock.getDelta(), 0.1);
+        camera.rotation.set(pitch, yaw, 0);
+        const forward = new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
+        const right = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
+        const move = new THREE.Vector3();
+        camera.rotation.set(pitch, yaw, 0);
+	if (worldLoaded) updatePhysics(dt);
+	sendPosition();
+        if (move.lengthSq() > 0) camera.position.addScaledVector(move.normalize(), speed * dt);
+        sendPosition();
+        // Smoothly glide other players toward their latest reported position
+        const k = 1 - Math.exp(-dt * 15);
+        remotePlayers.forEach(r => {
+          if (!r.hasPos) return;
+          r.group.position.lerp(r.target, k);
+          let d = r.targetYaw - r.group.rotation.y;
+          const head = r.group.userData.head;
+          head.rotation.x += (r.targetPitch - head.rotation.x) * k; // + is looking up, same as the camera  
+          d = Math.atan2(Math.sin(d), Math.cos(d)); // shortest way around
+          r.group.rotation.y += d * k;
         });
+        if (dirtyChunks.size) {
+          dirtyChunks.forEach(rebuildChunk);
+          dirtyChunks.clear();
+        }
+        renderer.render(scene, camera);
+      }
+      animate();
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
     </script>
-</body>
+  </body>
 </html>

@@ -230,16 +230,17 @@ async def handle_client(websocket):
                 log.info("SKIN  %s got skin %s (%d other player(s) sent)", label, player["skin"], len(others))
                 continue
 
-            # ---- movement
             if action == "PLAYER_MOVE":
                 x, y, z = as_float(data.get("x")), as_float(data.get("y")), as_float(data.get("z"))
                 yaw = as_float(data.get("yaw"), limit=1e6)
+                pitch = as_float(data.get("pitch"), limit=10.0) or 0.0
                 if None in (x, y, z, yaw) or not player["announced"]:
                     continue
                 player["pos"] = (x, y, z)
                 player["yaw"] = yaw
+                player["pitch"] = pitch
                 await broadcast(json.dumps({
-                    "type": "PLAYER_STATE", "id": pid, "x": x, "y": y, "z": z, "yaw": yaw,
+                    "type": "PLAYER_STATE", "id": pid, "x": x, "y": y, "z": z, "yaw": yaw, "pitch": pitch,
                 }), exclude=websocket)
                 continue
 

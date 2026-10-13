@@ -106,24 +106,37 @@
         // Blocky humanoid built from boxes. Origin = feet, front faces -Z (same as the camera at yaw 0).
         function buildPlayerModel(skin, name) {
             const group = new THREE.Group();
-            const part = (w, h, d, color, x, y, z) => {
-                const m = new THREE.Mesh(
-                    new THREE.BoxGeometry(w, h, d),
-                    new THREE.MeshBasicMaterial({ color })
-                );
-                m.position.set(x, y, z);
-                group.add(m);
+            const part = (w, h, d, color, x, y, z, axisX = 0, axisY = 0, axisZ = 0) => {
+            const geo = new THREE.BoxGeometry(w, h, d);
+            geo.translate(-axisX, -axisY, -axisZ);
+            const m = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color }));
+            m.position.set(x + axisX, y + axisY, z + axisZ);
+            group.add(m);
+            return m;                                      
+            
             };
             part(0.25, 0.7, 0.25, skin.legs, -0.125, 0.35, 0);   // legs
             part(0.25, 0.7, 0.25, skin.legs,  0.125, 0.35, 0);
             part(0.5,  0.7, 0.25, skin.body,  0,     1.05, 0);   // body
             part(0.2,  0.7, 0.2,  skin.arms, -0.35,  1.05, 0);   // arms
             part(0.2,  0.7, 0.2,  skin.arms,  0.35,  1.05, 0);
-            part(0.4,  0.4, 0.4,  skin.head,  0,     1.6,  0);   // head
-            part(0.08, 0.08, 0.02, skin.eyes, -0.1,  1.63, -0.205); // eyes (front = -Z)
-            part(0.08, 0.08, 0.02, skin.eyes,  0.1,  1.63, -0.205);
+            const head = part(0.4, 0.4, 0.4, skin.head, 0, 1.6, 0);   // head
+            const eyeL = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.02), new THREE.MeshBasicMaterial({ color: skin.eyes }));
+            const eyeR = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.02), new THREE.MeshBasicMaterial({ color: skin.eyes }));
+            eyeL.position.set(-0.1, 0.03, -0.205);                     // relative to the head's center
+            eyeR.position.set(0.1, 0.03, -0.205);
+            head.add(eyeL, eyeR);
+            movePivot(head, 0, -0.2, 0);                               // pivot at the neck; eyes stay on the face
+            group.userData.head = head;                                // keep a handle so we can tilt it later
+            //part(0.08, 0.08, 0.02, skin.eyes,  0.1,  1.63, -0.205);
             group.add(makeNameTag(name));
             return group;
+        }
+
+        function movePivot(mesh, dx, dy, dz) {
+        mesh.geometry.translate(-dx, -dy, -dz);                       
+        mesh.position.add(new THREE.Vector3(dx, dy, dz).applyQuaternion(mesh.quaternion));     // move the origin to the pivot (works even if already rotated)
+        mesh.children.forEach(c => c.position.sub(new THREE.Vector3(dx, dy, dz)));
         }
 
         function addRemotePlayer(p) {
@@ -132,7 +145,7 @@
             const group = buildPlayerModel(p.skin, p.name);
             group.visible = false;                 // hidden until we know where they are
             scene.add(group);
-            remotePlayers.set(p.id, { group, target: new THREE.Vector3(), targetYaw: 0, hasPos: false });
+            remotePlayers.set(p.id, { group, target: new THREE.Vector3(), targetYaw: 0, targetPitch: 0, hasPos: false });
             if (p.x != null) updateRemotePlayer(p);
         }
 
@@ -141,6 +154,7 @@
             if (!r || s.x == null) return;
             r.target.set(s.x, s.y - EYE_HEIGHT, s.z);
             r.targetYaw = s.yaw;
+            r.targetPitch = s.pitch || 0;
             if (!r.hasPos) {                       // first position: snap, don't glide in from the origin
                 r.group.position.copy(r.target);
                 r.group.rotation.y = s.yaw;
@@ -167,22 +181,21 @@
             Array.from(remotePlayers.keys()).forEach(removeRemotePlayer);
         }
 
-        // Tell the server where we are (about 15 times a second, only when we moved)
-        const lastSent = { x: 0, y: 0, z: 0, yaw: 0, time: 0 };
+        const lastSent = { x: 0, y: 0, z: 0, yaw: 0, pitch: 0, time: 0 };
         function sendPosition(force = false) {
             if (socket.readyState !== WebSocket.OPEN || myId === null) return;
             const now = performance.now();
             if (!force && now - lastSent.time < 66) return;
             const p = camera.position;
-            const moved = Math.abs(p.x - lastSent.x) > 0.01 || Math.abs(p.y - lastSent.y) > 0.01 ||
-                          Math.abs(p.z - lastSent.z) > 0.01 || Math.abs(yaw - lastSent.yaw) > 0.01;
+            const moved = Math.abs(p.x - lastSent.x) > 0.01 || Math.abs(p.y - lastSent.y) > 0.01 ||Math.abs(p.z - lastSent.z) > 0.01 || Math.abs(yaw - lastSent.yaw) > 0.01 ||Math.abs(pitch - lastSent.pitch) > 0.01;
             if (!force && !moved) return;
-            socket.send(JSON.stringify({ action: "PLAYER_MOVE", x: p.x, y: p.y, z: p.z, yaw }));
-            lastSent.x = p.x; lastSent.y = p.y; lastSent.z = p.z; lastSent.yaw = yaw; lastSent.time = now;
+            socket.send(JSON.stringify({ action: "PLAYER_MOVE", x: p.x, y: p.y, z: p.z, yaw, pitch }));
+            lastSent.x = p.x; lastSent.y = p.y; lastSent.z = p.z;
+            lastSent.yaw = yaw; lastSent.pitch = pitch; lastSent.time = now;
         }
 
         // --- 3. WEBSOCKET CONNECTION ---
-        const serverIP = "192.168.254.101"; // change to your server laptop's IP if needed
+        const serverIP = "192.168.123.64";
         const socket = new WebSocket(`ws://${serverIP}:8765`);
 
         function sendEdit(action, x, y, z, type) {
@@ -321,6 +334,8 @@
                 if (!r.hasPos) return;
                 r.group.position.lerp(r.target, k);
                 let d = r.targetYaw - r.group.rotation.y;
+                const head = r.group.userData.head;
+                head.rotation.x += (r.targetPitch - head.rotation.x) * k;   // + is looking up, same as the camera  
                 d = Math.atan2(Math.sin(d), Math.cos(d));   // shortest way around
                 r.group.rotation.y += d * k;
             });

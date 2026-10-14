@@ -100,7 +100,7 @@ BLOCK_NAMES = {0: "air", 1: "grass", 2: "tnt", 3: "stone", 4: "wood", 5:"dirt"}
 VALID_TYPES = {1, 2, 3, 4, 5}
 ```
 In `index.html`, you set the new block type in section 1. like this:
-```html
+```javascript
 const blockColors = {
         1: new THREE.Color(0x559933), // Grass
         2: new THREE.Color(0xcc3333), // TNT
@@ -128,6 +128,8 @@ document.addEventListener("keydown", (e) => {
         if (e.code === "Space") e.preventDefault();
       });
 ```
+
+Remember to set your colors at Section 1 too.
 
 #### Block edits
 

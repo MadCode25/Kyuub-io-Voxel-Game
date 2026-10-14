@@ -14,6 +14,7 @@ Made in 2026, the game mimics the mechanics of a real voxel engine and runs on a
   - [Sending the world to the player](#sending-the-world-to-the-player)
   - [Autosaving dirty chunks](#autosaving-dirty-chunks)
   - [Handling player actions](#handling-player-actions)
+  - [Making new blocks](#making-new-blocks)
 
 ---
 
@@ -89,6 +90,43 @@ if action == "PLAYER_MOVE":
         "type": "PLAYER_STATE", "id": pid, "x": x, "y": y, "z": z, "yaw": yaw,
     }), exclude=websocket)
     continue
+```
+
+#### Making new blocks
+The code below shows how to add new blocks. Both ends must be edited for this. (`server.py` and `index.html`)
+```python
+# Block types: 0 = air, 1 = grass, 2 = tnt, 3 = stone, 4 = wood, and 5 = dirt
+BLOCK_NAMES = {0: "air", 1: "grass", 2: "tnt", 3: "stone", 4: "wood", 5:"dirt"}
+VALID_TYPES = {1, 2, 3, 4, 5}
+```
+In `index.html`, you set the new block type in section 1. like this:
+```html
+const blockColors = {
+        1: new THREE.Color(0x559933), // Grass
+        2: new THREE.Color(0xcc3333), // TNT
+        3: new THREE.Color(0x888888), // Stone
+        4: new THREE.Color(0x775533), // Wood
+	      5: new THREE.Color(0x3d251e)  // Dirt
+      };
+      const blockNames = {
+        1: "Grass",
+        2: "TNT",
+        3: "Stone",
+        4: "Wood",
+	      5: "Dirt"
+      };
+```
+Then in Section 4 (controls), at `document.addEventListener` keyDown event, you turn it from<br>
+Digit4 to Digit5:
+```html
+document.addEventListener("keydown", (e) => {
+        keys[e.code] = true;
+        if (e.code >= "Digit1" && e.code <= "Digit5") { // <-- here
+          selectedType = Number(e.code.slice(-1));
+          selectedLabel.textContent = "Selected: " + blockNames[selectedType];
+        }
+        if (e.code === "Space") e.preventDefault();
+      });
 ```
 
 #### Block edits

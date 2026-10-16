@@ -19,6 +19,7 @@ import math
 import os
 from logging.handlers import RotatingFileHandler
 import random
+import requests
 
 import websockets
 
@@ -28,9 +29,9 @@ LOG_FILE = "kyuub.log"
 SEED = 6767
 SIZE_X, SIZE_Z = 128, 64
 
-# Block types: 0 = air, 1 = grass, 2 = tnt, 3 = stone, 4 = wood
-BLOCK_NAMES = {0: "air", 1: "grass", 2: "tnt", 3: "stone", 4: "wood"}
-VALID_TYPES = {1, 2, 3, 4}
+# Block types: 0 = air, 1 = grass, 2 = tnt, 3 = stone, 4 = wood, and 5 = dirt
+BLOCK_NAMES = {0: "air", 1: "grass", 2: "tnt", 3: "stone", 4: "wood", 5:"dirt"}
+VALID_TYPES = {1, 2, 3, 4, 5}
 MIN_XZ, MAX_XZ = -64, 96
 MIN_Y, MAX_Y = 0, 64
 
@@ -71,6 +72,21 @@ def desc(pos, t=None):
     x, y, z = pos
     return f"({x}, {y}, {z})" + (f" [{BLOCK_NAMES.get(t, t)}]" if t is not None else "")
 
+def register_with_master_server(my_game_url):
+    """
+    Important for fetching master server URL.
+    Commonly, the IP's 4th NO. is 103 or 101.
+    Just enter game frontend URL on arg.
+    """
+    master_url = "https://ardipole.pythonanywhere.com/get-server"
+    payload = {"url": my_game_url}
+    
+    try:
+        response = requests.post(master_url, json=payload)
+        print("[Master Server] Successfully updated live address")
+    except Exception as e:
+        print(f"[Master Server] Failed to update: {e}")
+
 
 # ---------------------------------------------------------------- world
 def generate_world():
@@ -91,7 +107,7 @@ def generate_world():
                 if y == max_y - 1:
                     t = 1
                 elif y > max_y - 3:
-                    t = 2 if (x + z) % 5 == 0 else 4
+                    t = 2 if (x + z) % 5 == 0 else 5
                 else:
                     t = 3
                 w[(x, y, z)] = t

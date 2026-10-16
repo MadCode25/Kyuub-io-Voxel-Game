@@ -34,6 +34,7 @@ Once forked, head to [How to Modify](#how-to-modify) for instructions on changin
 | `websockets` | Connects the server to the frontend | `pip install websockets` |
 | `asyncio`    | Async server loop               | Built in (standard library)  |
 | `random`     | Seed generation                 | Built in (standard library)  |
+| `requests`    | Fetch main server IP   (for MadCode_25's privacy)|            |
 
 ---
 

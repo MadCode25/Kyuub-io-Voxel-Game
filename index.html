@@ -425,22 +425,6 @@
           }));
         }
       }
-
-	async function fetchVoxelServerUrl() {
-    try {
-        const response = await fetch("https://ardipole.pythonanywhere.com/get-server");
-        const data = await response.json();
-        
-        serverIP = data.game_server_url; 
-        console.log("Targeting server at:", serverUrl);
-        
-        const socket = new WebSocket(serverUrl);
-        
-    } catch (error) {
-        console.error("Could not find the master server entry:", error);
-    }
-}
-
 	
       socket.onopen = () => {
         console.log("server connection was successful. requesting chunk and player skin...");

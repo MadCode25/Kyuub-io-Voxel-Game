@@ -101,6 +101,7 @@
       // --- 1. THREE.JS SETUP ---
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0x87ceeb);
+      scene.fog = new THREE.Fog(0x87ceeb, 14, 30);   // fog
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
       camera.rotation.order = "YXZ";
       camera.position.set(8, 20, 25);
@@ -120,7 +121,7 @@
         2: new THREE.Color(0xcc3333), // TNT
         3: new THREE.Color(0x888888), // Stone
         4: new THREE.Color(0x775533), // Wood
-	5: new THREE.Color(0x853689)  // Dirt
+	5: new THREE.Color(0x2e1b12)  // Dirt
       };
       const blockNames = {
         1: "Grass",
@@ -136,8 +137,13 @@
       const chunkMaterial = new THREE.MeshBasicMaterial({
         vertexColors: true
       });
-      const keyOf = (x, y, z) => `${x},${y},${z}`;
-      const getVoxel = (x, y, z) => voxels.get(keyOf(x, y, z)) || 0;
+	// CHUNK DISTANCE (VERY IMPORTANT VARIABLES  FOR OPTIMIZATION!)
+	const RENDER_DIST = 2;              // Optional, number of chunks the camera can render.
+	const knownChunks = new Set();      // every chunk that has ever had a block
+	const buildQueue = new Set();       // chunks waiting to be built as you walk
+	let lastPcx = null, lastPcz = null; // the chunk the player was last standing in
+        const keyOf = (x, y, z) => `${x},${y},${z}`;
+        const getVoxel = (x, y, z) => voxels.get(keyOf(x, y, z)) || 0;
       // The 6 faces of a cube: neighbor direction, 4 corners, and a brightness so blocks aren't flat
       const FACES = [{
         dir: [1, 0, 0],
@@ -202,6 +208,7 @@
           cy = Math.floor(y / CHUNK),
           cz = Math.floor(z / CHUNK);
         dirtyChunks.add(`${cx},${cy},${cz}`);
+        knownChunks.add(`${cx},${cy},${cz}`);
         // a block on a chunk edge also changes which faces the neighbor chunk needs
         const lx = x - cx * CHUNK,
           ly = y - cy * CHUNK,
@@ -228,6 +235,9 @@
           m.geometry.dispose();
         });
         chunks.clear();
+        knownChunks.clear();
+        buildQueue.clear();
+        lastPcx = lastPcz = null;
       }
 
       function rebuildChunk(key) {
@@ -267,6 +277,36 @@
         scene.add(mesh);
         chunks.set(key, mesh);
       }
+      
+    function chunkInRange(key, pcx, pcz) {
+  const [cx, , cz] = key.split(",").map(Number);
+  return Math.abs(cx - pcx) <= RENDER_DIST && Math.abs(cz - pcz) <= RENDER_DIST;
+}
+
+function unloadChunk(key) {
+  const m = chunks.get(key);
+  if (m) { scene.remove(m); m.geometry.dispose(); chunks.delete(key); }
+}
+
+// Runs every frame but only does work when the player crosses into a new chunk
+function updateChunkVisibility() {
+  // blocks are centered on whole numbers, so shift by 0.5 before dividing
+  const pcx = Math.floor(Math.floor(camera.position.x + 0.5) / CHUNK);
+  const pcz = Math.floor(Math.floor(camera.position.z + 0.5) / CHUNK);
+  if (pcx === lastPcx && pcz === lastPcz) return;
+  lastPcx = pcx; lastPcz = pcz;
+
+  // ditch chunks that are now too far away
+  for (const key of Array.from(chunks.keys())) {
+    if (!chunkInRange(key, pcx, pcz)) unloadChunk(key);
+  }
+  // queue up the nearby chunks that aren't built yet
+  buildQueue.clear();
+  for (const key of knownChunks) {
+    if (!chunks.has(key) && chunkInRange(key, pcx, pcz)) buildQueue.add(key);
+  }
+}
+      
       // --- 2. PLAYER SKINS (other players) ---
       const EYE_HEIGHT = 1.6; // camera sits this high above the player's feet
       const remotePlayers = new Map(); // id -> { group, target, targetYaw, hasPos }
@@ -274,16 +314,23 @@
 
       function makeNameTag(text) {
         const c = document.createElement("canvas");
-        c.width = 256;
+        c.width = 500;
         c.height = 64;
         const ctx = c.getContext("2d");
         ctx.fillStyle = "rgba(0,0,0,0.5)";
-        ctx.fillRect(0, 0, 256, 64);
+        ctx.fillRect(0, 0, 500, 64);
         ctx.fillStyle = "#fff";
         ctx.font = "bold 32px sans-serif";
         ctx.textAlign = "center";
+        
         ctx.textBaseline = "middle";
-        ctx.fillText(text, 128, 34);
+        ctx.fillText(text, 300, 34);
+        ctx.fillStyle = "#23549e"; 
+        ctx.fillRect(0, 0, 150, 64);
+        ctx.fillStyle = "#fff";
+        ctx.fillText("67", 85, 34);
+        
+        
         const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
           map: new THREE.CanvasTexture(c),
           depthTest: false
@@ -692,10 +739,22 @@
           d = Math.atan2(Math.sin(d), Math.cos(d)); // shortest way around
           r.group.rotation.y += d * k;
         });
-        if (dirtyChunks.size) {
-          dirtyChunks.forEach(rebuildChunk);
-          dirtyChunks.clear();
-        }
+        updateChunkVisibility();
+
+// Edited chunks: rebuild right away, but only if they're near the player
+dirtyChunks.forEach(key => {
+  if (chunkInRange(key, lastPcx, lastPcz)) rebuildChunk(key);
+  else unloadChunk(key);
+});
+dirtyChunks.clear();
+
+// Newly nearby chunks: build a couple per frame so walking doesn't stutter
+let budget = 2;
+for (const key of buildQueue) {
+  if (budget-- <= 0) break;
+  buildQueue.delete(key);
+  if (!chunks.has(key)) rebuildChunk(key);
+}
         renderer.render(scene, camera);
       }
       animate();

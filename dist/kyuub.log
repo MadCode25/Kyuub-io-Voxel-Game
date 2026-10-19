@@ -1,0 +1,1160 @@
+2026-10-13 21:33:14 [INFO   ] === Kyuub server starting ===
+2026-10-13 21:33:14 [INFO   ] No save found - generated new world (seed 1337, 6664 blocks)
+2026-10-13 21:33:14 [INFO   ] World saved (6664 blocks) to world.json
+2026-10-13 21:33:14 [INFO   ] Listening on 0.0.0.0:8765
+2026-10-13 21:35:49 [INFO   ] JOIN  Player1 (192.168.254.104) connected - 1 online
+2026-10-13 21:35:49 [DEBUG  ] RECV  Player1 (192.168.254.104): {"action":"GENERATE_CHUNK"}
+2026-10-13 21:35:49 [INFO   ] WORLD Player1 (192.168.254.104) requested the world (6664 blocks sent)
+2026-10-13 21:35:49 [DEBUG  ] RECV  Player1 (192.168.254.104): {"action":"CREATE_PLAYER_SKIN"}
+2026-10-13 21:35:49 [INFO   ] SKIN  Player1 (192.168.254.104) got skin {'head': '#8d5524', 'arms': '#8d5524', 'body': '#a855f7', 'legs': '#78350f', 'eyes': '#222222'} (0 other player(s) sent)
+2026-10-13 21:35:56 [INFO   ] JOIN  Player2 (192.168.254.104) connected - 2 online
+2026-10-13 21:35:56 [DEBUG  ] RECV  Player2 (192.168.254.104): {"action":"GENERATE_CHUNK"}
+2026-10-13 21:35:56 [INFO   ] WORLD Player2 (192.168.254.104) requested the world (6664 blocks sent)
+2026-10-13 21:35:56 [DEBUG  ] RECV  Player2 (192.168.254.104): {"action":"CREATE_PLAYER_SKIN"}
+2026-10-13 21:35:56 [INFO   ] SKIN  Player2 (192.168.254.104) got skin {'head': '#ffdbac', 'arms': '#ffdbac', 'body': '#ef4444', 'legs': '#4b5563', 'eyes': '#222222'} (1 other player(s) sent)
+2026-10-13 21:36:34 [INFO   ] LEAVE Player1 (192.168.254.104) disconnected - 1 online
+2026-10-14 14:32:06 [INFO   ] === Kyuub server starting ===
+2026-10-14 14:32:06 [INFO   ] Loaded 6664 blocks from world.json
+2026-10-14 14:32:06 [INFO   ] Listening on 0.0.0.0:8765
+2026-10-14 14:33:03 [INFO   ] JOIN  Player1 (192.168.254.100) connected - 1 online
+2026-10-14 14:33:03 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"GENERATE_CHUNK"}
+2026-10-14 14:33:03 [INFO   ] WORLD Player1 (192.168.254.100) requested the world (6664 blocks sent)
+2026-10-14 14:33:03 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"CREATE_PLAYER_SKIN"}
+2026-10-14 14:33:03 [INFO   ] SKIN  Player1 (192.168.254.100) got skin {'head': '#ffdbac', 'arms': '#ffdbac', 'body': '#a855f7', 'legs': '#996155', 'eyes': '#222222'} (0 other player(s) sent)
+2026-10-14 14:33:26 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":13,"y":6,"z":16,"type":1}
+2026-10-14 14:33:26 [INFO   ] PLACE Player1 (192.168.254.100) placed (13, 6, 16) [grass]
+2026-10-14 14:33:26 [INFO   ] DEBUG: 1
+2026-10-14 14:33:26 [INFO   ] UPDATE (13, 6, 16) -> grass sent to 1 client(s)
+2026-10-14 14:33:26 [INFO   ] World saved (6665 blocks) to world.json
+2026-10-14 14:33:26 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":12,"y":6,"z":16,"type":1}
+2026-10-14 14:33:26 [INFO   ] PLACE Player1 (192.168.254.100) placed (12, 6, 16) [grass]
+2026-10-14 14:33:26 [INFO   ] DEBUG: 1
+2026-10-14 14:33:26 [INFO   ] UPDATE (12, 6, 16) -> grass sent to 1 client(s)
+2026-10-14 14:33:27 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":11,"y":6,"z":16,"type":1}
+2026-10-14 14:33:27 [INFO   ] PLACE Player1 (192.168.254.100) placed (11, 6, 16) [grass]
+2026-10-14 14:33:27 [INFO   ] DEBUG: 1
+2026-10-14 14:33:27 [INFO   ] UPDATE (11, 6, 16) -> grass sent to 1 client(s)
+2026-10-14 14:33:27 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":11,"y":6,"z":15,"type":1}
+2026-10-14 14:33:27 [INFO   ] PLACE Player1 (192.168.254.100) placed (11, 6, 15) [grass]
+2026-10-14 14:33:27 [INFO   ] DEBUG: 1
+2026-10-14 14:33:27 [INFO   ] UPDATE (11, 6, 15) -> grass sent to 1 client(s)
+2026-10-14 14:33:28 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":12,"y":6,"z":15,"type":1}
+2026-10-14 14:33:28 [INFO   ] PLACE Player1 (192.168.254.100) placed (12, 6, 15) [grass]
+2026-10-14 14:33:28 [INFO   ] DEBUG: 1
+2026-10-14 14:33:28 [INFO   ] UPDATE (12, 6, 15) -> grass sent to 1 client(s)
+2026-10-14 14:33:28 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":13,"y":6,"z":15,"type":1}
+2026-10-14 14:33:28 [INFO   ] PLACE Player1 (192.168.254.100) placed (13, 6, 15) [grass]
+2026-10-14 14:33:28 [INFO   ] DEBUG: 1
+2026-10-14 14:33:28 [INFO   ] UPDATE (13, 6, 15) -> grass sent to 1 client(s)
+2026-10-14 14:33:29 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":14,"y":6,"z":15,"type":1}
+2026-10-14 14:33:29 [INFO   ] PLACE Player1 (192.168.254.100) placed (14, 6, 15) [grass]
+2026-10-14 14:33:29 [INFO   ] DEBUG: 1
+2026-10-14 14:33:29 [INFO   ] UPDATE (14, 6, 15) -> grass sent to 1 client(s)
+2026-10-14 14:33:29 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":15,"y":6,"z":14,"type":1}
+2026-10-14 14:33:29 [INFO   ] PLACE Player1 (192.168.254.100) placed (15, 6, 14) [grass]
+2026-10-14 14:33:29 [INFO   ] DEBUG: 1
+2026-10-14 14:33:29 [INFO   ] UPDATE (15, 6, 14) -> grass sent to 1 client(s)
+2026-10-14 14:33:30 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":14,"y":6,"z":14,"type":1}
+2026-10-14 14:33:30 [INFO   ] PLACE Player1 (192.168.254.100) placed (14, 6, 14) [grass]
+2026-10-14 14:33:30 [INFO   ] DEBUG: 1
+2026-10-14 14:33:30 [INFO   ] UPDATE (14, 6, 14) -> grass sent to 1 client(s)
+2026-10-14 14:33:30 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":13,"y":6,"z":14,"type":1}
+2026-10-14 14:33:30 [INFO   ] PLACE Player1 (192.168.254.100) placed (13, 6, 14) [grass]
+2026-10-14 14:33:30 [INFO   ] DEBUG: 1
+2026-10-14 14:33:30 [INFO   ] UPDATE (13, 6, 14) -> grass sent to 1 client(s)
+2026-10-14 14:33:30 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":12,"y":6,"z":14,"type":1}
+2026-10-14 14:33:30 [INFO   ] PLACE Player1 (192.168.254.100) placed (12, 6, 14) [grass]
+2026-10-14 14:33:30 [INFO   ] DEBUG: 1
+2026-10-14 14:33:30 [INFO   ] UPDATE (12, 6, 14) -> grass sent to 1 client(s)
+2026-10-14 14:33:32 [INFO   ] World saved (6675 blocks) to world.json
+2026-10-14 14:33:49 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":9,"y":5,"z":10,"type":1}
+2026-10-14 14:33:49 [INFO   ] PLACE Player1 (192.168.254.100) placed (9, 5, 10) [grass]
+2026-10-14 14:33:49 [INFO   ] DEBUG: 1
+2026-10-14 14:33:49 [INFO   ] UPDATE (9, 5, 10) -> grass sent to 1 client(s)
+2026-10-14 14:33:50 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":10,"y":5,"z":10,"type":1}
+2026-10-14 14:33:50 [INFO   ] PLACE Player1 (192.168.254.100) placed (10, 5, 10) [grass]
+2026-10-14 14:33:50 [INFO   ] DEBUG: 1
+2026-10-14 14:33:50 [INFO   ] UPDATE (10, 5, 10) -> grass sent to 1 client(s)
+2026-10-14 14:33:50 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":9,"y":5,"z":9,"type":1}
+2026-10-14 14:33:50 [INFO   ] PLACE Player1 (192.168.254.100) placed (9, 5, 9) [grass]
+2026-10-14 14:33:50 [INFO   ] DEBUG: 1
+2026-10-14 14:33:50 [INFO   ] UPDATE (9, 5, 9) -> grass sent to 1 client(s)
+2026-10-14 14:33:51 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":9,"y":5,"z":8,"type":1}
+2026-10-14 14:33:51 [INFO   ] PLACE Player1 (192.168.254.100) placed (9, 5, 8) [grass]
+2026-10-14 14:33:51 [INFO   ] DEBUG: 1
+2026-10-14 14:33:51 [INFO   ] UPDATE (9, 5, 8) -> grass sent to 1 client(s)
+2026-10-14 14:33:51 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":10,"y":5,"z":8,"type":1}
+2026-10-14 14:33:51 [INFO   ] PLACE Player1 (192.168.254.100) placed (10, 5, 8) [grass]
+2026-10-14 14:33:51 [INFO   ] DEBUG: 1
+2026-10-14 14:33:51 [INFO   ] UPDATE (10, 5, 8) -> grass sent to 1 client(s)
+2026-10-14 14:33:52 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":10,"y":5,"z":9,"type":1}
+2026-10-14 14:33:52 [INFO   ] PLACE Player1 (192.168.254.100) placed (10, 5, 9) [grass]
+2026-10-14 14:33:52 [INFO   ] DEBUG: 1
+2026-10-14 14:33:52 [INFO   ] UPDATE (10, 5, 9) -> grass sent to 1 client(s)
+2026-10-14 14:33:52 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":11,"y":5,"z":8,"type":1}
+2026-10-14 14:33:52 [INFO   ] PLACE Player1 (192.168.254.100) placed (11, 5, 8) [grass]
+2026-10-14 14:33:52 [INFO   ] DEBUG: 1
+2026-10-14 14:33:52 [INFO   ] UPDATE (11, 5, 8) -> grass sent to 1 client(s)
+2026-10-14 14:33:54 [INFO   ] World saved (6682 blocks) to world.json
+2026-10-14 14:33:58 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":11,"y":6,"z":11,"type":0}
+2026-10-14 14:33:58 [INFO   ] BREAK Player1 (192.168.254.100) broke (11, 6, 11) [grass]
+2026-10-14 14:33:58 [INFO   ] DEBUG: 1
+2026-10-14 14:33:58 [INFO   ] UPDATE (11, 6, 11) -> air sent to 1 client(s)
+2026-10-14 14:33:58 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":12,"y":6,"z":11,"type":0}
+2026-10-14 14:33:58 [INFO   ] BREAK Player1 (192.168.254.100) broke (12, 6, 11) [grass]
+2026-10-14 14:33:58 [INFO   ] DEBUG: 1
+2026-10-14 14:33:58 [INFO   ] UPDATE (12, 6, 11) -> air sent to 1 client(s)
+2026-10-14 14:33:58 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":12,"y":6,"z":11,"type":0}
+2026-10-14 14:33:58 [INFO   ] DENY  Player1 (192.168.254.100) BREAK (12, 6, 11) - nothing there
+2026-10-14 14:33:59 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":10,"y":6,"z":12,"type":0}
+2026-10-14 14:33:59 [INFO   ] BREAK Player1 (192.168.254.100) broke (10, 6, 12) [grass]
+2026-10-14 14:33:59 [INFO   ] DEBUG: 1
+2026-10-14 14:33:59 [INFO   ] UPDATE (10, 6, 12) -> air sent to 1 client(s)
+2026-10-14 14:33:59 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":11,"y":6,"z":12,"type":0}
+2026-10-14 14:33:59 [INFO   ] BREAK Player1 (192.168.254.100) broke (11, 6, 12) [grass]
+2026-10-14 14:33:59 [INFO   ] DEBUG: 1
+2026-10-14 14:33:59 [INFO   ] UPDATE (11, 6, 12) -> air sent to 1 client(s)
+2026-10-14 14:34:00 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":12,"y":6,"z":12,"type":0}
+2026-10-14 14:34:00 [INFO   ] BREAK Player1 (192.168.254.100) broke (12, 6, 12) [grass]
+2026-10-14 14:34:00 [INFO   ] DEBUG: 1
+2026-10-14 14:34:00 [INFO   ] UPDATE (12, 6, 12) -> air sent to 1 client(s)
+2026-10-14 14:34:00 [INFO   ] World saved (6677 blocks) to world.json
+2026-10-14 14:34:01 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":12,"y":6,"z":6,"type":0}
+2026-10-14 14:34:01 [INFO   ] BREAK Player1 (192.168.254.100) broke (12, 6, 6) [grass]
+2026-10-14 14:34:01 [INFO   ] DEBUG: 1
+2026-10-14 14:34:02 [INFO   ] UPDATE (12, 6, 6) -> air sent to 1 client(s)
+2026-10-14 14:34:02 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":12,"y":6,"z":7,"type":0}
+2026-10-14 14:34:02 [INFO   ] BREAK Player1 (192.168.254.100) broke (12, 6, 7) [grass]
+2026-10-14 14:34:02 [INFO   ] DEBUG: 1
+2026-10-14 14:34:02 [INFO   ] UPDATE (12, 6, 7) -> air sent to 1 client(s)
+2026-10-14 14:34:02 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":13,"y":6,"z":7,"type":0}
+2026-10-14 14:34:02 [INFO   ] BREAK Player1 (192.168.254.100) broke (13, 6, 7) [grass]
+2026-10-14 14:34:02 [INFO   ] DEBUG: 1
+2026-10-14 14:34:02 [INFO   ] UPDATE (13, 6, 7) -> air sent to 1 client(s)
+2026-10-14 14:34:03 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":13,"y":6,"z":6,"type":0}
+2026-10-14 14:34:03 [INFO   ] BREAK Player1 (192.168.254.100) broke (13, 6, 6) [grass]
+2026-10-14 14:34:03 [INFO   ] DEBUG: 1
+2026-10-14 14:34:03 [INFO   ] UPDATE (13, 6, 6) -> air sent to 1 client(s)
+2026-10-14 14:34:03 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":12,"y":6,"z":5,"type":0}
+2026-10-14 14:34:03 [INFO   ] BREAK Player1 (192.168.254.100) broke (12, 6, 5) [grass]
+2026-10-14 14:34:03 [INFO   ] DEBUG: 1
+2026-10-14 14:34:03 [INFO   ] UPDATE (12, 6, 5) -> air sent to 1 client(s)
+2026-10-14 14:34:03 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":13,"y":6,"z":5,"type":0}
+2026-10-14 14:34:03 [INFO   ] BREAK Player1 (192.168.254.100) broke (13, 6, 5) [grass]
+2026-10-14 14:34:03 [INFO   ] DEBUG: 1
+2026-10-14 14:34:03 [INFO   ] UPDATE (13, 6, 5) -> air sent to 1 client(s)
+2026-10-14 14:34:04 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":14,"y":6,"z":5,"type":0}
+2026-10-14 14:34:04 [INFO   ] BREAK Player1 (192.168.254.100) broke (14, 6, 5) [grass]
+2026-10-14 14:34:04 [INFO   ] DEBUG: 1
+2026-10-14 14:34:04 [INFO   ] UPDATE (14, 6, 5) -> air sent to 1 client(s)
+2026-10-14 14:34:04 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":14,"y":6,"z":6,"type":0}
+2026-10-14 14:34:04 [INFO   ] BREAK Player1 (192.168.254.100) broke (14, 6, 6) [grass]
+2026-10-14 14:34:04 [INFO   ] DEBUG: 1
+2026-10-14 14:34:04 [INFO   ] UPDATE (14, 6, 6) -> air sent to 1 client(s)
+2026-10-14 14:34:05 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":14,"y":6,"z":7,"type":0}
+2026-10-14 14:34:05 [INFO   ] BREAK Player1 (192.168.254.100) broke (14, 6, 7) [grass]
+2026-10-14 14:34:05 [INFO   ] DEBUG: 1
+2026-10-14 14:34:05 [INFO   ] UPDATE (14, 6, 7) -> air sent to 1 client(s)
+2026-10-14 14:34:06 [INFO   ] World saved (6668 blocks) to world.json
+2026-10-14 14:34:06 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":14,"y":6,"z":8,"type":0}
+2026-10-14 14:34:06 [INFO   ] BREAK Player1 (192.168.254.100) broke (14, 6, 8) [grass]
+2026-10-14 14:34:06 [INFO   ] DEBUG: 1
+2026-10-14 14:34:06 [INFO   ] UPDATE (14, 6, 8) -> air sent to 1 client(s)
+2026-10-14 14:34:07 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":13,"y":6,"z":9,"type":0}
+2026-10-14 14:34:07 [INFO   ] BREAK Player1 (192.168.254.100) broke (13, 6, 9) [grass]
+2026-10-14 14:34:07 [INFO   ] DEBUG: 1
+2026-10-14 14:34:07 [INFO   ] UPDATE (13, 6, 9) -> air sent to 1 client(s)
+2026-10-14 14:34:08 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":13,"y":6,"z":10,"type":0}
+2026-10-14 14:34:08 [INFO   ] BREAK Player1 (192.168.254.100) broke (13, 6, 10) [grass]
+2026-10-14 14:34:08 [INFO   ] DEBUG: 1
+2026-10-14 14:34:08 [INFO   ] UPDATE (13, 6, 10) -> air sent to 1 client(s)
+2026-10-14 14:34:08 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":13,"y":6,"z":11,"type":0}
+2026-10-14 14:34:08 [INFO   ] BREAK Player1 (192.168.254.100) broke (13, 6, 11) [grass]
+2026-10-14 14:34:08 [INFO   ] DEBUG: 1
+2026-10-14 14:34:08 [INFO   ] UPDATE (13, 6, 11) -> air sent to 1 client(s)
+2026-10-14 14:34:09 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":13,"y":6,"z":12,"type":0}
+2026-10-14 14:34:09 [INFO   ] BREAK Player1 (192.168.254.100) broke (13, 6, 12) [grass]
+2026-10-14 14:34:09 [INFO   ] DEBUG: 1
+2026-10-14 14:34:09 [INFO   ] UPDATE (13, 6, 12) -> air sent to 1 client(s)
+2026-10-14 14:34:10 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":14,"y":6,"z":9,"type":0}
+2026-10-14 14:34:10 [INFO   ] BREAK Player1 (192.168.254.100) broke (14, 6, 9) [grass]
+2026-10-14 14:34:10 [INFO   ] DEBUG: 1
+2026-10-14 14:34:10 [INFO   ] UPDATE (14, 6, 9) -> air sent to 1 client(s)
+2026-10-14 14:34:10 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":14,"y":6,"z":10,"type":0}
+2026-10-14 14:34:10 [INFO   ] BREAK Player1 (192.168.254.100) broke (14, 6, 10) [grass]
+2026-10-14 14:34:10 [INFO   ] DEBUG: 1
+2026-10-14 14:34:10 [INFO   ] UPDATE (14, 6, 10) -> air sent to 1 client(s)
+2026-10-14 14:34:10 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":14,"y":6,"z":11,"type":0}
+2026-10-14 14:34:10 [INFO   ] BREAK Player1 (192.168.254.100) broke (14, 6, 11) [grass]
+2026-10-14 14:34:10 [INFO   ] DEBUG: 1
+2026-10-14 14:34:10 [INFO   ] UPDATE (14, 6, 11) -> air sent to 1 client(s)
+2026-10-14 14:34:11 [INFO   ] World saved (6660 blocks) to world.json
+2026-10-14 14:34:12 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":15,"y":6,"z":8,"type":0}
+2026-10-14 14:34:12 [INFO   ] BREAK Player1 (192.168.254.100) broke (15, 6, 8) [grass]
+2026-10-14 14:34:12 [INFO   ] DEBUG: 1
+2026-10-14 14:34:12 [INFO   ] UPDATE (15, 6, 8) -> air sent to 1 client(s)
+2026-10-14 14:34:12 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":15,"y":6,"z":9,"type":0}
+2026-10-14 14:34:12 [INFO   ] BREAK Player1 (192.168.254.100) broke (15, 6, 9) [grass]
+2026-10-14 14:34:12 [INFO   ] DEBUG: 1
+2026-10-14 14:34:12 [INFO   ] UPDATE (15, 6, 9) -> air sent to 1 client(s)
+2026-10-14 14:34:13 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":15,"y":6,"z":10,"type":0}
+2026-10-14 14:34:13 [INFO   ] BREAK Player1 (192.168.254.100) broke (15, 6, 10) [grass]
+2026-10-14 14:34:13 [INFO   ] DEBUG: 1
+2026-10-14 14:34:13 [INFO   ] UPDATE (15, 6, 10) -> air sent to 1 client(s)
+2026-10-14 14:34:13 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":15,"y":6,"z":11,"type":0}
+2026-10-14 14:34:13 [INFO   ] BREAK Player1 (192.168.254.100) broke (15, 6, 11) [grass]
+2026-10-14 14:34:13 [INFO   ] DEBUG: 1
+2026-10-14 14:34:13 [INFO   ] UPDATE (15, 6, 11) -> air sent to 1 client(s)
+2026-10-14 14:34:14 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":16,"y":6,"z":8,"type":0}
+2026-10-14 14:34:14 [INFO   ] BREAK Player1 (192.168.254.100) broke (16, 6, 8) [grass]
+2026-10-14 14:34:14 [INFO   ] DEBUG: 1
+2026-10-14 14:34:14 [INFO   ] UPDATE (16, 6, 8) -> air sent to 1 client(s)
+2026-10-14 14:34:15 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":16,"y":6,"z":9,"type":0}
+2026-10-14 14:34:15 [INFO   ] BREAK Player1 (192.168.254.100) broke (16, 6, 9) [grass]
+2026-10-14 14:34:15 [INFO   ] DEBUG: 1
+2026-10-14 14:34:15 [INFO   ] UPDATE (16, 6, 9) -> air sent to 1 client(s)
+2026-10-14 14:34:15 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":16,"y":6,"z":10,"type":0}
+2026-10-14 14:34:15 [INFO   ] BREAK Player1 (192.168.254.100) broke (16, 6, 10) [grass]
+2026-10-14 14:34:15 [INFO   ] DEBUG: 1
+2026-10-14 14:34:15 [INFO   ] UPDATE (16, 6, 10) -> air sent to 1 client(s)
+2026-10-14 14:34:15 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":16,"y":6,"z":11,"type":0}
+2026-10-14 14:34:15 [INFO   ] BREAK Player1 (192.168.254.100) broke (16, 6, 11) [grass]
+2026-10-14 14:34:15 [INFO   ] DEBUG: 1
+2026-10-14 14:34:15 [INFO   ] UPDATE (16, 6, 11) -> air sent to 1 client(s)
+2026-10-14 14:34:17 [INFO   ] World saved (6652 blocks) to world.json
+2026-10-14 14:34:23 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":13,"y":5,"z":12,"type":0}
+2026-10-14 14:34:23 [INFO   ] BREAK Player1 (192.168.254.100) broke (13, 5, 12) [tnt]
+2026-10-14 14:34:23 [INFO   ] DEBUG: 2
+2026-10-14 14:34:23 [INFO   ] ACTION Player1 (192.168.254.100) broke tnt, centered 17x17 'explosion' update sent to client(s).
+2026-10-14 14:34:23 [INFO   ] UPDATE (13, 5, 12) -> air sent to 1 client(s)
+2026-10-14 14:34:26 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"BREAK_BLOCK","x":16,"y":4,"z":11,"type":0}
+2026-10-14 14:34:26 [INFO   ] BREAK Player1 (192.168.254.100) broke (16, 4, 11) [stone]
+2026-10-14 14:34:26 [INFO   ] DEBUG: 3
+2026-10-14 14:34:26 [INFO   ] UPDATE (16, 4, 11) -> air sent to 1 client(s)
+2026-10-14 14:34:27 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":16,"y":4,"z":11,"type":1}
+2026-10-14 14:34:27 [INFO   ] PLACE Player1 (192.168.254.100) placed (16, 4, 11) [grass]
+2026-10-14 14:34:27 [INFO   ] DEBUG: 1
+2026-10-14 14:34:28 [INFO   ] UPDATE (16, 4, 11) -> grass sent to 1 client(s)
+2026-10-14 14:34:28 [INFO   ] World saved (6363 blocks) to world.json
+2026-10-14 14:34:28 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":16,"y":5,"z":11,"type":1}
+2026-10-14 14:34:28 [INFO   ] PLACE Player1 (192.168.254.100) placed (16, 5, 11) [grass]
+2026-10-14 14:34:28 [INFO   ] DEBUG: 1
+2026-10-14 14:34:28 [INFO   ] UPDATE (16, 5, 11) -> grass sent to 1 client(s)
+2026-10-14 14:34:28 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":16,"y":6,"z":11,"type":1}
+2026-10-14 14:34:28 [INFO   ] PLACE Player1 (192.168.254.100) placed (16, 6, 11) [grass]
+2026-10-14 14:34:28 [INFO   ] DEBUG: 1
+2026-10-14 14:34:28 [INFO   ] UPDATE (16, 6, 11) -> grass sent to 1 client(s)
+2026-10-14 14:34:32 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":17,"y":5,"z":13,"type":4}
+2026-10-14 14:34:32 [INFO   ] PLACE Player1 (192.168.254.100) placed (17, 5, 13) [wood]
+2026-10-14 14:34:32 [INFO   ] DEBUG: 4
+2026-10-14 14:34:32 [INFO   ] UPDATE (17, 5, 13) -> wood sent to 1 client(s)
+2026-10-14 14:34:32 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":18,"y":5,"z":12,"type":4}
+2026-10-14 14:34:32 [INFO   ] PLACE Player1 (192.168.254.100) placed (18, 5, 12) [wood]
+2026-10-14 14:34:32 [INFO   ] DEBUG: 4
+2026-10-14 14:34:32 [INFO   ] UPDATE (18, 5, 12) -> wood sent to 1 client(s)
+2026-10-14 14:34:33 [DEBUG  ] RECV  Player1 (192.168.254.100): {"action":"PLACE_BLOCK","x":17,"y":5,"z":12,"type":4}
+2026-10-14 14:34:33 [INFO   ] PLACE Player1 (192.168.254.100) placed (17, 5, 12) [wood]
+2026-10-14 14:34:33 [INFO   ] DEBUG: 4
+2026-10-14 14:34:33 [INFO   ] UPDATE (17, 5, 12) -> wood sent to 1 client(s)
+2026-10-14 14:34:33 [INFO   ] World saved (6368 blocks) to world.json
+2026-10-14 14:34:39 [INFO   ] World saved (6368 blocks) to world.json
+2026-10-14 14:36:01 [INFO   ] LEAVE Player1 (192.168.254.100) disconnected - 0 online
+2026-10-16 13:37:23 [INFO   ] === Kyuub server starting ===
+2026-10-16 13:37:23 [INFO   ] Loaded 6368 blocks from world.json
+2026-10-16 13:37:24 [INFO   ] Listening on 0.0.0.0:8765
+2026-10-16 13:37:25 [INFO   ] JOIN  Player1 (192.168.254.103) connected - 1 online
+2026-10-16 13:37:25 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"GENERATE_CHUNK"}
+2026-10-16 13:37:25 [INFO   ] WORLD Player1 (192.168.254.103) requested the world (6368 blocks sent)
+2026-10-16 13:37:25 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"CREATE_PLAYER_SKIN"}
+2026-10-16 13:37:25 [INFO   ] SKIN  Player1 (192.168.254.103) got skin {'head': '#c68642', 'arms': '#c68642', 'body': '#a855f7', 'legs': '#996155', 'eyes': '#222222'} (0 other player(s) sent)
+2026-10-16 13:37:34 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":16,"y":7,"z":20,"type":1}
+2026-10-16 13:37:34 [INFO   ] PLACE Player1 (192.168.254.103) placed (16, 7, 20) [grass]
+2026-10-16 13:37:34 [INFO   ] DEBUG: 1
+2026-10-16 13:37:34 [INFO   ] UPDATE (16, 7, 20) -> grass sent to 1 client(s)
+2026-10-16 13:37:35 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":17,"y":7,"z":20,"type":5}
+2026-10-16 13:37:35 [WARNING] DENY  Player1 (192.168.254.103) PLACE (17, 7, 20) - invalid block type 5
+2026-10-16 13:37:36 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":17,"y":7,"z":20,"type":5}
+2026-10-16 13:37:36 [WARNING] DENY  Player1 (192.168.254.103) PLACE (17, 7, 20) - invalid block type 5
+2026-10-16 13:37:39 [INFO   ] World saved (6369 blocks) to world.json
+2026-10-16 13:37:39 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":18,"y":7,"z":20,"type":2}
+2026-10-16 13:37:39 [INFO   ] PLACE Player1 (192.168.254.103) placed (18, 7, 20) [tnt]
+2026-10-16 13:37:39 [INFO   ] DEBUG: 2
+2026-10-16 13:37:39 [INFO   ] UPDATE (18, 7, 20) -> tnt sent to 1 client(s)
+2026-10-16 13:37:40 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"BREAK_BLOCK","x":18,"y":7,"z":20,"type":0}
+2026-10-16 13:37:40 [INFO   ] BREAK Player1 (192.168.254.103) broke (18, 7, 20) [tnt]
+2026-10-16 13:37:40 [INFO   ] DEBUG: 2
+2026-10-16 13:37:40 [INFO   ] ACTION Player1 (192.168.254.103) broke tnt, centered 17x17 'explosion' update sent to client(s).
+2026-10-16 13:37:40 [INFO   ] UPDATE (18, 7, 20) -> air sent to 1 client(s)
+2026-10-16 13:37:45 [INFO   ] World saved (6358 blocks) to world.json
+2026-10-16 13:37:47 [INFO   ] JOIN  Player2 (192.168.254.103) connected - 2 online
+2026-10-16 13:37:47 [DEBUG  ] RECV  Player2 (192.168.254.103): {"action":"GENERATE_CHUNK"}
+2026-10-16 13:37:47 [INFO   ] WORLD Player2 (192.168.254.103) requested the world (6358 blocks sent)
+2026-10-16 13:37:47 [DEBUG  ] RECV  Player2 (192.168.254.103): {"action":"CREATE_PLAYER_SKIN"}
+2026-10-16 13:37:48 [INFO   ] SKIN  Player2 (192.168.254.103) got skin {'head': '#e0ac69', 'arms': '#e0ac69', 'body': 'FF0000', 'legs': '#1e3a8a', 'eyes': '#222222'} (1 other player(s) sent)
+2026-10-16 13:38:01 [INFO   ] LEAVE Player1 (192.168.254.103) disconnected - 1 online
+2026-10-16 13:38:02 [INFO   ] LEAVE Player2 (192.168.254.103) disconnected - 0 online
+2026-10-17 17:08:30 [INFO   ] === Kyuub server starting ===
+2026-10-17 17:08:30 [INFO   ] Loaded 6358 blocks from world.json
+2026-10-17 17:08:30 [INFO   ] Listening on 0.0.0.0:8765
+2026-10-17 17:08:32 [INFO   ] JOIN  Player1 (192.168.254.103) connected - 1 online
+2026-10-17 17:08:32 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"GENERATE_CHUNK"}
+2026-10-17 17:08:32 [INFO   ] WORLD Player1 (192.168.254.103) requested the world (6358 blocks sent)
+2026-10-17 17:08:32 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"CREATE_PLAYER_SKIN"}
+2026-10-17 17:08:32 [INFO   ] SKIN  Player1 (192.168.254.103) got skin {'head': '#8d5524', 'arms': '#8d5524', 'body': '#22c55e', 'legs': '#111827', 'eyes': '#222222'} (0 other player(s) sent)
+2026-10-17 17:08:39 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":9,"y":6,"z":24,"type":5}
+2026-10-17 17:08:39 [WARNING] DENY  Player1 (192.168.254.103) PLACE (9, 6, 24) - invalid block type 5
+2026-10-17 17:08:40 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":11,"y":7,"z":22,"type":4}
+2026-10-17 17:08:40 [INFO   ] PLACE Player1 (192.168.254.103) placed (11, 7, 22) [wood]
+2026-10-17 17:08:40 [INFO   ] DEBUG: 4
+2026-10-17 17:08:40 [INFO   ] UPDATE (11, 7, 22) -> wood sent to 1 client(s)
+2026-10-17 17:08:41 [INFO   ] World saved (6359 blocks) to world.json
+2026-10-17 17:08:41 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"BREAK_BLOCK","x":11,"y":7,"z":22,"type":0}
+2026-10-17 17:08:41 [INFO   ] BREAK Player1 (192.168.254.103) broke (11, 7, 22) [wood]
+2026-10-17 17:08:41 [INFO   ] DEBUG: 4
+2026-10-17 17:08:41 [INFO   ] UPDATE (11, 7, 22) -> air sent to 1 client(s)
+2026-10-17 17:08:46 [INFO   ] World saved (6358 blocks) to world.json
+2026-10-17 17:08:58 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":10,"y":6,"z":20,"type":1}
+2026-10-17 17:08:58 [INFO   ] PLACE Player1 (192.168.254.103) placed (10, 6, 20) [grass]
+2026-10-17 17:08:58 [INFO   ] DEBUG: 1
+2026-10-17 17:08:58 [INFO   ] UPDATE (10, 6, 20) -> grass sent to 1 client(s)
+2026-10-17 17:09:00 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":6,"z":11,"type":1}
+2026-10-17 17:09:00 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 6, 11) [grass]
+2026-10-17 17:09:00 [INFO   ] DEBUG: 1
+2026-10-17 17:09:00 [INFO   ] UPDATE (15, 6, 11) -> grass sent to 1 client(s)
+2026-10-17 17:09:01 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":18,"y":6,"z":12,"type":1}
+2026-10-17 17:09:01 [INFO   ] PLACE Player1 (192.168.254.103) placed (18, 6, 12) [grass]
+2026-10-17 17:09:01 [INFO   ] DEBUG: 1
+2026-10-17 17:09:01 [INFO   ] UPDATE (18, 6, 12) -> grass sent to 1 client(s)
+2026-10-17 17:09:01 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":17,"y":6,"z":12,"type":1}
+2026-10-17 17:09:01 [INFO   ] PLACE Player1 (192.168.254.103) placed (17, 6, 12) [grass]
+2026-10-17 17:09:01 [INFO   ] DEBUG: 1
+2026-10-17 17:09:01 [INFO   ] UPDATE (17, 6, 12) -> grass sent to 1 client(s)
+2026-10-17 17:09:02 [INFO   ] World saved (6362 blocks) to world.json
+2026-10-17 17:09:02 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":16,"y":6,"z":12,"type":1}
+2026-10-17 17:09:02 [INFO   ] PLACE Player1 (192.168.254.103) placed (16, 6, 12) [grass]
+2026-10-17 17:09:02 [INFO   ] DEBUG: 1
+2026-10-17 17:09:02 [INFO   ] UPDATE (16, 6, 12) -> grass sent to 1 client(s)
+2026-10-17 17:09:03 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":6,"z":12,"type":1}
+2026-10-17 17:09:03 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 6, 12) [grass]
+2026-10-17 17:09:03 [INFO   ] DEBUG: 1
+2026-10-17 17:09:03 [INFO   ] UPDATE (15, 6, 12) -> grass sent to 1 client(s)
+2026-10-17 17:09:04 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":17,"y":6,"z":13,"type":1}
+2026-10-17 17:09:04 [INFO   ] PLACE Player1 (192.168.254.103) placed (17, 6, 13) [grass]
+2026-10-17 17:09:04 [INFO   ] DEBUG: 1
+2026-10-17 17:09:04 [INFO   ] UPDATE (17, 6, 13) -> grass sent to 1 client(s)
+2026-10-17 17:09:04 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":16,"y":6,"z":13,"type":1}
+2026-10-17 17:09:04 [INFO   ] PLACE Player1 (192.168.254.103) placed (16, 6, 13) [grass]
+2026-10-17 17:09:04 [INFO   ] DEBUG: 1
+2026-10-17 17:09:04 [INFO   ] UPDATE (16, 6, 13) -> grass sent to 1 client(s)
+2026-10-17 17:09:05 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":17,"y":5,"z":14,"type":1}
+2026-10-17 17:09:05 [INFO   ] PLACE Player1 (192.168.254.103) placed (17, 5, 14) [grass]
+2026-10-17 17:09:05 [INFO   ] DEBUG: 1
+2026-10-17 17:09:05 [INFO   ] UPDATE (17, 5, 14) -> grass sent to 1 client(s)
+2026-10-17 17:09:05 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":17,"y":6,"z":14,"type":1}
+2026-10-17 17:09:05 [INFO   ] PLACE Player1 (192.168.254.103) placed (17, 6, 14) [grass]
+2026-10-17 17:09:05 [INFO   ] DEBUG: 1
+2026-10-17 17:09:05 [INFO   ] UPDATE (17, 6, 14) -> grass sent to 1 client(s)
+2026-10-17 17:09:06 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":18,"y":6,"z":13,"type":1}
+2026-10-17 17:09:06 [INFO   ] PLACE Player1 (192.168.254.103) placed (18, 6, 13) [grass]
+2026-10-17 17:09:06 [INFO   ] DEBUG: 1
+2026-10-17 17:09:06 [INFO   ] UPDATE (18, 6, 13) -> grass sent to 1 client(s)
+2026-10-17 17:09:07 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":19,"y":6,"z":14,"type":1}
+2026-10-17 17:09:07 [INFO   ] PLACE Player1 (192.168.254.103) placed (19, 6, 14) [grass]
+2026-10-17 17:09:07 [INFO   ] DEBUG: 1
+2026-10-17 17:09:07 [INFO   ] UPDATE (19, 6, 14) -> grass sent to 1 client(s)
+2026-10-17 17:09:07 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":18,"y":6,"z":14,"type":1}
+2026-10-17 17:09:07 [INFO   ] PLACE Player1 (192.168.254.103) placed (18, 6, 14) [grass]
+2026-10-17 17:09:07 [INFO   ] DEBUG: 1
+2026-10-17 17:09:07 [INFO   ] UPDATE (18, 6, 14) -> grass sent to 1 client(s)
+2026-10-17 17:09:07 [INFO   ] World saved (6371 blocks) to world.json
+2026-10-17 17:09:08 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":20,"y":6,"z":12,"type":1}
+2026-10-17 17:09:08 [INFO   ] PLACE Player1 (192.168.254.103) placed (20, 6, 12) [grass]
+2026-10-17 17:09:08 [INFO   ] DEBUG: 1
+2026-10-17 17:09:08 [INFO   ] UPDATE (20, 6, 12) -> grass sent to 1 client(s)
+2026-10-17 17:09:08 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":19,"y":6,"z":12,"type":1}
+2026-10-17 17:09:08 [INFO   ] PLACE Player1 (192.168.254.103) placed (19, 6, 12) [grass]
+2026-10-17 17:09:08 [INFO   ] DEBUG: 1
+2026-10-17 17:09:08 [INFO   ] UPDATE (19, 6, 12) -> grass sent to 1 client(s)
+2026-10-17 17:09:09 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":22,"y":5,"z":13,"type":1}
+2026-10-17 17:09:09 [INFO   ] PLACE Player1 (192.168.254.103) placed (22, 5, 13) [grass]
+2026-10-17 17:09:09 [INFO   ] DEBUG: 1
+2026-10-17 17:09:10 [INFO   ] UPDATE (22, 5, 13) -> grass sent to 1 client(s)
+2026-10-17 17:09:10 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":21,"y":5,"z":10,"type":1}
+2026-10-17 17:09:10 [INFO   ] PLACE Player1 (192.168.254.103) placed (21, 5, 10) [grass]
+2026-10-17 17:09:10 [INFO   ] DEBUG: 1
+2026-10-17 17:09:10 [INFO   ] UPDATE (21, 5, 10) -> grass sent to 1 client(s)
+2026-10-17 17:09:11 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":21,"y":6,"z":11,"type":1}
+2026-10-17 17:09:11 [INFO   ] PLACE Player1 (192.168.254.103) placed (21, 6, 11) [grass]
+2026-10-17 17:09:11 [INFO   ] DEBUG: 1
+2026-10-17 17:09:11 [INFO   ] UPDATE (21, 6, 11) -> grass sent to 1 client(s)
+2026-10-17 17:09:11 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":21,"y":6,"z":12,"type":1}
+2026-10-17 17:09:11 [INFO   ] PLACE Player1 (192.168.254.103) placed (21, 6, 12) [grass]
+2026-10-17 17:09:11 [INFO   ] DEBUG: 1
+2026-10-17 17:09:11 [INFO   ] UPDATE (21, 6, 12) -> grass sent to 1 client(s)
+2026-10-17 17:09:13 [INFO   ] World saved (6377 blocks) to world.json
+2026-10-17 17:09:13 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":20,"y":6,"z":13,"type":1}
+2026-10-17 17:09:13 [INFO   ] PLACE Player1 (192.168.254.103) placed (20, 6, 13) [grass]
+2026-10-17 17:09:13 [INFO   ] DEBUG: 1
+2026-10-17 17:09:13 [INFO   ] UPDATE (20, 6, 13) -> grass sent to 1 client(s)
+2026-10-17 17:09:14 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":21,"y":6,"z":13,"type":1}
+2026-10-17 17:09:14 [INFO   ] PLACE Player1 (192.168.254.103) placed (21, 6, 13) [grass]
+2026-10-17 17:09:14 [INFO   ] DEBUG: 1
+2026-10-17 17:09:14 [INFO   ] UPDATE (21, 6, 13) -> grass sent to 1 client(s)
+2026-10-17 17:09:15 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":20,"y":6,"z":14,"type":1}
+2026-10-17 17:09:15 [INFO   ] PLACE Player1 (192.168.254.103) placed (20, 6, 14) [grass]
+2026-10-17 17:09:15 [INFO   ] DEBUG: 1
+2026-10-17 17:09:15 [INFO   ] UPDATE (20, 6, 14) -> grass sent to 1 client(s)
+2026-10-17 17:09:15 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":21,"y":6,"z":14,"type":1}
+2026-10-17 17:09:15 [INFO   ] PLACE Player1 (192.168.254.103) placed (21, 6, 14) [grass]
+2026-10-17 17:09:15 [INFO   ] DEBUG: 1
+2026-10-17 17:09:15 [INFO   ] UPDATE (21, 6, 14) -> grass sent to 1 client(s)
+2026-10-17 17:09:16 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":20,"y":6,"z":16,"type":1}
+2026-10-17 17:09:16 [INFO   ] PLACE Player1 (192.168.254.103) placed (20, 6, 16) [grass]
+2026-10-17 17:09:16 [INFO   ] DEBUG: 1
+2026-10-17 17:09:16 [INFO   ] UPDATE (20, 6, 16) -> grass sent to 1 client(s)
+2026-10-17 17:09:16 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":20,"y":6,"z":15,"type":1}
+2026-10-17 17:09:16 [INFO   ] PLACE Player1 (192.168.254.103) placed (20, 6, 15) [grass]
+2026-10-17 17:09:16 [INFO   ] DEBUG: 1
+2026-10-17 17:09:16 [INFO   ] UPDATE (20, 6, 15) -> grass sent to 1 client(s)
+2026-10-17 17:09:16 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":21,"y":6,"z":16,"type":1}
+2026-10-17 17:09:16 [INFO   ] PLACE Player1 (192.168.254.103) placed (21, 6, 16) [grass]
+2026-10-17 17:09:16 [INFO   ] DEBUG: 1
+2026-10-17 17:09:16 [INFO   ] UPDATE (21, 6, 16) -> grass sent to 1 client(s)
+2026-10-17 17:09:17 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":21,"y":6,"z":15,"type":1}
+2026-10-17 17:09:17 [INFO   ] PLACE Player1 (192.168.254.103) placed (21, 6, 15) [grass]
+2026-10-17 17:09:17 [INFO   ] DEBUG: 1
+2026-10-17 17:09:17 [INFO   ] UPDATE (21, 6, 15) -> grass sent to 1 client(s)
+2026-10-17 17:09:17 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":20,"y":6,"z":17,"type":1}
+2026-10-17 17:09:17 [INFO   ] PLACE Player1 (192.168.254.103) placed (20, 6, 17) [grass]
+2026-10-17 17:09:17 [INFO   ] DEBUG: 1
+2026-10-17 17:09:17 [INFO   ] UPDATE (20, 6, 17) -> grass sent to 1 client(s)
+2026-10-17 17:09:18 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":21,"y":6,"z":17,"type":1}
+2026-10-17 17:09:18 [INFO   ] PLACE Player1 (192.168.254.103) placed (21, 6, 17) [grass]
+2026-10-17 17:09:18 [INFO   ] DEBUG: 1
+2026-10-17 17:09:18 [INFO   ] UPDATE (21, 6, 17) -> grass sent to 1 client(s)
+2026-10-17 17:09:19 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":21,"y":6,"z":18,"type":1}
+2026-10-17 17:09:19 [INFO   ] PLACE Player1 (192.168.254.103) placed (21, 6, 18) [grass]
+2026-10-17 17:09:19 [INFO   ] DEBUG: 1
+2026-10-17 17:09:19 [INFO   ] UPDATE (21, 6, 18) -> grass sent to 1 client(s)
+2026-10-17 17:09:19 [INFO   ] World saved (6388 blocks) to world.json
+2026-10-17 17:09:19 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":21,"y":6,"z":20,"type":1}
+2026-10-17 17:09:19 [INFO   ] PLACE Player1 (192.168.254.103) placed (21, 6, 20) [grass]
+2026-10-17 17:09:19 [INFO   ] DEBUG: 1
+2026-10-17 17:09:19 [INFO   ] UPDATE (21, 6, 20) -> grass sent to 1 client(s)
+2026-10-17 17:09:19 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":21,"y":6,"z":19,"type":1}
+2026-10-17 17:09:19 [INFO   ] PLACE Player1 (192.168.254.103) placed (21, 6, 19) [grass]
+2026-10-17 17:09:19 [INFO   ] DEBUG: 1
+2026-10-17 17:09:19 [INFO   ] UPDATE (21, 6, 19) -> grass sent to 1 client(s)
+2026-10-17 17:09:23 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":7,"z":19,"type":1}
+2026-10-17 17:09:23 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 7, 19) [grass]
+2026-10-17 17:09:23 [INFO   ] DEBUG: 1
+2026-10-17 17:09:23 [INFO   ] UPDATE (12, 7, 19) -> grass sent to 1 client(s)
+2026-10-17 17:09:24 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":7,"z":19,"type":1}
+2026-10-17 17:09:24 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 7, 19) [grass]
+2026-10-17 17:09:24 [INFO   ] DEBUG: 1
+2026-10-17 17:09:24 [INFO   ] UPDATE (13, 7, 19) -> grass sent to 1 client(s)
+2026-10-17 17:09:24 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":7,"z":19,"type":1}
+2026-10-17 17:09:24 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 7, 19) [grass]
+2026-10-17 17:09:24 [INFO   ] DEBUG: 1
+2026-10-17 17:09:24 [INFO   ] UPDATE (14, 7, 19) -> grass sent to 1 client(s)
+2026-10-17 17:09:24 [INFO   ] World saved (6393 blocks) to world.json
+2026-10-17 17:09:25 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":7,"z":18,"type":1}
+2026-10-17 17:09:25 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 7, 18) [grass]
+2026-10-17 17:09:25 [INFO   ] DEBUG: 1
+2026-10-17 17:09:25 [INFO   ] UPDATE (13, 7, 18) -> grass sent to 1 client(s)
+2026-10-17 17:09:25 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":7,"z":18,"type":1}
+2026-10-17 17:09:25 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 7, 18) [grass]
+2026-10-17 17:09:25 [INFO   ] DEBUG: 1
+2026-10-17 17:09:25 [INFO   ] UPDATE (15, 7, 18) -> grass sent to 1 client(s)
+2026-10-17 17:09:26 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":7,"z":18,"type":1}
+2026-10-17 17:09:26 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 7, 18) [grass]
+2026-10-17 17:09:26 [INFO   ] DEBUG: 1
+2026-10-17 17:09:26 [INFO   ] UPDATE (14, 7, 18) -> grass sent to 1 client(s)
+2026-10-17 17:09:27 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":7,"z":17,"type":1}
+2026-10-17 17:09:27 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 7, 17) [grass]
+2026-10-17 17:09:27 [INFO   ] DEBUG: 1
+2026-10-17 17:09:27 [INFO   ] UPDATE (15, 7, 17) -> grass sent to 1 client(s)
+2026-10-17 17:09:27 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":16,"y":7,"z":17,"type":1}
+2026-10-17 17:09:27 [INFO   ] PLACE Player1 (192.168.254.103) placed (16, 7, 17) [grass]
+2026-10-17 17:09:27 [INFO   ] DEBUG: 1
+2026-10-17 17:09:27 [INFO   ] UPDATE (16, 7, 17) -> grass sent to 1 client(s)
+2026-10-17 17:09:28 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":17,"y":7,"z":17,"type":1}
+2026-10-17 17:09:28 [INFO   ] PLACE Player1 (192.168.254.103) placed (17, 7, 17) [grass]
+2026-10-17 17:09:28 [INFO   ] DEBUG: 1
+2026-10-17 17:09:28 [INFO   ] UPDATE (17, 7, 17) -> grass sent to 1 client(s)
+2026-10-17 17:09:28 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":17,"y":8,"z":17,"type":1}
+2026-10-17 17:09:28 [INFO   ] PLACE Player1 (192.168.254.103) placed (17, 8, 17) [grass]
+2026-10-17 17:09:28 [INFO   ] DEBUG: 1
+2026-10-17 17:09:28 [INFO   ] UPDATE (17, 8, 17) -> grass sent to 1 client(s)
+2026-10-17 17:09:28 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":17,"y":7,"z":16,"type":1}
+2026-10-17 17:09:28 [INFO   ] PLACE Player1 (192.168.254.103) placed (17, 7, 16) [grass]
+2026-10-17 17:09:28 [INFO   ] DEBUG: 1
+2026-10-17 17:09:28 [INFO   ] UPDATE (17, 7, 16) -> grass sent to 1 client(s)
+2026-10-17 17:09:29 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"BREAK_BLOCK","x":17,"y":8,"z":17,"type":0}
+2026-10-17 17:09:29 [INFO   ] BREAK Player1 (192.168.254.103) broke (17, 8, 17) [grass]
+2026-10-17 17:09:29 [INFO   ] DEBUG: 1
+2026-10-17 17:09:29 [INFO   ] UPDATE (17, 8, 17) -> air sent to 1 client(s)
+2026-10-17 17:09:30 [INFO   ] World saved (6400 blocks) to world.json
+2026-10-17 17:09:32 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":7,"z":18,"type":1}
+2026-10-17 17:09:32 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 7, 18) [grass]
+2026-10-17 17:09:32 [INFO   ] DEBUG: 1
+2026-10-17 17:09:32 [INFO   ] UPDATE (12, 7, 18) -> grass sent to 1 client(s)
+2026-10-17 17:09:32 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":7,"z":17,"type":1}
+2026-10-17 17:09:32 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 7, 17) [grass]
+2026-10-17 17:09:32 [INFO   ] DEBUG: 1
+2026-10-17 17:09:32 [INFO   ] UPDATE (13, 7, 17) -> grass sent to 1 client(s)
+2026-10-17 17:09:33 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":7,"z":17,"type":1}
+2026-10-17 17:09:33 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 7, 17) [grass]
+2026-10-17 17:09:33 [INFO   ] DEBUG: 1
+2026-10-17 17:09:33 [INFO   ] UPDATE (14, 7, 17) -> grass sent to 1 client(s)
+2026-10-17 17:09:34 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":16,"y":7,"z":16,"type":1}
+2026-10-17 17:09:34 [INFO   ] PLACE Player1 (192.168.254.103) placed (16, 7, 16) [grass]
+2026-10-17 17:09:34 [INFO   ] DEBUG: 1
+2026-10-17 17:09:34 [INFO   ] UPDATE (16, 7, 16) -> grass sent to 1 client(s)
+2026-10-17 17:09:34 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":7,"z":16,"type":1}
+2026-10-17 17:09:34 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 7, 16) [grass]
+2026-10-17 17:09:34 [INFO   ] DEBUG: 1
+2026-10-17 17:09:34 [INFO   ] UPDATE (15, 7, 16) -> grass sent to 1 client(s)
+2026-10-17 17:09:34 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":8,"z":16,"type":1}
+2026-10-17 17:09:34 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 8, 16) [grass]
+2026-10-17 17:09:34 [INFO   ] DEBUG: 1
+2026-10-17 17:09:34 [INFO   ] UPDATE (15, 8, 16) -> grass sent to 1 client(s)
+2026-10-17 17:09:35 [INFO   ] World saved (6406 blocks) to world.json
+2026-10-17 17:09:38 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":5,"z":4,"type":1}
+2026-10-17 17:09:38 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 5, 4) [grass]
+2026-10-17 17:09:38 [INFO   ] DEBUG: 1
+2026-10-17 17:09:38 [INFO   ] UPDATE (5, 5, 4) -> grass sent to 1 client(s)
+2026-10-17 17:09:39 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":5,"z":6,"type":1}
+2026-10-17 17:09:39 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 5, 6) [grass]
+2026-10-17 17:09:39 [INFO   ] DEBUG: 1
+2026-10-17 17:09:39 [INFO   ] UPDATE (5, 5, 6) -> grass sent to 1 client(s)
+2026-10-17 17:09:39 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":5,"z":5,"type":1}
+2026-10-17 17:09:39 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 5, 5) [grass]
+2026-10-17 17:09:39 [INFO   ] DEBUG: 1
+2026-10-17 17:09:39 [INFO   ] UPDATE (5, 5, 5) -> grass sent to 1 client(s)
+2026-10-17 17:09:40 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":5,"z":4,"type":1}
+2026-10-17 17:09:40 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 5, 4) [grass]
+2026-10-17 17:09:40 [INFO   ] DEBUG: 1
+2026-10-17 17:09:40 [INFO   ] UPDATE (6, 5, 4) -> grass sent to 1 client(s)
+2026-10-17 17:09:41 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":5,"z":6,"type":1}
+2026-10-17 17:09:41 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 5, 6) [grass]
+2026-10-17 17:09:41 [INFO   ] DEBUG: 1
+2026-10-17 17:09:41 [INFO   ] UPDATE (6, 5, 6) -> grass sent to 1 client(s)
+2026-10-17 17:09:41 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":5,"z":8,"type":1}
+2026-10-17 17:09:41 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 5, 8) [grass]
+2026-10-17 17:09:41 [INFO   ] DEBUG: 1
+2026-10-17 17:09:41 [INFO   ] UPDATE (6, 5, 8) -> grass sent to 1 client(s)
+2026-10-17 17:09:41 [INFO   ] World saved (6412 blocks) to world.json
+2026-10-17 17:09:41 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":5,"z":11,"type":1}
+2026-10-17 17:09:41 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 5, 11) [grass]
+2026-10-17 17:09:41 [INFO   ] DEBUG: 1
+2026-10-17 17:09:41 [INFO   ] UPDATE (7, 5, 11) -> grass sent to 1 client(s)
+2026-10-17 17:09:42 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":9,"y":5,"z":11,"type":1}
+2026-10-17 17:09:42 [INFO   ] PLACE Player1 (192.168.254.103) placed (9, 5, 11) [grass]
+2026-10-17 17:09:42 [INFO   ] DEBUG: 1
+2026-10-17 17:09:42 [INFO   ] UPDATE (9, 5, 11) -> grass sent to 1 client(s)
+2026-10-17 17:09:42 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":9,"y":5,"z":9,"type":1}
+2026-10-17 17:09:42 [INFO   ] PLACE Player1 (192.168.254.103) placed (9, 5, 9) [grass]
+2026-10-17 17:09:42 [INFO   ] DEBUG: 1
+2026-10-17 17:09:42 [INFO   ] UPDATE (9, 5, 9) -> grass sent to 1 client(s)
+2026-10-17 17:09:42 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":9,"y":5,"z":8,"type":1}
+2026-10-17 17:09:42 [INFO   ] PLACE Player1 (192.168.254.103) placed (9, 5, 8) [grass]
+2026-10-17 17:09:42 [INFO   ] DEBUG: 1
+2026-10-17 17:09:42 [INFO   ] UPDATE (9, 5, 8) -> grass sent to 1 client(s)
+2026-10-17 17:09:42 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":9,"y":5,"z":7,"type":1}
+2026-10-17 17:09:42 [INFO   ] PLACE Player1 (192.168.254.103) placed (9, 5, 7) [grass]
+2026-10-17 17:09:42 [INFO   ] DEBUG: 1
+2026-10-17 17:09:42 [INFO   ] UPDATE (9, 5, 7) -> grass sent to 1 client(s)
+2026-10-17 17:09:42 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":8,"y":5,"z":6,"type":1}
+2026-10-17 17:09:42 [INFO   ] PLACE Player1 (192.168.254.103) placed (8, 5, 6) [grass]
+2026-10-17 17:09:42 [INFO   ] DEBUG: 1
+2026-10-17 17:09:42 [INFO   ] UPDATE (8, 5, 6) -> grass sent to 1 client(s)
+2026-10-17 17:09:43 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":5,"z":5,"type":1}
+2026-10-17 17:09:43 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 5, 5) [grass]
+2026-10-17 17:09:43 [INFO   ] DEBUG: 1
+2026-10-17 17:09:43 [INFO   ] UPDATE (6, 5, 5) -> grass sent to 1 client(s)
+2026-10-17 17:09:44 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":8,"y":5,"z":5,"type":1}
+2026-10-17 17:09:44 [INFO   ] PLACE Player1 (192.168.254.103) placed (8, 5, 5) [grass]
+2026-10-17 17:09:44 [INFO   ] DEBUG: 1
+2026-10-17 17:09:44 [INFO   ] UPDATE (8, 5, 5) -> grass sent to 1 client(s)
+2026-10-17 17:09:44 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":5,"z":4,"type":1}
+2026-10-17 17:09:44 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 5, 4) [grass]
+2026-10-17 17:09:44 [INFO   ] DEBUG: 1
+2026-10-17 17:09:44 [INFO   ] UPDATE (7, 5, 4) -> grass sent to 1 client(s)
+2026-10-17 17:09:45 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":5,"z":6,"type":1}
+2026-10-17 17:09:45 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 5, 6) [grass]
+2026-10-17 17:09:45 [INFO   ] DEBUG: 1
+2026-10-17 17:09:45 [INFO   ] UPDATE (7, 5, 6) -> grass sent to 1 client(s)
+2026-10-17 17:09:45 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":5,"z":6,"type":1}
+2026-10-17 17:09:45 [INFO   ] DENY  Player1 (192.168.254.103) PLACE (7, 5, 6) - spot occupied by grass
+2026-10-17 17:09:46 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":5,"z":5,"type":1}
+2026-10-17 17:09:46 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 5, 5) [grass]
+2026-10-17 17:09:46 [INFO   ] DEBUG: 1
+2026-10-17 17:09:46 [INFO   ] UPDATE (7, 5, 5) -> grass sent to 1 client(s)
+2026-10-17 17:09:46 [INFO   ] World saved (6423 blocks) to world.json
+2026-10-17 17:09:47 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":8,"y":5,"z":4,"type":1}
+2026-10-17 17:09:47 [INFO   ] PLACE Player1 (192.168.254.103) placed (8, 5, 4) [grass]
+2026-10-17 17:09:47 [INFO   ] DEBUG: 1
+2026-10-17 17:09:47 [INFO   ] UPDATE (8, 5, 4) -> grass sent to 1 client(s)
+2026-10-17 17:09:47 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":9,"y":5,"z":4,"type":1}
+2026-10-17 17:09:47 [INFO   ] PLACE Player1 (192.168.254.103) placed (9, 5, 4) [grass]
+2026-10-17 17:09:47 [INFO   ] DEBUG: 1
+2026-10-17 17:09:47 [INFO   ] UPDATE (9, 5, 4) -> grass sent to 1 client(s)
+2026-10-17 17:09:48 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":9,"y":5,"z":6,"type":1}
+2026-10-17 17:09:48 [INFO   ] PLACE Player1 (192.168.254.103) placed (9, 5, 6) [grass]
+2026-10-17 17:09:48 [INFO   ] DEBUG: 1
+2026-10-17 17:09:48 [INFO   ] UPDATE (9, 5, 6) -> grass sent to 1 client(s)
+2026-10-17 17:09:48 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":9,"y":5,"z":5,"type":1}
+2026-10-17 17:09:48 [INFO   ] PLACE Player1 (192.168.254.103) placed (9, 5, 5) [grass]
+2026-10-17 17:09:48 [INFO   ] DEBUG: 1
+2026-10-17 17:09:48 [INFO   ] UPDATE (9, 5, 5) -> grass sent to 1 client(s)
+2026-10-17 17:09:49 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":10,"y":5,"z":4,"type":1}
+2026-10-17 17:09:49 [INFO   ] PLACE Player1 (192.168.254.103) placed (10, 5, 4) [grass]
+2026-10-17 17:09:49 [INFO   ] DEBUG: 1
+2026-10-17 17:09:49 [INFO   ] UPDATE (10, 5, 4) -> grass sent to 1 client(s)
+2026-10-17 17:09:49 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":10,"y":5,"z":5,"type":1}
+2026-10-17 17:09:49 [INFO   ] PLACE Player1 (192.168.254.103) placed (10, 5, 5) [grass]
+2026-10-17 17:09:49 [INFO   ] DEBUG: 1
+2026-10-17 17:09:49 [INFO   ] UPDATE (10, 5, 5) -> grass sent to 1 client(s)
+2026-10-17 17:09:50 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":10,"y":5,"z":7,"type":1}
+2026-10-17 17:09:50 [INFO   ] PLACE Player1 (192.168.254.103) placed (10, 5, 7) [grass]
+2026-10-17 17:09:50 [INFO   ] DEBUG: 1
+2026-10-17 17:09:50 [INFO   ] UPDATE (10, 5, 7) -> grass sent to 1 client(s)
+2026-10-17 17:09:50 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":10,"y":5,"z":6,"type":1}
+2026-10-17 17:09:50 [INFO   ] PLACE Player1 (192.168.254.103) placed (10, 5, 6) [grass]
+2026-10-17 17:09:50 [INFO   ] DEBUG: 1
+2026-10-17 17:09:50 [INFO   ] UPDATE (10, 5, 6) -> grass sent to 1 client(s)
+2026-10-17 17:09:51 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":10,"y":5,"z":8,"type":1}
+2026-10-17 17:09:51 [INFO   ] PLACE Player1 (192.168.254.103) placed (10, 5, 8) [grass]
+2026-10-17 17:09:51 [INFO   ] DEBUG: 1
+2026-10-17 17:09:51 [INFO   ] UPDATE (10, 5, 8) -> grass sent to 1 client(s)
+2026-10-17 17:09:52 [INFO   ] World saved (6432 blocks) to world.json
+2026-10-17 17:09:52 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":10,"y":5,"z":9,"type":1}
+2026-10-17 17:09:52 [INFO   ] PLACE Player1 (192.168.254.103) placed (10, 5, 9) [grass]
+2026-10-17 17:09:52 [INFO   ] DEBUG: 1
+2026-10-17 17:09:52 [INFO   ] UPDATE (10, 5, 9) -> grass sent to 1 client(s)
+2026-10-17 17:09:52 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":10,"y":5,"z":10,"type":1}
+2026-10-17 17:09:52 [INFO   ] PLACE Player1 (192.168.254.103) placed (10, 5, 10) [grass]
+2026-10-17 17:09:52 [INFO   ] DEBUG: 1
+2026-10-17 17:09:52 [INFO   ] UPDATE (10, 5, 10) -> grass sent to 1 client(s)
+2026-10-17 17:09:53 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":9,"y":5,"z":10,"type":1}
+2026-10-17 17:09:53 [INFO   ] PLACE Player1 (192.168.254.103) placed (9, 5, 10) [grass]
+2026-10-17 17:09:53 [INFO   ] DEBUG: 1
+2026-10-17 17:09:53 [INFO   ] UPDATE (9, 5, 10) -> grass sent to 1 client(s)
+2026-10-17 17:09:55 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":8,"y":5,"z":10,"type":1}
+2026-10-17 17:09:55 [INFO   ] PLACE Player1 (192.168.254.103) placed (8, 5, 10) [grass]
+2026-10-17 17:09:55 [INFO   ] DEBUG: 1
+2026-10-17 17:09:55 [INFO   ] UPDATE (8, 5, 10) -> grass sent to 1 client(s)
+2026-10-17 17:09:56 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":8,"y":5,"z":9,"type":1}
+2026-10-17 17:09:56 [INFO   ] PLACE Player1 (192.168.254.103) placed (8, 5, 9) [grass]
+2026-10-17 17:09:56 [INFO   ] DEBUG: 1
+2026-10-17 17:09:56 [INFO   ] UPDATE (8, 5, 9) -> grass sent to 1 client(s)
+2026-10-17 17:09:57 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":5,"z":10,"type":1}
+2026-10-17 17:09:57 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 5, 10) [grass]
+2026-10-17 17:09:57 [INFO   ] DEBUG: 1
+2026-10-17 17:09:57 [INFO   ] UPDATE (7, 5, 10) -> grass sent to 1 client(s)
+2026-10-17 17:09:57 [INFO   ] World saved (6438 blocks) to world.json
+2026-10-17 17:09:58 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":6,"z":10,"type":1}
+2026-10-17 17:09:58 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 6, 10) [grass]
+2026-10-17 17:09:58 [INFO   ] DEBUG: 1
+2026-10-17 17:09:58 [INFO   ] UPDATE (7, 6, 10) -> grass sent to 1 client(s)
+2026-10-17 17:09:58 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":5,"z":7,"type":1}
+2026-10-17 17:09:58 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 5, 7) [grass]
+2026-10-17 17:09:58 [INFO   ] DEBUG: 1
+2026-10-17 17:09:58 [INFO   ] UPDATE (7, 5, 7) -> grass sent to 1 client(s)
+2026-10-17 17:09:59 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"BREAK_BLOCK","x":7,"y":6,"z":10,"type":0}
+2026-10-17 17:09:59 [INFO   ] BREAK Player1 (192.168.254.103) broke (7, 6, 10) [grass]
+2026-10-17 17:09:59 [INFO   ] DEBUG: 1
+2026-10-17 17:09:59 [INFO   ] UPDATE (7, 6, 10) -> air sent to 1 client(s)
+2026-10-17 17:10:00 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":5,"z":8,"type":1}
+2026-10-17 17:10:00 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 5, 8) [grass]
+2026-10-17 17:10:00 [INFO   ] DEBUG: 1
+2026-10-17 17:10:00 [INFO   ] UPDATE (7, 5, 8) -> grass sent to 1 client(s)
+2026-10-17 17:10:00 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":5,"z":9,"type":1}
+2026-10-17 17:10:00 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 5, 9) [grass]
+2026-10-17 17:10:00 [INFO   ] DEBUG: 1
+2026-10-17 17:10:00 [INFO   ] UPDATE (7, 5, 9) -> grass sent to 1 client(s)
+2026-10-17 17:10:01 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":8,"y":5,"z":7,"type":1}
+2026-10-17 17:10:01 [INFO   ] PLACE Player1 (192.168.254.103) placed (8, 5, 7) [grass]
+2026-10-17 17:10:01 [INFO   ] DEBUG: 1
+2026-10-17 17:10:01 [INFO   ] UPDATE (8, 5, 7) -> grass sent to 1 client(s)
+2026-10-17 17:10:01 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":8,"y":5,"z":8,"type":1}
+2026-10-17 17:10:01 [INFO   ] PLACE Player1 (192.168.254.103) placed (8, 5, 8) [grass]
+2026-10-17 17:10:01 [INFO   ] DEBUG: 1
+2026-10-17 17:10:01 [INFO   ] UPDATE (8, 5, 8) -> grass sent to 1 client(s)
+2026-10-17 17:10:02 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":6,"z":9,"type":1}
+2026-10-17 17:10:02 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 6, 9) [grass]
+2026-10-17 17:10:02 [INFO   ] DEBUG: 1
+2026-10-17 17:10:02 [INFO   ] UPDATE (7, 6, 9) -> grass sent to 1 client(s)
+2026-10-17 17:10:02 [INFO   ] World saved (6444 blocks) to world.json
+2026-10-17 17:10:03 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"BREAK_BLOCK","x":7,"y":6,"z":9,"type":0}
+2026-10-17 17:10:03 [INFO   ] BREAK Player1 (192.168.254.103) broke (7, 6, 9) [grass]
+2026-10-17 17:10:03 [INFO   ] DEBUG: 1
+2026-10-17 17:10:03 [INFO   ] UPDATE (7, 6, 9) -> air sent to 1 client(s)
+2026-10-17 17:10:04 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":5,"z":7,"type":1}
+2026-10-17 17:10:04 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 5, 7) [grass]
+2026-10-17 17:10:04 [INFO   ] DEBUG: 1
+2026-10-17 17:10:04 [INFO   ] UPDATE (6, 5, 7) -> grass sent to 1 client(s)
+2026-10-17 17:10:05 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":5,"z":9,"type":1}
+2026-10-17 17:10:05 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 5, 9) [grass]
+2026-10-17 17:10:05 [INFO   ] DEBUG: 1
+2026-10-17 17:10:05 [INFO   ] UPDATE (6, 5, 9) -> grass sent to 1 client(s)
+2026-10-17 17:10:05 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":5,"z":10,"type":1}
+2026-10-17 17:10:05 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 5, 10) [grass]
+2026-10-17 17:10:05 [INFO   ] DEBUG: 1
+2026-10-17 17:10:05 [INFO   ] UPDATE (6, 5, 10) -> grass sent to 1 client(s)
+2026-10-17 17:10:06 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":5,"z":11,"type":1}
+2026-10-17 17:10:06 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 5, 11) [grass]
+2026-10-17 17:10:06 [INFO   ] DEBUG: 1
+2026-10-17 17:10:06 [INFO   ] UPDATE (6, 5, 11) -> grass sent to 1 client(s)
+2026-10-17 17:10:07 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":5,"z":7,"type":1}
+2026-10-17 17:10:07 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 5, 7) [grass]
+2026-10-17 17:10:07 [INFO   ] DEBUG: 1
+2026-10-17 17:10:07 [INFO   ] UPDATE (5, 5, 7) -> grass sent to 1 client(s)
+2026-10-17 17:10:07 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":5,"z":8,"type":1}
+2026-10-17 17:10:07 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 5, 8) [grass]
+2026-10-17 17:10:07 [INFO   ] DEBUG: 1
+2026-10-17 17:10:07 [INFO   ] UPDATE (5, 5, 8) -> grass sent to 1 client(s)
+2026-10-17 17:10:08 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":5,"z":9,"type":1}
+2026-10-17 17:10:08 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 5, 9) [grass]
+2026-10-17 17:10:08 [INFO   ] DEBUG: 1
+2026-10-17 17:10:08 [INFO   ] UPDATE (5, 5, 9) -> grass sent to 1 client(s)
+2026-10-17 17:10:08 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":5,"z":10,"type":1}
+2026-10-17 17:10:08 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 5, 10) [grass]
+2026-10-17 17:10:08 [INFO   ] DEBUG: 1
+2026-10-17 17:10:08 [INFO   ] UPDATE (5, 5, 10) -> grass sent to 1 client(s)
+2026-10-17 17:10:08 [INFO   ] World saved (6451 blocks) to world.json
+2026-10-17 17:10:09 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":5,"z":12,"type":1}
+2026-10-17 17:10:09 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 5, 12) [grass]
+2026-10-17 17:10:09 [INFO   ] DEBUG: 1
+2026-10-17 17:10:09 [INFO   ] UPDATE (5, 5, 12) -> grass sent to 1 client(s)
+2026-10-17 17:10:10 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":5,"z":11,"type":1}
+2026-10-17 17:10:10 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 5, 11) [grass]
+2026-10-17 17:10:10 [INFO   ] DEBUG: 1
+2026-10-17 17:10:10 [INFO   ] UPDATE (5, 5, 11) -> grass sent to 1 client(s)
+2026-10-17 17:10:10 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":5,"z":12,"type":1}
+2026-10-17 17:10:10 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 5, 12) [grass]
+2026-10-17 17:10:10 [INFO   ] DEBUG: 1
+2026-10-17 17:10:10 [INFO   ] UPDATE (6, 5, 12) -> grass sent to 1 client(s)
+2026-10-17 17:10:11 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":8,"y":5,"z":11,"type":1}
+2026-10-17 17:10:11 [INFO   ] PLACE Player1 (192.168.254.103) placed (8, 5, 11) [grass]
+2026-10-17 17:10:11 [INFO   ] DEBUG: 1
+2026-10-17 17:10:11 [INFO   ] UPDATE (8, 5, 11) -> grass sent to 1 client(s)
+2026-10-17 17:10:13 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":16,"y":6,"z":4,"type":1}
+2026-10-17 17:10:13 [INFO   ] PLACE Player1 (192.168.254.103) placed (16, 6, 4) [grass]
+2026-10-17 17:10:13 [INFO   ] DEBUG: 1
+2026-10-17 17:10:13 [INFO   ] UPDATE (16, 6, 4) -> grass sent to 1 client(s)
+2026-10-17 17:10:13 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":6,"z":4,"type":1}
+2026-10-17 17:10:13 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 6, 4) [grass]
+2026-10-17 17:10:13 [INFO   ] DEBUG: 1
+2026-10-17 17:10:13 [INFO   ] UPDATE (15, 6, 4) -> grass sent to 1 client(s)
+2026-10-17 17:10:13 [INFO   ] World saved (6457 blocks) to world.json
+2026-10-17 17:10:13 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":6,"z":4,"type":1}
+2026-10-17 17:10:13 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 6, 4) [grass]
+2026-10-17 17:10:13 [INFO   ] DEBUG: 1
+2026-10-17 17:10:13 [INFO   ] UPDATE (14, 6, 4) -> grass sent to 1 client(s)
+2026-10-17 17:10:14 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":6,"z":4,"type":1}
+2026-10-17 17:10:14 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 6, 4) [grass]
+2026-10-17 17:10:14 [INFO   ] DEBUG: 1
+2026-10-17 17:10:14 [INFO   ] UPDATE (13, 6, 4) -> grass sent to 1 client(s)
+2026-10-17 17:10:14 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":6,"z":4,"type":1}
+2026-10-17 17:10:14 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 6, 4) [grass]
+2026-10-17 17:10:14 [INFO   ] DEBUG: 1
+2026-10-17 17:10:14 [INFO   ] UPDATE (12, 6, 4) -> grass sent to 1 client(s)
+2026-10-17 17:10:14 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":11,"y":6,"z":4,"type":1}
+2026-10-17 17:10:14 [INFO   ] PLACE Player1 (192.168.254.103) placed (11, 6, 4) [grass]
+2026-10-17 17:10:14 [INFO   ] DEBUG: 1
+2026-10-17 17:10:14 [INFO   ] UPDATE (11, 6, 4) -> grass sent to 1 client(s)
+2026-10-17 17:10:16 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":5,"z":4,"type":1}
+2026-10-17 17:10:16 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 5, 4) [grass]
+2026-10-17 17:10:16 [INFO   ] DEBUG: 1
+2026-10-17 17:10:16 [INFO   ] UPDATE (13, 5, 4) -> grass sent to 1 client(s)
+2026-10-17 17:10:16 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":5,"z":4,"type":1}
+2026-10-17 17:10:16 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 5, 4) [grass]
+2026-10-17 17:10:16 [INFO   ] DEBUG: 1
+2026-10-17 17:10:16 [INFO   ] UPDATE (12, 5, 4) -> grass sent to 1 client(s)
+2026-10-17 17:10:17 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":5,"z":3,"type":1}
+2026-10-17 17:10:17 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 5, 3) [grass]
+2026-10-17 17:10:17 [INFO   ] DEBUG: 1
+2026-10-17 17:10:17 [INFO   ] UPDATE (13, 5, 3) -> grass sent to 1 client(s)
+2026-10-17 17:10:17 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":5,"z":3,"type":1}
+2026-10-17 17:10:17 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 5, 3) [grass]
+2026-10-17 17:10:17 [INFO   ] DEBUG: 1
+2026-10-17 17:10:17 [INFO   ] UPDATE (12, 5, 3) -> grass sent to 1 client(s)
+2026-10-17 17:10:19 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":16,"y":6,"z":5,"type":1}
+2026-10-17 17:10:19 [INFO   ] PLACE Player1 (192.168.254.103) placed (16, 6, 5) [grass]
+2026-10-17 17:10:19 [INFO   ] DEBUG: 1
+2026-10-17 17:10:19 [INFO   ] UPDATE (16, 6, 5) -> grass sent to 1 client(s)
+2026-10-17 17:10:19 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":16,"y":6,"z":5,"type":1}
+2026-10-17 17:10:19 [INFO   ] DENY  Player1 (192.168.254.103) PLACE (16, 6, 5) - spot occupied by grass
+2026-10-17 17:10:19 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":6,"z":5,"type":1}
+2026-10-17 17:10:19 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 6, 5) [grass]
+2026-10-17 17:10:19 [INFO   ] DEBUG: 1
+2026-10-17 17:10:19 [INFO   ] UPDATE (15, 6, 5) -> grass sent to 1 client(s)
+2026-10-17 17:10:19 [INFO   ] World saved (6467 blocks) to world.json
+2026-10-17 17:10:19 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":6,"z":5,"type":1}
+2026-10-17 17:10:19 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 6, 5) [grass]
+2026-10-17 17:10:19 [INFO   ] DEBUG: 1
+2026-10-17 17:10:19 [INFO   ] UPDATE (14, 6, 5) -> grass sent to 1 client(s)
+2026-10-17 17:10:20 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":6,"z":5,"type":1}
+2026-10-17 17:10:20 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 6, 5) [grass]
+2026-10-17 17:10:20 [INFO   ] DEBUG: 1
+2026-10-17 17:10:20 [INFO   ] UPDATE (13, 6, 5) -> grass sent to 1 client(s)
+2026-10-17 17:10:20 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":6,"z":5,"type":1}
+2026-10-17 17:10:20 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 6, 5) [grass]
+2026-10-17 17:10:20 [INFO   ] DEBUG: 1
+2026-10-17 17:10:20 [INFO   ] UPDATE (12, 6, 5) -> grass sent to 1 client(s)
+2026-10-17 17:10:20 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":11,"y":6,"z":5,"type":1}
+2026-10-17 17:10:20 [INFO   ] PLACE Player1 (192.168.254.103) placed (11, 6, 5) [grass]
+2026-10-17 17:10:20 [INFO   ] DEBUG: 1
+2026-10-17 17:10:20 [INFO   ] UPDATE (11, 6, 5) -> grass sent to 1 client(s)
+2026-10-17 17:10:21 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":17,"y":6,"z":6,"type":1}
+2026-10-17 17:10:21 [INFO   ] PLACE Player1 (192.168.254.103) placed (17, 6, 6) [grass]
+2026-10-17 17:10:21 [INFO   ] DEBUG: 1
+2026-10-17 17:10:21 [INFO   ] UPDATE (17, 6, 6) -> grass sent to 1 client(s)
+2026-10-17 17:10:21 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":16,"y":6,"z":6,"type":1}
+2026-10-17 17:10:21 [INFO   ] PLACE Player1 (192.168.254.103) placed (16, 6, 6) [grass]
+2026-10-17 17:10:21 [INFO   ] DEBUG: 1
+2026-10-17 17:10:21 [INFO   ] UPDATE (16, 6, 6) -> grass sent to 1 client(s)
+2026-10-17 17:10:21 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":6,"z":6,"type":1}
+2026-10-17 17:10:21 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 6, 6) [grass]
+2026-10-17 17:10:21 [INFO   ] DEBUG: 1
+2026-10-17 17:10:21 [INFO   ] UPDATE (15, 6, 6) -> grass sent to 1 client(s)
+2026-10-17 17:10:22 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":6,"z":6,"type":1}
+2026-10-17 17:10:22 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 6, 6) [grass]
+2026-10-17 17:10:22 [INFO   ] DEBUG: 1
+2026-10-17 17:10:22 [INFO   ] UPDATE (14, 6, 6) -> grass sent to 1 client(s)
+2026-10-17 17:10:22 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":6,"z":6,"type":1}
+2026-10-17 17:10:22 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 6, 6) [grass]
+2026-10-17 17:10:22 [INFO   ] DEBUG: 1
+2026-10-17 17:10:22 [INFO   ] UPDATE (13, 6, 6) -> grass sent to 1 client(s)
+2026-10-17 17:10:22 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":6,"z":6,"type":1}
+2026-10-17 17:10:22 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 6, 6) [grass]
+2026-10-17 17:10:22 [INFO   ] DEBUG: 1
+2026-10-17 17:10:22 [INFO   ] UPDATE (12, 6, 6) -> grass sent to 1 client(s)
+2026-10-17 17:10:22 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":11,"y":6,"z":6,"type":1}
+2026-10-17 17:10:22 [INFO   ] PLACE Player1 (192.168.254.103) placed (11, 6, 6) [grass]
+2026-10-17 17:10:22 [INFO   ] DEBUG: 1
+2026-10-17 17:10:22 [INFO   ] UPDATE (11, 6, 6) -> grass sent to 1 client(s)
+2026-10-17 17:10:23 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":17,"y":6,"z":7,"type":1}
+2026-10-17 17:10:23 [INFO   ] PLACE Player1 (192.168.254.103) placed (17, 6, 7) [grass]
+2026-10-17 17:10:23 [INFO   ] DEBUG: 1
+2026-10-17 17:10:23 [INFO   ] UPDATE (17, 6, 7) -> grass sent to 1 client(s)
+2026-10-17 17:10:23 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":16,"y":6,"z":7,"type":1}
+2026-10-17 17:10:23 [INFO   ] PLACE Player1 (192.168.254.103) placed (16, 6, 7) [grass]
+2026-10-17 17:10:23 [INFO   ] DEBUG: 1
+2026-10-17 17:10:23 [INFO   ] UPDATE (16, 6, 7) -> grass sent to 1 client(s)
+2026-10-17 17:10:24 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":6,"z":7,"type":1}
+2026-10-17 17:10:24 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 6, 7) [grass]
+2026-10-17 17:10:24 [INFO   ] DEBUG: 1
+2026-10-17 17:10:24 [INFO   ] UPDATE (15, 6, 7) -> grass sent to 1 client(s)
+2026-10-17 17:10:24 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":6,"z":7,"type":1}
+2026-10-17 17:10:24 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 6, 7) [grass]
+2026-10-17 17:10:24 [INFO   ] DEBUG: 1
+2026-10-17 17:10:24 [INFO   ] UPDATE (14, 6, 7) -> grass sent to 1 client(s)
+2026-10-17 17:10:24 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":6,"z":7,"type":1}
+2026-10-17 17:10:24 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 6, 7) [grass]
+2026-10-17 17:10:24 [INFO   ] DEBUG: 1
+2026-10-17 17:10:24 [INFO   ] UPDATE (13, 6, 7) -> grass sent to 1 client(s)
+2026-10-17 17:10:24 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":6,"z":7,"type":1}
+2026-10-17 17:10:24 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 6, 7) [grass]
+2026-10-17 17:10:24 [INFO   ] DEBUG: 1
+2026-10-17 17:10:24 [INFO   ] UPDATE (12, 6, 7) -> grass sent to 1 client(s)
+2026-10-17 17:10:24 [INFO   ] World saved (6484 blocks) to world.json
+2026-10-17 17:10:25 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":11,"y":6,"z":7,"type":1}
+2026-10-17 17:10:25 [INFO   ] PLACE Player1 (192.168.254.103) placed (11, 6, 7) [grass]
+2026-10-17 17:10:25 [INFO   ] DEBUG: 1
+2026-10-17 17:10:25 [INFO   ] UPDATE (11, 6, 7) -> grass sent to 1 client(s)
+2026-10-17 17:10:25 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":18,"y":6,"z":8,"type":1}
+2026-10-17 17:10:25 [INFO   ] PLACE Player1 (192.168.254.103) placed (18, 6, 8) [grass]
+2026-10-17 17:10:25 [INFO   ] DEBUG: 1
+2026-10-17 17:10:25 [INFO   ] UPDATE (18, 6, 8) -> grass sent to 1 client(s)
+2026-10-17 17:10:26 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":17,"y":6,"z":8,"type":1}
+2026-10-17 17:10:26 [INFO   ] PLACE Player1 (192.168.254.103) placed (17, 6, 8) [grass]
+2026-10-17 17:10:26 [INFO   ] DEBUG: 1
+2026-10-17 17:10:26 [INFO   ] UPDATE (17, 6, 8) -> grass sent to 1 client(s)
+2026-10-17 17:10:26 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":16,"y":6,"z":8,"type":1}
+2026-10-17 17:10:26 [INFO   ] PLACE Player1 (192.168.254.103) placed (16, 6, 8) [grass]
+2026-10-17 17:10:26 [INFO   ] DEBUG: 1
+2026-10-17 17:10:26 [INFO   ] UPDATE (16, 6, 8) -> grass sent to 1 client(s)
+2026-10-17 17:10:26 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":6,"z":8,"type":1}
+2026-10-17 17:10:26 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 6, 8) [grass]
+2026-10-17 17:10:26 [INFO   ] DEBUG: 1
+2026-10-17 17:10:26 [INFO   ] UPDATE (15, 6, 8) -> grass sent to 1 client(s)
+2026-10-17 17:10:26 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":6,"z":8,"type":1}
+2026-10-17 17:10:26 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 6, 8) [grass]
+2026-10-17 17:10:26 [INFO   ] DEBUG: 1
+2026-10-17 17:10:26 [INFO   ] UPDATE (14, 6, 8) -> grass sent to 1 client(s)
+2026-10-17 17:10:27 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":6,"z":8,"type":1}
+2026-10-17 17:10:27 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 6, 8) [grass]
+2026-10-17 17:10:27 [INFO   ] DEBUG: 1
+2026-10-17 17:10:27 [INFO   ] UPDATE (13, 6, 8) -> grass sent to 1 client(s)
+2026-10-17 17:10:27 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":6,"z":8,"type":1}
+2026-10-17 17:10:27 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 6, 8) [grass]
+2026-10-17 17:10:27 [INFO   ] DEBUG: 1
+2026-10-17 17:10:27 [INFO   ] UPDATE (12, 6, 8) -> grass sent to 1 client(s)
+2026-10-17 17:10:27 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":11,"y":6,"z":8,"type":1}
+2026-10-17 17:10:27 [INFO   ] PLACE Player1 (192.168.254.103) placed (11, 6, 8) [grass]
+2026-10-17 17:10:27 [INFO   ] DEBUG: 1
+2026-10-17 17:10:27 [INFO   ] UPDATE (11, 6, 8) -> grass sent to 1 client(s)
+2026-10-17 17:10:28 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":16,"y":6,"z":9,"type":1}
+2026-10-17 17:10:28 [INFO   ] PLACE Player1 (192.168.254.103) placed (16, 6, 9) [grass]
+2026-10-17 17:10:28 [INFO   ] DEBUG: 1
+2026-10-17 17:10:28 [INFO   ] UPDATE (16, 6, 9) -> grass sent to 1 client(s)
+2026-10-17 17:10:28 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":6,"z":9,"type":1}
+2026-10-17 17:10:28 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 6, 9) [grass]
+2026-10-17 17:10:28 [INFO   ] DEBUG: 1
+2026-10-17 17:10:28 [INFO   ] UPDATE (15, 6, 9) -> grass sent to 1 client(s)
+2026-10-17 17:10:28 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":6,"z":9,"type":1}
+2026-10-17 17:10:28 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 6, 9) [grass]
+2026-10-17 17:10:28 [INFO   ] DEBUG: 1
+2026-10-17 17:10:28 [INFO   ] UPDATE (14, 6, 9) -> grass sent to 1 client(s)
+2026-10-17 17:10:29 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":6,"z":9,"type":1}
+2026-10-17 17:10:29 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 6, 9) [grass]
+2026-10-17 17:10:29 [INFO   ] DEBUG: 1
+2026-10-17 17:10:29 [INFO   ] UPDATE (13, 6, 9) -> grass sent to 1 client(s)
+2026-10-17 17:10:29 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":6,"z":9,"type":1}
+2026-10-17 17:10:29 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 6, 9) [grass]
+2026-10-17 17:10:29 [INFO   ] DEBUG: 1
+2026-10-17 17:10:29 [INFO   ] UPDATE (12, 6, 9) -> grass sent to 1 client(s)
+2026-10-17 17:10:29 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":11,"y":6,"z":9,"type":1}
+2026-10-17 17:10:29 [INFO   ] PLACE Player1 (192.168.254.103) placed (11, 6, 9) [grass]
+2026-10-17 17:10:29 [INFO   ] DEBUG: 1
+2026-10-17 17:10:29 [INFO   ] UPDATE (11, 6, 9) -> grass sent to 1 client(s)
+2026-10-17 17:10:30 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":16,"y":6,"z":10,"type":1}
+2026-10-17 17:10:30 [INFO   ] PLACE Player1 (192.168.254.103) placed (16, 6, 10) [grass]
+2026-10-17 17:10:30 [INFO   ] DEBUG: 1
+2026-10-17 17:10:30 [INFO   ] UPDATE (16, 6, 10) -> grass sent to 1 client(s)
+2026-10-17 17:10:30 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":6,"z":10,"type":1}
+2026-10-17 17:10:30 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 6, 10) [grass]
+2026-10-17 17:10:30 [INFO   ] DEBUG: 1
+2026-10-17 17:10:30 [INFO   ] UPDATE (15, 6, 10) -> grass sent to 1 client(s)
+2026-10-17 17:10:30 [INFO   ] World saved (6501 blocks) to world.json
+2026-10-17 17:10:30 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":6,"z":10,"type":1}
+2026-10-17 17:10:30 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 6, 10) [grass]
+2026-10-17 17:10:30 [INFO   ] DEBUG: 1
+2026-10-17 17:10:30 [INFO   ] UPDATE (14, 6, 10) -> grass sent to 1 client(s)
+2026-10-17 17:10:30 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":6,"z":10,"type":1}
+2026-10-17 17:10:30 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 6, 10) [grass]
+2026-10-17 17:10:30 [INFO   ] DEBUG: 1
+2026-10-17 17:10:30 [INFO   ] UPDATE (13, 6, 10) -> grass sent to 1 client(s)
+2026-10-17 17:10:31 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":6,"z":10,"type":1}
+2026-10-17 17:10:31 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 6, 10) [grass]
+2026-10-17 17:10:31 [INFO   ] DEBUG: 1
+2026-10-17 17:10:31 [INFO   ] UPDATE (12, 6, 10) -> grass sent to 1 client(s)
+2026-10-17 17:10:31 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":11,"y":6,"z":10,"type":1}
+2026-10-17 17:10:31 [INFO   ] PLACE Player1 (192.168.254.103) placed (11, 6, 10) [grass]
+2026-10-17 17:10:31 [INFO   ] DEBUG: 1
+2026-10-17 17:10:31 [INFO   ] UPDATE (11, 6, 10) -> grass sent to 1 client(s)
+2026-10-17 17:10:31 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":6,"z":11,"type":1}
+2026-10-17 17:10:31 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 6, 11) [grass]
+2026-10-17 17:10:32 [INFO   ] DEBUG: 1
+2026-10-17 17:10:32 [INFO   ] UPDATE (14, 6, 11) -> grass sent to 1 client(s)
+2026-10-17 17:10:32 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":6,"z":11,"type":1}
+2026-10-17 17:10:32 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 6, 11) [grass]
+2026-10-17 17:10:32 [INFO   ] DEBUG: 1
+2026-10-17 17:10:32 [INFO   ] UPDATE (13, 6, 11) -> grass sent to 1 client(s)
+2026-10-17 17:10:32 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":6,"z":11,"type":1}
+2026-10-17 17:10:32 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 6, 11) [grass]
+2026-10-17 17:10:32 [INFO   ] DEBUG: 1
+2026-10-17 17:10:32 [INFO   ] UPDATE (12, 6, 11) -> grass sent to 1 client(s)
+2026-10-17 17:10:32 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":11,"y":6,"z":11,"type":1}
+2026-10-17 17:10:32 [INFO   ] PLACE Player1 (192.168.254.103) placed (11, 6, 11) [grass]
+2026-10-17 17:10:32 [INFO   ] DEBUG: 1
+2026-10-17 17:10:32 [INFO   ] UPDATE (11, 6, 11) -> grass sent to 1 client(s)
+2026-10-17 17:10:33 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":10,"y":6,"z":11,"type":1}
+2026-10-17 17:10:33 [INFO   ] PLACE Player1 (192.168.254.103) placed (10, 6, 11) [grass]
+2026-10-17 17:10:33 [INFO   ] DEBUG: 1
+2026-10-17 17:10:33 [INFO   ] UPDATE (10, 6, 11) -> grass sent to 1 client(s)
+2026-10-17 17:10:34 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":6,"z":12,"type":1}
+2026-10-17 17:10:34 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 6, 12) [grass]
+2026-10-17 17:10:34 [INFO   ] DEBUG: 1
+2026-10-17 17:10:34 [INFO   ] UPDATE (13, 6, 12) -> grass sent to 1 client(s)
+2026-10-17 17:10:35 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":6,"z":12,"type":1}
+2026-10-17 17:10:35 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 6, 12) [grass]
+2026-10-17 17:10:35 [INFO   ] DEBUG: 1
+2026-10-17 17:10:35 [INFO   ] UPDATE (12, 6, 12) -> grass sent to 1 client(s)
+2026-10-17 17:10:35 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":11,"y":6,"z":12,"type":1}
+2026-10-17 17:10:35 [INFO   ] PLACE Player1 (192.168.254.103) placed (11, 6, 12) [grass]
+2026-10-17 17:10:35 [INFO   ] DEBUG: 1
+2026-10-17 17:10:35 [INFO   ] UPDATE (11, 6, 12) -> grass sent to 1 client(s)
+2026-10-17 17:10:35 [INFO   ] World saved (6513 blocks) to world.json
+2026-10-17 17:10:36 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":10,"y":6,"z":12,"type":1}
+2026-10-17 17:10:36 [INFO   ] PLACE Player1 (192.168.254.103) placed (10, 6, 12) [grass]
+2026-10-17 17:10:36 [INFO   ] DEBUG: 1
+2026-10-17 17:10:36 [INFO   ] UPDATE (10, 6, 12) -> grass sent to 1 client(s)
+2026-10-17 17:10:36 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":9,"y":6,"z":12,"type":1}
+2026-10-17 17:10:36 [INFO   ] PLACE Player1 (192.168.254.103) placed (9, 6, 12) [grass]
+2026-10-17 17:10:36 [INFO   ] DEBUG: 1
+2026-10-17 17:10:36 [INFO   ] UPDATE (9, 6, 12) -> grass sent to 1 client(s)
+2026-10-17 17:10:37 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":8,"y":6,"z":14,"type":1}
+2026-10-17 17:10:37 [INFO   ] PLACE Player1 (192.168.254.103) placed (8, 6, 14) [grass]
+2026-10-17 17:10:37 [INFO   ] DEBUG: 1
+2026-10-17 17:10:37 [INFO   ] UPDATE (8, 6, 14) -> grass sent to 1 client(s)
+2026-10-17 17:10:37 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":8,"y":6,"z":13,"type":1}
+2026-10-17 17:10:37 [INFO   ] PLACE Player1 (192.168.254.103) placed (8, 6, 13) [grass]
+2026-10-17 17:10:37 [INFO   ] DEBUG: 1
+2026-10-17 17:10:37 [INFO   ] UPDATE (8, 6, 13) -> grass sent to 1 client(s)
+2026-10-17 17:10:37 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":8,"y":6,"z":12,"type":1}
+2026-10-17 17:10:37 [INFO   ] PLACE Player1 (192.168.254.103) placed (8, 6, 12) [grass]
+2026-10-17 17:10:37 [INFO   ] DEBUG: 1
+2026-10-17 17:10:37 [INFO   ] UPDATE (8, 6, 12) -> grass sent to 1 client(s)
+2026-10-17 17:10:39 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":6,"z":19,"type":1}
+2026-10-17 17:10:39 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 6, 19) [grass]
+2026-10-17 17:10:39 [INFO   ] DEBUG: 1
+2026-10-17 17:10:39 [INFO   ] UPDATE (7, 6, 19) -> grass sent to 1 client(s)
+2026-10-17 17:10:39 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":6,"z":18,"type":1}
+2026-10-17 17:10:39 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 6, 18) [grass]
+2026-10-17 17:10:39 [INFO   ] DEBUG: 1
+2026-10-17 17:10:39 [INFO   ] UPDATE (7, 6, 18) -> grass sent to 1 client(s)
+2026-10-17 17:10:39 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":6,"z":17,"type":1}
+2026-10-17 17:10:39 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 6, 17) [grass]
+2026-10-17 17:10:39 [INFO   ] DEBUG: 1
+2026-10-17 17:10:39 [INFO   ] UPDATE (7, 6, 17) -> grass sent to 1 client(s)
+2026-10-17 17:10:39 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":6,"z":16,"type":1}
+2026-10-17 17:10:39 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 6, 16) [grass]
+2026-10-17 17:10:39 [INFO   ] DEBUG: 1
+2026-10-17 17:10:39 [INFO   ] UPDATE (7, 6, 16) -> grass sent to 1 client(s)
+2026-10-17 17:10:39 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":6,"z":15,"type":1}
+2026-10-17 17:10:39 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 6, 15) [grass]
+2026-10-17 17:10:39 [INFO   ] DEBUG: 1
+2026-10-17 17:10:39 [INFO   ] UPDATE (7, 6, 15) -> grass sent to 1 client(s)
+2026-10-17 17:10:40 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":6,"z":14,"type":1}
+2026-10-17 17:10:40 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 6, 14) [grass]
+2026-10-17 17:10:40 [INFO   ] DEBUG: 1
+2026-10-17 17:10:40 [INFO   ] UPDATE (7, 6, 14) -> grass sent to 1 client(s)
+2026-10-17 17:10:40 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":6,"z":13,"type":1}
+2026-10-17 17:10:40 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 6, 13) [grass]
+2026-10-17 17:10:40 [INFO   ] DEBUG: 1
+2026-10-17 17:10:40 [INFO   ] UPDATE (7, 6, 13) -> grass sent to 1 client(s)
+2026-10-17 17:10:40 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":7,"y":6,"z":12,"type":1}
+2026-10-17 17:10:40 [INFO   ] PLACE Player1 (192.168.254.103) placed (7, 6, 12) [grass]
+2026-10-17 17:10:40 [INFO   ] DEBUG: 1
+2026-10-17 17:10:40 [INFO   ] UPDATE (7, 6, 12) -> grass sent to 1 client(s)
+2026-10-17 17:10:41 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":6,"z":19,"type":1}
+2026-10-17 17:10:41 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 6, 19) [grass]
+2026-10-17 17:10:41 [INFO   ] DEBUG: 1
+2026-10-17 17:10:41 [INFO   ] UPDATE (6, 6, 19) -> grass sent to 1 client(s)
+2026-10-17 17:10:41 [INFO   ] World saved (6527 blocks) to world.json
+2026-10-17 17:10:41 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":6,"z":18,"type":1}
+2026-10-17 17:10:41 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 6, 18) [grass]
+2026-10-17 17:10:41 [INFO   ] DEBUG: 1
+2026-10-17 17:10:41 [INFO   ] UPDATE (6, 6, 18) -> grass sent to 1 client(s)
+2026-10-17 17:10:42 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":6,"z":17,"type":1}
+2026-10-17 17:10:42 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 6, 17) [grass]
+2026-10-17 17:10:42 [INFO   ] DEBUG: 1
+2026-10-17 17:10:42 [INFO   ] UPDATE (6, 6, 17) -> grass sent to 1 client(s)
+2026-10-17 17:10:42 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":6,"z":16,"type":1}
+2026-10-17 17:10:42 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 6, 16) [grass]
+2026-10-17 17:10:42 [INFO   ] DEBUG: 1
+2026-10-17 17:10:42 [INFO   ] UPDATE (6, 6, 16) -> grass sent to 1 client(s)
+2026-10-17 17:10:42 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":6,"z":15,"type":1}
+2026-10-17 17:10:42 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 6, 15) [grass]
+2026-10-17 17:10:42 [INFO   ] DEBUG: 1
+2026-10-17 17:10:42 [INFO   ] UPDATE (6, 6, 15) -> grass sent to 1 client(s)
+2026-10-17 17:10:42 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":6,"z":14,"type":1}
+2026-10-17 17:10:42 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 6, 14) [grass]
+2026-10-17 17:10:42 [INFO   ] DEBUG: 1
+2026-10-17 17:10:42 [INFO   ] UPDATE (6, 6, 14) -> grass sent to 1 client(s)
+2026-10-17 17:10:43 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":6,"y":6,"z":13,"type":1}
+2026-10-17 17:10:43 [INFO   ] PLACE Player1 (192.168.254.103) placed (6, 6, 13) [grass]
+2026-10-17 17:10:43 [INFO   ] DEBUG: 1
+2026-10-17 17:10:43 [INFO   ] UPDATE (6, 6, 13) -> grass sent to 1 client(s)
+2026-10-17 17:10:43 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":6,"z":18,"type":1}
+2026-10-17 17:10:43 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 6, 18) [grass]
+2026-10-17 17:10:43 [INFO   ] DEBUG: 1
+2026-10-17 17:10:43 [INFO   ] UPDATE (5, 6, 18) -> grass sent to 1 client(s)
+2026-10-17 17:10:44 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":6,"z":17,"type":1}
+2026-10-17 17:10:44 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 6, 17) [grass]
+2026-10-17 17:10:44 [INFO   ] DEBUG: 1
+2026-10-17 17:10:44 [INFO   ] UPDATE (5, 6, 17) -> grass sent to 1 client(s)
+2026-10-17 17:10:44 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":6,"z":16,"type":1}
+2026-10-17 17:10:44 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 6, 16) [grass]
+2026-10-17 17:10:44 [INFO   ] DEBUG: 1
+2026-10-17 17:10:44 [INFO   ] UPDATE (5, 6, 16) -> grass sent to 1 client(s)
+2026-10-17 17:10:45 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":6,"z":15,"type":1}
+2026-10-17 17:10:45 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 6, 15) [grass]
+2026-10-17 17:10:45 [INFO   ] DEBUG: 1
+2026-10-17 17:10:45 [INFO   ] UPDATE (5, 6, 15) -> grass sent to 1 client(s)
+2026-10-17 17:10:45 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":6,"z":14,"type":1}
+2026-10-17 17:10:45 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 6, 14) [grass]
+2026-10-17 17:10:45 [INFO   ] DEBUG: 1
+2026-10-17 17:10:45 [INFO   ] UPDATE (5, 6, 14) -> grass sent to 1 client(s)
+2026-10-17 17:10:46 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":5,"y":6,"z":13,"type":1}
+2026-10-17 17:10:46 [INFO   ] PLACE Player1 (192.168.254.103) placed (5, 6, 13) [grass]
+2026-10-17 17:10:46 [INFO   ] DEBUG: 1
+2026-10-17 17:10:46 [INFO   ] UPDATE (5, 6, 13) -> grass sent to 1 client(s)
+2026-10-17 17:10:47 [INFO   ] World saved (6539 blocks) to world.json
+2026-10-17 17:10:50 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":18,"y":6,"z":10,"type":1}
+2026-10-17 17:10:50 [INFO   ] PLACE Player1 (192.168.254.103) placed (18, 6, 10) [grass]
+2026-10-17 17:10:50 [INFO   ] DEBUG: 1
+2026-10-17 17:10:50 [INFO   ] UPDATE (18, 6, 10) -> grass sent to 1 client(s)
+2026-10-17 17:10:53 [INFO   ] World saved (6540 blocks) to world.json
+2026-10-17 17:10:59 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"BREAK_BLOCK","x":15,"y":8,"z":16,"type":0}
+2026-10-17 17:10:59 [INFO   ] BREAK Player1 (192.168.254.103) broke (15, 8, 16) [grass]
+2026-10-17 17:10:59 [INFO   ] DEBUG: 1
+2026-10-17 17:10:59 [INFO   ] UPDATE (15, 8, 16) -> air sent to 1 client(s)
+2026-10-17 17:11:01 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":7,"z":8,"type":1}
+2026-10-17 17:11:01 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 7, 8) [grass]
+2026-10-17 17:11:01 [INFO   ] DEBUG: 1
+2026-10-17 17:11:01 [INFO   ] UPDATE (15, 7, 8) -> grass sent to 1 client(s)
+2026-10-17 17:11:01 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":7,"z":9,"type":1}
+2026-10-17 17:11:01 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 7, 9) [grass]
+2026-10-17 17:11:01 [INFO   ] DEBUG: 1
+2026-10-17 17:11:01 [INFO   ] UPDATE (15, 7, 9) -> grass sent to 1 client(s)
+2026-10-17 17:11:02 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":7,"z":11,"type":1}
+2026-10-17 17:11:02 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 7, 11) [grass]
+2026-10-17 17:11:02 [INFO   ] DEBUG: 1
+2026-10-17 17:11:02 [INFO   ] UPDATE (15, 7, 11) -> grass sent to 1 client(s)
+2026-10-17 17:11:02 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":7,"z":11,"type":1}
+2026-10-17 17:11:02 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 7, 11) [grass]
+2026-10-17 17:11:02 [INFO   ] DEBUG: 1
+2026-10-17 17:11:02 [INFO   ] UPDATE (14, 7, 11) -> grass sent to 1 client(s)
+2026-10-17 17:11:02 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":15,"y":7,"z":10,"type":1}
+2026-10-17 17:11:02 [INFO   ] PLACE Player1 (192.168.254.103) placed (15, 7, 10) [grass]
+2026-10-17 17:11:02 [INFO   ] DEBUG: 1
+2026-10-17 17:11:02 [INFO   ] UPDATE (15, 7, 10) -> grass sent to 1 client(s)
+2026-10-17 17:11:03 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":7,"z":10,"type":1}
+2026-10-17 17:11:03 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 7, 10) [grass]
+2026-10-17 17:11:03 [INFO   ] DEBUG: 1
+2026-10-17 17:11:03 [INFO   ] UPDATE (14, 7, 10) -> grass sent to 1 client(s)
+2026-10-17 17:11:03 [INFO   ] World saved (6545 blocks) to world.json
+2026-10-17 17:11:04 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":7,"z":9,"type":1}
+2026-10-17 17:11:04 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 7, 9) [grass]
+2026-10-17 17:11:04 [INFO   ] DEBUG: 1
+2026-10-17 17:11:04 [INFO   ] UPDATE (14, 7, 9) -> grass sent to 1 client(s)
+2026-10-17 17:11:04 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":14,"y":7,"z":8,"type":1}
+2026-10-17 17:11:04 [INFO   ] PLACE Player1 (192.168.254.103) placed (14, 7, 8) [grass]
+2026-10-17 17:11:04 [INFO   ] DEBUG: 1
+2026-10-17 17:11:04 [INFO   ] UPDATE (14, 7, 8) -> grass sent to 1 client(s)
+2026-10-17 17:11:05 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":7,"z":9,"type":1}
+2026-10-17 17:11:05 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 7, 9) [grass]
+2026-10-17 17:11:05 [INFO   ] DEBUG: 1
+2026-10-17 17:11:05 [INFO   ] UPDATE (13, 7, 9) -> grass sent to 1 client(s)
+2026-10-17 17:11:05 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":7,"z":10,"type":1}
+2026-10-17 17:11:05 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 7, 10) [grass]
+2026-10-17 17:11:05 [INFO   ] DEBUG: 1
+2026-10-17 17:11:05 [INFO   ] UPDATE (13, 7, 10) -> grass sent to 1 client(s)
+2026-10-17 17:11:06 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":7,"z":11,"type":1}
+2026-10-17 17:11:06 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 7, 11) [grass]
+2026-10-17 17:11:06 [INFO   ] DEBUG: 1
+2026-10-17 17:11:06 [INFO   ] UPDATE (12, 7, 11) -> grass sent to 1 client(s)
+2026-10-17 17:11:07 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":12,"y":7,"z":10,"type":1}
+2026-10-17 17:11:07 [INFO   ] PLACE Player1 (192.168.254.103) placed (12, 7, 10) [grass]
+2026-10-17 17:11:07 [INFO   ] DEBUG: 1
+2026-10-17 17:11:07 [INFO   ] UPDATE (12, 7, 10) -> grass sent to 1 client(s)
+2026-10-17 17:11:08 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":11,"y":7,"z":11,"type":1}
+2026-10-17 17:11:08 [INFO   ] PLACE Player1 (192.168.254.103) placed (11, 7, 11) [grass]
+2026-10-17 17:11:08 [INFO   ] DEBUG: 1
+2026-10-17 17:11:08 [INFO   ] UPDATE (11, 7, 11) -> grass sent to 1 client(s)
+2026-10-17 17:11:08 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":11,"y":7,"z":12,"type":1}
+2026-10-17 17:11:08 [INFO   ] PLACE Player1 (192.168.254.103) placed (11, 7, 12) [grass]
+2026-10-17 17:11:08 [INFO   ] DEBUG: 1
+2026-10-17 17:11:08 [INFO   ] UPDATE (11, 7, 12) -> grass sent to 1 client(s)
+2026-10-17 17:11:09 [INFO   ] World saved (6553 blocks) to world.json
+2026-10-17 17:11:10 [DEBUG  ] RECV  Player1 (192.168.254.103): {"action":"PLACE_BLOCK","x":13,"y":7,"z":11,"type":1}
+2026-10-17 17:11:10 [INFO   ] PLACE Player1 (192.168.254.103) placed (13, 7, 11) [grass]
+2026-10-17 17:11:10 [INFO   ] DEBUG: 1
+2026-10-17 17:11:10 [INFO   ] UPDATE (13, 7, 11) -> grass sent to 1 client(s)
+2026-10-17 17:11:14 [INFO   ] World saved (6554 blocks) to world.json
+2026-10-17 17:11:18 [INFO   ] LEAVE Player1 (192.168.254.103) disconnected - 0 online

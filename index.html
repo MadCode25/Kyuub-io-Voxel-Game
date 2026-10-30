@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Kyuub.io</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      #ui {
+        position: absolute;
+        color: white;
+        padding: 10px;
+        font-family: sans-serif;
+        text-shadow: 1px 1px 2px #000;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      #crosshair {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 -10px;
+        pointer-events: none;
+      }
+
+      #crosshair::before,
+      #crosshair::after {
+        content: "";
+        position: absolute;
+        background: white;
+        mix-blend-mode: difference;
+      }
+
+      #crosshair::before {
+        left: 9px;
+        top: 0;
+        width: 2px;
+        height: 20px;
+      }
+
+      #crosshair::after {
+        top: 9px;
+        left: 0;
+        height: 2px;
+        width: 20px;
+      }
+
+      #hint {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        text-align: center;
+        color: white;
+        font-family: sans-serif;
+        font-size: 22px;
+        text-shadow: 1px 1px 3px #000;
+        pointer-events: none;
+        margin-top: 40px;
+      }
+
+      #status {
+        position: absolute;
+        transform: translate(10%, -10%);
+        width: 500px;
+        z-index: 3;
+      }
+
+      .screen-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: black;
+        opacity: 95%;
+        width: 100%;
+        height: 200%;
+        display: block;
+        z-index: 2;
+      }
+
+      #chatBox {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        width: min(420px, 60vw);
+        z-index: 5;
+        font-family: sans-serif;
+        font-size: 14px;
+      }
+
+      #chatMessages {
+        max-height: 180px;
+        overflow-y: auto;
+        padding: 6px;
+        border-radius: 6px;
+        color: white;
+        text-shadow: 1px 1px 2px #000;
+        pointer-events: none;
+        scrollbar-width: thin;
+      }
+
+      #chatBox.open #chatMessages {
+        background: rgba(0, 0, 0, 0.55);
+        pointer-events: auto;
+      }
+
+      .chatLine {
+        padding: 1px 0;
+        word-wrap: break-word;
+      }
+
+      .chatLine.faded {
+        display: none;
+      }
+
+      /* old lines disappear when the chat is closed... */
+      #chatBox.open .chatLine.faded {
+        display: block;
+      }
+
+      /* ...and come back when you open it */
+      .chatName {
+        font-weight: bold;
+      }
+
+      .chatSystem {
+        color: #ffd866;
+        font-style: italic;
+      }
+
+      #chatInput {
+        display: none;
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 4px;
+        padding: 6px;
+        border: none;
+        border-radius: 6px;
+        background: rgba(0, 0, 0, 0.75);
+        color: white;
+        font-size: 14px;
+        outline: none;
+      }
+
+      #chatBox.open #chatInput {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="screen-overlay" id="screen-overlay"></div>
+    <div id="ui">
+      <p id="status">Connecting to game server... (server_ip:8765) <br>Click the game to start <br> WASD: Move | Space: Up | Shift: Down | Mouse: Look <br> Left Click: Break | Right Click: Place <br> 1-6: Choose block (Grass, TNT, Stone, Wood, Dirt, and Leaves.) </p>
+      <p id="selected">Selected: Grass</p>
+      <p id="flyLabel"></p>
+    </div>
+    <div id="crosshair"></div>
+    <div id="chatBox">
+      <div id="chatMessages"></div>
+      <input id="chatInput" maxlength="200" autocomplete="off" placeholder="Enter to send, Esc to cancel">
+    </div>
+    <div id="hint">Click to play</div>
+    <script>
+      // --- 1. THREE.JS SETUP ---
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x87ceeb);
+      scene.fog = new THREE.Fog(0x87ceeb, 14, 30); // fog
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.rotation.order = "YXZ";
+      camera.position.set(8, 20, 25);
+      let yaw = 0;
+      let pitch = -Math.atan2(20, 17);
+      // If you're editing the file for server failures, change this to your device's IP address. (OUTDATED, ONLY FOR PLAYER-SIDE SERVERS.)
+      // const serverIP = "192.168.254.103";
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+      const statusEl = document.getElementById("status");
+      const blockColors = {
+        1: new THREE.Color(0x559933), // Grass
+        2: new THREE.Color(0xcc3333), // TNT
+        3: new THREE.Color(0x888888), // Stone
+        4: new THREE.Color(0x775533), // Wood
+        5: new THREE.Color(0x2e1b12), // Dirt
+        6: new THREE.Color(0x559933), // Leaves (pretty much the same as grass)
+	7: new THREE.Color(0x18A912)  // Water bucket (random color, it isnt really needed but might appear when it fails to render)
+      };
+	const SOLID = new Set([1, 2, 3, 4, 5, 6]); // Water is hated so yeah it's not there (lol)
+	const isSolid = (x, y, z) => SOLID.has(getVoxel(x, y, z));
+	const isTargetable = (x, y, z) => { const t = getVoxel(x, y, z); return t !== 0 && t !== 7; };
+      const blockNames = {
+        1: "Grass",
+        2: "TNT",
+        3: "Stone",
+        4: "Wood",
+        5: "Dirt",
+        6: "Leaves",
+	7: "Water Bucket"
+      };
+      const CHUNK = 16;
+      const voxels = new Map(); // "x,y,z" -> block type  (the actual world data)
+      const WORLD_HEIGHT = 64; // must match HEIGHT in server.py
+      const loadedCols = new Set(); // "cx,cz" columns whose data the browser currently has
+      const chunks = new Map(); // "cx,cy,cz" -> one merged mesh
+      const dirtyChunks = new Set(); // chunks that need rebuilding
+      // ---------- TEXTURES (drawn in code, no image files needed) ----------
+      const TILE = 20,
+        TILES = 10,
+        ATLAS_W = TILE * TILES;
+      const T = {
+        GRASS_TOP: 0,
+        GRASS_SIDE: 1,
+        DIRT: 2,
+        STONE: 3,
+        LOG_SIDE: 4,
+        LOG_TOP: 5,
+        TNT_SIDE: 6,
+        TNT_TOP: 7,
+        LEAVES: 8,
+	WATER: 9
+      };
+      // Which tile each block type uses on its top / sides / bottom
+      const BLOCK_TILES = {
+        1: {
+          top: T.GRASS_TOP,
+          side: T.GRASS_SIDE,
+          bottom: T.DIRT
+        }, // grass
+        2: {
+          top: T.TNT_TOP,
+          side: T.TNT_SIDE,
+          bottom: T.TNT_TOP
+        }, // tnt
+        3: {
+          top: T.STONE,
+          side: T.STONE,
+          bottom: T.STONE
+        }, // stone
+        4: {
+          top: T.LOG_TOP,
+          side: T.LOG_SIDE,
+          bottom: T.LOG_TOP
+        }, // wood
+        5: {
+          top: T.DIRT,
+          side: T.DIRT,
+          bottom: T.DIRT
+        }, // dirt
+        6: {
+          top: T.LEAVES,
+          side: T.LEAVES,
+          bottom: T.LEAVES
+        }, // leaves
+      };
+      // Where each tile sits in the atlas (inset a hair so neighbouring tiles never bleed in)
+      const INSET = 0.1;
+      const TILE_U = Array.from({
+        length: TILES
+      }, (_, i) => [(i * TILE + INSET) / ATLAS_W, ((i + 1) * TILE - INSET) / ATLAS_W]);
+      const V0 = INSET / TILE,
+        V1 = 1 - INSET / TILE;
+      const atlas = new THREE.TextureLoader().load("textures.png");
+      atlas.magFilter = THREE.NearestFilter; // up close: crisp square pixels, no blur
+      atlas.minFilter = THREE.NearestFilter; // far away: still pixel-exact, never mixes neighbouring tiles
+      atlas.generateMipmaps = false;
+      atlas.anisotropy = 1;
+      atlas.needsUpdate = true;
+      const chunkMaterial = new THREE.MeshBasicMaterial({
+        map: atlas,
+        vertexColors: true
+      });
+      // CHUNK DISTANCE (VERY IMPORTANT VARIABLES  FOR OPTIMIZATION!)
+      const RENDER_DIST = 2; // Optional, number of chunks the camera can render.
+      const knownChunks = new Set(); // every chunk that has ever had a block
+      const buildQueue = new Set(); // chunks waiting to be built as you walk
+      let lastPcx = null,
+        lastPcz = null; // the chunk the player was last standing in
+      const keyOf = (x, y, z) => `${x},${y},${z}`;
+      const getVoxel = (x, y, z) => voxels.get(keyOf(x, y, z)) || 0;
+      // The 6 faces of a cube: neighbor direction, 4 corners, and a brightness so blocks aren't flat
+      const FACES = [{
+        dir: [1, 0, 0],
+        kind: "side",
+        shade: 0.8,
+        c: [
+          [.5, -.5, -.5],
+          [.5, .5, -.5],
+          [.5, .5, .5],
+          [.5, -.5, .5]
+        ],
+        uv: [
+          [1, 0],
+          [1, 1],
+          [0, 1],
+          [0, 0]
+        ]
+      }, {
+        dir: [-1, 0, 0],
+        kind: "side",
+        shade: 0.8,
+        c: [
+          [-.5, -.5, .5],
+          [-.5, .5, .5],
+          [-.5, .5, -.5],
+          [-.5, -.5, -.5]
+        ],
+        uv: [
+          [1, 0],
+          [1, 1],
+          [0, 1],
+          [0, 0]
+        ]
+      }, {
+        dir: [0, 1, 0],
+        kind: "top",
+        shade: 1.0,
+        c: [
+          [-.5, .5, .5],
+          [.5, .5, .5],
+          [.5, .5, -.5],
+          [-.5, .5, -.5]
+        ],
+        uv: [
+          [0, 0],
+          [1, 0],
+          [1, 1],
+          [0, 1]
+        ]
+      }, {
+        dir: [0, -1, 0],
+        kind: "bottom",
+        shade: 0.5,
+        c: [
+          [-.5, -.5, -.5],
+          [.5, -.5, -.5],
+          [.5, -.5, .5],
+          [-.5, -.5, .5]
+        ],
+        uv: [
+          [0, 0],
+          [1, 0],
+          [1, 1],
+          [0, 1]
+        ]
+      }, {
+        dir: [0, 0, 1],
+        kind: "side",
+        shade: 0.7,
+        c: [
+          [-.5, -.5, .5],
+          [.5, -.5, .5],
+          [.5, .5, .5],
+          [-.5, .5, .5]
+        ],
+        uv: [
+          [0, 0],
+          [1, 0],
+          [1, 1],
+          [0, 1]
+        ]
+      }, {
+        dir: [0, 0, -1],
+        kind: "side",
+        shade: 0.7,
+        c: [
+          [.5, -.5, -.5],
+          [-.5, -.5, -.5],
+          [-.5, .5, -.5],
+          [.5, .5, -.5]
+        ],
+        uv: [
+          [0, 0],
+          [1, 0],
+          [1, 1],
+          [0, 1]
+        ]
+      }, ];
+      let worldLoaded = false;
+      const overlay = document.getElementById("screen-overlay")
+
+      function markDirty(x, y, z) {
+        const cx = Math.floor(x / CHUNK),
+          cy = Math.floor(y / CHUNK),
+          cz = Math.floor(z / CHUNK);
+        dirtyChunks.add(`${cx},${cy},${cz}`);
+        knownChunks.add(`${cx},${cy},${cz}`);
+        // a block on a chunk edge also changes which faces the neighbor chunk needs
+        const lx = x - cx * CHUNK,
+          ly = y - cy * CHUNK,
+          lz = z - cz * CHUNK;
+        if (lx === 0) dirtyChunks.add(`${cx - 1},${cy},${cz}`);
+        if (lx === CHUNK - 1) dirtyChunks.add(`${cx + 1},${cy},${cz}`);
+        if (ly === 0) dirtyChunks.add(`${cx},${cy - 1},${cz}`);
+        if (ly === CHUNK - 1) dirtyChunks.add(`${cx},${cy + 1},${cz}`);
+        if (lz === 0) dirtyChunks.add(`${cx},${cy},${cz - 1}`);
+        if (lz === CHUNK - 1) dirtyChunks.add(`${cx},${cy},${cz + 1}`);
+      }
+
+      function setBlock(x, y, z, type) {
+        if (type > 0 && blockColors[type]) voxels.set(keyOf(x, y, z), type);
+        else voxels.delete(keyOf(x, y, z));
+        markDirty(x, y, z);
+      }
+
+      function clearWorld() {
+        voxels.clear();
+        dirtyChunks.clear();
+        chunks.forEach(m => {
+          scene.remove(m);
+          m.geometry.dispose();
+        });
+        chunks.clear();
+        knownChunks.clear();
+        buildQueue.clear();
+        lastPcx = lastPcz = null;
+      }
+
+	const WATER_COLOR = new THREE.Color(0x3a6fd8);
+	const waterMaterial = new THREE.MeshBasicMaterial({
+  		vertexColors: true, transparent: true, opacity: 0.6, depthWrite: false
+	});
+
+function rebuildChunk(key) {
+  const old = chunks.get(key);
+  if (old) { scene.remove(old); old.geometry.dispose(); chunks.delete(key); }
+
+  const [cx, cy, cz] = key.split(",").map(Number);
+  const positions = [], colors = [], uvs = [], indices = [], waterIndices = [];
+
+  for (let x = cx * CHUNK; x < (cx + 1) * CHUNK; x++)
+  for (let y = cy * CHUNK; y < (cy + 1) * CHUNK; y++)
+  for (let z = cz * CHUNK; z < (cz + 1) * CHUNK; z++) {
+    const type = voxels.get(keyOf(x, y, z));
+    if (!type) continue;
+    const isWater = type === 7;
+    const tiles = isWater ? null : (BLOCK_TILES[type] || BLOCK_TILES[3]);
+    // water sits a little below the top of its block when open to the sky
+    const drop = (isWater && !getVoxel(x, y + 1, z)) ? 0.1 : 0;
+
+    for (const f of FACES) {
+      const n = getVoxel(x + f.dir[0], y + f.dir[1], z + f.dir[2]);
+      if (isWater ? n !== 0 : (n !== 0 && n !== 7)) continue;   // water shows only against air; solids show against air or water
+
+      const base = positions.length / 3;
+      for (let i = 0; i < 4; i++) {
+        const c = f.c[i], uv = f.uv[i];
+        positions.push(x + c[0], y + c[1] - (c[1] > 0 ? drop : 0), z + c[2]);
+        if (isWater) {
+          colors.push(WATER_COLOR.r * f.shade, WATER_COLOR.g * f.shade, WATER_COLOR.b * f.shade);
+          uvs.push(0, 0);
+        } else {
+          colors.push(f.shade, f.shade, f.shade);
+          const [u0, u1] = TILE_U[tiles[f.kind]];
+          uvs.push(uv[0] ? u1 : u0, uv[1] ? V1 : V0);
+        }
+      }
+      (isWater ? waterIndices : indices).push(base, base + 1, base + 2, base, base + 2, base + 3);
+    }
+  }
+  if (!positions.length) return;
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geo.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+  geo.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
+  geo.setIndex(indices.concat(waterIndices));
+  geo.addGroup(0, indices.length, 0);                          // first the solid blocks...
+  geo.addGroup(indices.length, waterIndices.length, 1);        // ...then the water, drawn on top
+  geo.computeBoundingSphere();
+  const mesh = new THREE.Mesh(geo, [chunkMaterial, waterMaterial]);
+  scene.add(mesh);
+  chunks.set(key, mesh);
+}
+      
+
+      function decodeChunk(cx, cz, b64) {
+        dropColumn(cx, cz); // replace the column if it was already loaded
+        const bin = atob(b64);
+        const packed = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) packed[i] = bin.charCodeAt(i);
+        const data = pako.inflate(packed); // 16 * 16 * WORLD_HEIGHT bytes
+        const hasBlocks = new Array(WORLD_HEIGHT / CHUNK).fill(false);
+        for (let y = 0; y < WORLD_HEIGHT; y++)
+          for (let lz = 0; lz < CHUNK; lz++)
+            for (let lx = 0; lx < CHUNK; lx++) {
+              const t = data[lx + CHUNK * (lz + CHUNK * y)];
+              if (t && blockColors[t]) {
+                voxels.set(keyOf(cx * CHUNK + lx, y, cz * CHUNK + lz), t);
+                hasBlocks[Math.floor(y / CHUNK)] = true;
+              }
+            }
+        hasBlocks.forEach((has, cy) => { // only chunks that contain something
+          if (!has) return;
+          const key = `${cx},${cy},${cz}`;
+          knownChunks.add(key);
+          dirtyChunks.add(key);
+        });
+        loadedCols.add(`${cx},${cz}`);
+        worldLoaded = true;
+      }
+
+      function dropColumn(cx, cz) {
+        if (!loadedCols.delete(`${cx},${cz}`)) return;
+        for (let y = 0; y < WORLD_HEIGHT; y++)
+          for (let lz = 0; lz < CHUNK; lz++)
+            for (let lx = 0; lx < CHUNK; lx++) voxels.delete(keyOf(cx * CHUNK + lx, y, cz * CHUNK + lz));
+        for (let cy = 0; cy < WORLD_HEIGHT / CHUNK; cy++) {
+          const key = `${cx},${cy},${cz}`;
+          unloadChunk(key);
+          knownChunks.delete(key);
+          dirtyChunks.delete(key);
+          buildQueue.delete(key);
+        }
+      }
+
+      function chunkInRange(key, pcx, pcz) {
+        const [cx, , cz] = key.split(",").map(Number);
+        return Math.abs(cx - pcx) <= RENDER_DIST && Math.abs(cz - pcz) <= RENDER_DIST;
+      }
+
+      function unloadChunk(key) {
+        const m = chunks.get(key);
+        if (m) {
+          scene.remove(m);
+          m.geometry.dispose();
+          chunks.delete(key);
+        }
+      }
+      // Runs every frame but only does work when the player crosses into a new chunk
+      function updateChunkVisibility() {
+        // blocks are centered on whole numbers, so shift by 0.5 before dividing
+        const pcx = Math.floor(Math.floor(camera.position.x + 0.5) / CHUNK);
+        const pcz = Math.floor(Math.floor(camera.position.z + 0.5) / CHUNK);
+        if (pcx === lastPcx && pcz === lastPcz) return;
+        lastPcx = pcx;
+        lastPcz = pcz;
+        // ditch chunks that are now too far away
+        for (const key of Array.from(chunks.keys())) {
+          if (!chunkInRange(key, pcx, pcz)) unloadChunk(key);
+        }
+        // queue up the nearby chunks that aren't built yet
+        buildQueue.clear();
+        for (const key of knownChunks) {
+          if (!chunks.has(key) && chunkInRange(key, pcx, pcz)) buildQueue.add(key);
+        }
+      }
+      // --- 2. PLAYER SKINS (other players) ---
+      const EYE_HEIGHT = 1.6; // camera sits this high above the player's feet
+      const remotePlayers = new Map(); // id -> { group, target, targetYaw, hasPos }
+      let myId = null;
+
+      function makeNameTag(text) {
+        const c = document.createElement("canvas");
+        c.width = 500;
+        c.height = 64;
+        const ctx = c.getContext("2d");
+        ctx.fillStyle = "rgba(0,0,0,0.5)";
+        ctx.fillRect(0, 0, 500, 64);
+        ctx.fillStyle = "#fff";
+        ctx.font = "bold 32px sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(text, 300, 34);
+        ctx.fillStyle = "#23549e";
+        ctx.fillRect(0, 0, 150, 64);
+        ctx.fillStyle = "#fff";
+        ctx.fillText("67", 85, 34);
+        const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+          map: new THREE.CanvasTexture(c),
+          depthTest: false
+        }));
+        sprite.scale.set(1.6, 0.4, 1);
+        sprite.position.set(0, 2.2, 0);
+        return sprite;
+      }
+      // Blocky humanoid built from boxes. Origin = feet, front faces -Z (same as the camera at yaw 0).
+      function buildPlayerModel(skin, name) {
+        const group = new THREE.Group();
+        const part = (w, h, d, color, x, y, z, axisX = 0, axisY = 0, axisZ = 0) => {
+          const geo = new THREE.BoxGeometry(w, h, d);
+          geo.translate(-axisX, -axisY, -axisZ);
+          const m = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({
+            color
+          }));
+          m.position.set(x + axisX, y + axisY, z + axisZ);
+          group.add(m);
+          return m;
+        };
+        part(0.25, 0.7, 0.25, skin.legs, -0.125, 0.35, 0); // legs
+        part(0.25, 0.7, 0.25, skin.legs, 0.125, 0.35, 0);
+        part(0.5, 0.7, 0.25, skin.body, 0, 1.05, 0); // body
+        part(0.2, 0.7, 0.2, skin.arms, -0.35, 1.05, 0); // arms
+        part(0.2, 0.7, 0.2, skin.arms, 0.35, 1.05, 0);
+        const head = part(0.4, 0.4, 0.4, skin.head, 0, 1.6, 0); // head
+        const eyeL = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.02), new THREE.MeshBasicMaterial({
+          color: skin.eyes
+        }));
+        const eyeR = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.02), new THREE.MeshBasicMaterial({
+          color: skin.eyes
+        }));
+        eyeL.position.set(-0.1, 0.03, -0.205); // relative to the head's center
+        eyeR.position.set(0.1, 0.03, -0.205);
+        head.add(eyeL, eyeR);
+        movePivot(head, 0, -0.2, 0); // pivot at the neck; eyes stay on the face
+        group.userData.head = head; // keep a handle so we can tilt it later
+        //part(0.08, 0.08, 0.02, skin.eyes,  0.1,  1.63, -0.205);
+        group.add(makeNameTag(name));
+        return group;
+      }
+
+      function movePivot(mesh, dx, dy, dz) {
+        mesh.geometry.translate(-dx, -dy, -dz);
+        mesh.position.add(new THREE.Vector3(dx, dy, dz).applyQuaternion(mesh.quaternion)); // move the origin to the pivot (works even if already rotated)
+        mesh.children.forEach(c => c.position.sub(new THREE.Vector3(dx, dy, dz)));
+      }
+
+      function addRemotePlayer(p) {
+        if (p.id === myId) return;
+        removeRemotePlayer(p.id);
+        const group = buildPlayerModel(p.skin, p.name);
+        group.visible = false; // hidden until we know where they are
+        scene.add(group);
+        remotePlayers.set(p.id, {
+          group,
+          target: new THREE.Vector3(),
+          targetYaw: 0,
+          targetPitch: 0,
+          hasPos: false
+        });
+        if (p.x != null) updateRemotePlayer(p);
+      }
+
+      function updateRemotePlayer(s) {
+        const r = remotePlayers.get(s.id);
+        if (!r || s.x == null) return;
+        r.target.set(s.x, s.y - EYE_HEIGHT, s.z);
+        r.targetYaw = s.yaw;
+        r.targetPitch = s.pitch || 0;
+        if (!r.hasPos) { // first position: snap, don't glide in from the origin
+          r.group.position.copy(r.target);
+          r.group.rotation.y = s.yaw;
+          r.group.visible = true;
+          r.hasPos = true;
+        }
+      }
+
+      function removeRemotePlayer(id) {
+        const r = remotePlayers.get(id);
+        if (!r) return;
+        scene.remove(r.group);
+        r.group.traverse(o => {
+          if (o.geometry) o.geometry.dispose();
+          if (o.material) {
+            if (o.material.map) o.material.map.dispose();
+            o.material.dispose();
+          }
+        });
+        remotePlayers.delete(id);
+      }
+
+      function clearRemotePlayers() {
+        Array.from(remotePlayers.keys()).forEach(removeRemotePlayer);
+      }
+      const lastSent = {
+        x: 0,
+        y: 0,
+        z: 0,
+        yaw: 0,
+        pitch: 0,
+        time: 0
+      };
+
+      function sendPosition(force = false) {
+        if (socket.readyState !== WebSocket.OPEN || myId === null) return;
+        const now = performance.now();
+        if (!force && now - lastSent.time < 66) return;
+        const p = camera.position;
+        const moved = Math.abs(p.x - lastSent.x) > 0.01 || Math.abs(p.y - lastSent.y) > 0.01 || Math.abs(p.z - lastSent.z) > 0.01 || Math.abs(yaw - lastSent.yaw) > 0.01 || Math.abs(pitch - lastSent.pitch) > 0.01;
+        if (!force && !moved) return;
+        socket.send(JSON.stringify({
+          action: "PLAYER_MOVE",
+          x: p.x,
+          y: p.y,
+          z: p.z,
+          yaw,
+          pitch
+        }));
+        lastSent.x = p.x;
+        lastSent.y = p.y;
+        lastSent.z = p.z;
+        lastSent.yaw = yaw;
+        lastSent.pitch = pitch;
+        lastSent.time = now;
+      }
+      // --- 3. WEBSOCKET CONNECTION ---
+      const socket = new WebSocket(`wss://kyuube.loophole.site`); // you can replace this with "${serverIP}:9080" because the old server can bot be ran by the dev, or the player (you, editing this, right now.)
+
+      function sendEdit(action, x, y, z, type) {
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.send(JSON.stringify({
+            action,
+            x,
+            y,
+            z,
+            type
+          }));
+        }
+      }
+      socket.onopen = () => {
+        console.log("server connection was successful. requesting chunk and player skin...");
+        statusEl.textContent = "Connected";
+        setTimeout(function() {
+          overlay.style.display = "none";
+          statusEl.style.display = "none"
+        }, 3000)
+        socket.send(JSON.stringify({
+          action: "GENERATE_CHUNK"
+        }));
+        socket.send(JSON.stringify({
+          action: "CREATE_PLAYER_SKIN"
+        }));
+        console.log("request sent.")
+      };
+      socket.onclose = () => {
+        statusEl.textContent = "Disconnected - refresh to reconnect";
+        overlay.style.display = "block";
+        clearRemotePlayers();
+      };
+      socket.onerror = () => {
+        console.error(`failed to reach wss://${serverIP}:8765`);
+        statusEl.textContent = "Failed to reach Kyuube's game server. Please report to MadGuy25 if this keeps happening.";
+        overlay.style.display = "block";
+      };
+      socket.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+        switch (msg.type) {
+          case "CHUNK_DATA":
+            decodeChunk(msg.cx, msg.cz, msg.data);
+            break;
+          case "UNLOAD_CHUNKS":
+            msg.chunks.forEach(([cx, cz]) => dropColumn(cx, cz));
+            break;
+          case "BLOCK_UPDATES":
+            msg.updates.forEach(([x, y, z, t]) => setBlock(x, y, z, t));
+            break;
+          case "BLOCK_UPDATE":
+            setBlock(msg.x, msg.y, msg.z, msg.block); // block 0 = removed
+            break;
+          case "CHAT":
+            addChatLine(msg.name + ": ", msg.msg)
+            break;
+          case "PLAYER_INIT":
+            myId = msg.id;
+            statusEl.textContent = `Connected as ${msg.name}`;
+            msg.players.forEach(addRemotePlayer);
+            sendPosition(true); // announce where we are right away
+            break;
+          case "PLAYER_JOIN":
+            addRemotePlayer(msg);
+            addChatLine(msg.name, " joined")
+            break;
+          case "PLAYER_STATE":
+            updateRemotePlayer(msg);
+            break;
+          case "PLAYER_LEAVE":
+            removeRemotePlayer(msg.id);
+            addChatLine("Player" + msg.id, " left")
+            break;
+        }
+      };
+      // --- 4. CONTROLS ---
+      const hint = document.getElementById("hint");
+      const selectedLabel = document.getElementById("selected");
+      let selectedType = 1;
+      renderer.domElement.addEventListener("click", () => {
+        if (document.pointerLockElement !== renderer.domElement) {
+          renderer.domElement.requestPointerLock();
+        }
+      });
+      document.addEventListener("pointerlockchange", () => {
+        hint.style.display = document.pointerLockElement === renderer.domElement ? "none" : "block";
+      });
+      document.addEventListener("mousemove", (e) => {
+        if (document.pointerLockElement !== renderer.domElement) return;
+        yaw -= e.movementX * 0.002;
+        pitch -= e.movementY * 0.002;
+        pitch = Math.max(-Math.PI / 2 + 0.01, Math.min(Math.PI / 2 - 0.01, pitch));
+      });
+      const keys = {};
+      // --- CHAT WINDOW ---
+      const chatBox = document.getElementById("chatBox");
+      const chatMessages = document.getElementById("chatMessages");
+      const chatInput = document.getElementById("chatInput");
+      let chatOpen = false;
+
+      function addChatLine(name, text, system = false) {
+        const line = document.createElement("div");
+        line.className = "chatLine" + (system ? " chatSystem" : "");
+        if (system) {
+          line.textContent = text;
+        } else {
+          const who = document.createElement("span");
+          who.className = "chatName";
+          who.textContent = name;
+          line.append(who, document.createTextNode(text)); // text nodes only, so nobody can inject HTML
+        }
+        chatMessages.appendChild(line);
+        while (chatMessages.children.length > 100) chatMessages.firstChild.remove(); // keep the last 100
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        setTimeout(() => line.classList.add("faded"), 8000); // hide after 8 seconds when chat is closed
+      }
+
+      function openChat() {
+        chatOpen = true;
+        chatBox.classList.add("open");
+        for (const k in keys) keys[k] = false; // stop walking while you type
+        document.exitPointerLock(); // free the mouse
+        chatInput.focus();
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        hint.style.display = "none";
+      }
+
+      function closeChat() {
+        chatOpen = false;
+        chatBox.classList.remove("open");
+        chatInput.value = "";
+        chatInput.blur();
+        try {
+          renderer.domElement.requestPointerLock();
+        } catch (e) {}
+      }
+
+      function sendChat() {
+        const text = chatInput.value.trim();
+        if (text && socket && socket.readyState === WebSocket.OPEN) {
+          socket.send(JSON.stringify({
+            action: "PLAYER_MESSAGE",
+            msg: text
+          }));
+        }
+      }
+      // Capture phase, so this runs before the game's own key handler
+      document.addEventListener("keydown", (e) => {
+        if (chatOpen) {
+          e.stopPropagation(); // game keys must not react while typing
+          if (e.code === "Enter") {
+            e.preventDefault();
+            sendChat();
+            closeChat();
+          } else if (e.code === "Escape") closeChat();
+          return;
+        }
+        if (e.code === "KeyT" || e.code === "Enter") {
+          e.preventDefault();
+          e.stopPropagation();
+          openChat();
+        }
+      }, true);
+      document.addEventListener("keydown", (e) => {
+        keys[e.code] = true;
+        if (e.code >= "Digit1" && e.code <= "Digit7") {
+          selectedType = Number(e.code.slice(-1));
+          selectedLabel.textContent = "Selected: " + blockNames[selectedType];
+        }
+        if (e.code === "Space") e.preventDefault();
+	if (e.code === "KeyF" && !e.repeat) { // !e.repeat: holding F shouldn't flip it over and over
+          flyMode = !flyMode;
+          vy = 0; // stop any fall or climb right away
+          document.getElementById("flyLabel").textContent = flyMode ? "Flying (F to stop)" : "";
+        }
+      });
+      document.addEventListener("keyup", (e) => {
+        keys[e.code] = false;
+      });
+      const raycaster = new THREE.Raycaster();
+      raycaster.far = 10;
+      // Walk along the ray one block at a time (no meshes involved). Blocks are centered on whole numbers.
+      function raycastVoxels(origin, dir, maxDist) {
+        let x = Math.floor(origin.x + 0.5),
+          y = Math.floor(origin.y + 0.5),
+          z = Math.floor(origin.z + 0.5);
+        const sx = dir.x > 0 ? 1 : -1,
+          sy = dir.y > 0 ? 1 : -1,
+          sz = dir.z > 0 ? 1 : -1;
+        const tDx = dir.x !== 0 ? Math.abs(1 / dir.x) : Infinity;
+        const tDy = dir.y !== 0 ? Math.abs(1 / dir.y) : Infinity;
+        const tDz = dir.z !== 0 ? Math.abs(1 / dir.z) : Infinity;
+        let tMx = dir.x !== 0 ? ((sx > 0 ? x + 0.5 : x - 0.5) - origin.x) / dir.x : Infinity;
+        let tMy = dir.y !== 0 ? ((sy > 0 ? y + 0.5 : y - 0.5) - origin.y) / dir.y : Infinity;
+        let tMz = dir.z !== 0 ? ((sz > 0 ? z + 0.5 : z - 0.5) - origin.z) / dir.z : Infinity;
+        let t = 0,
+          normal = null;
+	if (normal && isTargetable(x, y, z)) return { x, y, z, normal };
+        while (t <= maxDist) {
+          if (normal && getVoxel(x, y, z)) return {
+            x,
+            y,
+            z,
+            normal
+          };
+          if (tMx < tMy && tMx < tMz) {
+            x += sx;
+            t = tMx;
+            tMx += tDx;
+            normal = [-sx, 0, 0];
+          } else if (tMy < tMz) {
+            y += sy;
+            t = tMy;
+            tMy += tDy;
+            normal = [0, -sy, 0];
+          } else {
+            z += sz;
+            t = tMz;
+            tMz += tDz;
+            normal = [0, 0, -sz];
+          }
+        }
+        return null;
+      }
+      renderer.domElement.addEventListener("mousedown", (e) => {
+        if (document.pointerLockElement !== renderer.domElement) return;
+        const hit = raycastVoxels(camera.position, camera.getWorldDirection(new THREE.Vector3()), 10);
+        if (!hit) return;
+        if (e.button === 0) { // break
+          sendEdit("BREAK_BLOCK", hit.x, hit.y, hit.z, 0);
+        } else if (e.button === 2) { // place on the face you're looking at
+          const px = hit.x + hit.normal[0],
+            py = hit.y + hit.normal[1],
+            pz = hit.z + hit.normal[2];
+          const d = Math.hypot(px - camera.position.x, py - camera.position.y, pz - camera.position.z);
+          if (blockOverlapsPlayer(px, py, pz)) return;
+          sendEdit("PLACE_BLOCK", px, py, pz, selectedType);
+        }
+      });
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+      // --- 5. GAME LOOP ---
+      const clock = new THREE.Clock();
+      const speed = 10;
+      // --- PHYSICS ---
+      const PLAYER_HALF_W = 0.3; // player is 0.6 wide
+      const PLAYER_H = 1.8; // and 1.8 tall (feet to top of head)
+      const WALK_SPEED = 6; // blocks per second
+      const FLY_SPEED = 8;
+      const GRAVITY = 28;
+      const JUMP_SPEED = 8.5; // about 1.3 blocks high
+      const MAX_FALL = 30;
+      // "feet" is the real player position; the camera sits EYE_HEIGHT above it
+      const feet = new THREE.Vector3(camera.position.x, camera.position.y - EYE_HEIGHT, camera.position.z);
+      let vy = 0;
+      let flyMode = false;
+      let onGround = false;
+      // Does a player standing with feet at (px, py, pz) overlap any block?
+      // (a block at whole number i fills i-0.5 to i+0.5)
+
+      function collides(px, py, pz) {
+        const x0 = Math.floor(px - PLAYER_HALF_W + 0.5),
+          x1 = Math.floor(px + PLAYER_HALF_W + 0.5 - 1e-4);
+        const y0 = Math.floor(py + 0.5),
+          y1 = Math.floor(py + PLAYER_H + 0.5 - 1e-4);
+        const z0 = Math.floor(pz - PLAYER_HALF_W + 0.5),
+          z1 = Math.floor(pz + PLAYER_HALF_W + 0.5 - 1e-4);
+        for (let x = x0; x <= x1; x++)
+          for (let y = y0; y <= y1; y++)
+            for (let z = z0; z <= z1; z++)
+              if (isSolid(x, y, z)) return true;
+        return false;
+      }
+      // Move along one axis in small steps so fast falls can't skip through a block.
+      // Returns true if something blocked the movement.
+      function moveAxis(axis, delta) {
+        if (!delta) return false;
+        const steps = Math.ceil(Math.abs(delta) / 0.2);
+        const step = delta / steps;
+        for (let i = 0; i < steps; i++) {
+          feet[axis] += step;
+          if (collides(feet.x, feet.y, feet.z)) {
+            feet[axis] -= step;
+            return true;
+          }
+        }
+        return false;
+      }
+
+      function blockOverlapsPlayer(bx, by, bz) {
+        return bx + 0.5 > feet.x - PLAYER_HALF_W && bx - 0.5 < feet.x + PLAYER_HALF_W && by + 0.5 > feet.y && by - 0.5 < feet.y + PLAYER_H && bz + 0.5 > feet.z - PLAYER_HALF_W && bz - 0.5 < feet.z + PLAYER_HALF_W;
+      }
+
+      function updatePhysics(dt) {
+        // if we somehow ended up inside a block, pop up out of it
+        for (let i = 0; i < 20 && collides(feet.x, feet.y, feet.z); i++) feet.y += 1;
+        // horizontal movement (each axis separately, so you slide along walls)
+        const forward = new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
+        const right = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
+        const move = new THREE.Vector3();
+        if (keys["KeyW"]) move.add(forward);
+        if (keys["KeyS"]) move.sub(forward);
+        if (keys["KeyD"]) move.add(right);
+        if (keys["KeyA"]) move.sub(right);
+	const inWater = getVoxel(Math.floor(feet.x + 0.5), Math.floor(feet.y + 0.9 + 0.5), Math.floor(feet.z + 0.5)) === 7;
+        if (move.lengthSq() > 0) move.normalize().multiplyScalar(WALK_SPEED * dt);
+        moveAxis("x", move.x);
+        moveAxis("z", move.z);
+        // vertical movement
+        const flying = keys["Space"] && keys["KeyF"];
+        
+        if (flyMode) {
+          vy = 0; // no gravity while flying
+          if (keys["Space"]) vy = FLY_SPEED; // Space: up
+          if (keys["ShiftLeft"] || keys["ShiftRight"]) vy = -FLY_SPEED; // Shift: down
+        } else {
+          vy = Math.max(vy - GRAVITY * dt, -MAX_FALL); // gravity
+          if (keys["Space"] && onGround) vy = JUMP_SPEED; // Space: jump
+        } 
+
+
+        const blocked = moveAxis("y", vy * dt);
+        if (blocked) {
+          onGround = vy < 0;
+          vy = 0;
+        } // landed (or bonked your head)
+        else onGround = false;
+        // fell out of the world: back to spawn
+        if (feet.y < -30) {
+          feet.set(8, 20, 25);
+          vy = 0;
+        }
+        camera.position.set(feet.x, feet.y + EYE_HEIGHT, feet.z);
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        const dt = Math.min(clock.getDelta(), 0.1);
+        camera.rotation.set(pitch, yaw, 0);
+        const forward = new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
+        const right = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
+        const move = new THREE.Vector3();
+        camera.rotation.set(pitch, yaw, 0);
+        if (worldLoaded) updatePhysics(dt);
+        sendPosition();
+        if (move.lengthSq() > 0) camera.position.addScaledVector(move.normalize(), speed * dt);
+        sendPosition();
+        // Smoothly glide other players toward their latest reported position
+        const k = 1 - Math.exp(-dt * 15);
+        remotePlayers.forEach(r => {
+          if (!r.hasPos) return;
+          r.group.position.lerp(r.target, k);
+          let d = r.targetYaw - r.group.rotation.y;
+          const head = r.group.userData.head;
+          head.rotation.x += (r.targetPitch - head.rotation.x) * k; // + is looking up, same as the camera  
+          d = Math.atan2(Math.sin(d), Math.cos(d)); // shortest way around
+          r.group.rotation.y += d * k;
+        });
+        updateChunkVisibility();
+        // Edited chunks: rebuild right away, but only if they're near the player
+        dirtyChunks.forEach(key => {
+          if (chunkInRange(key, lastPcx, lastPcz)) rebuildChunk(key);
+          else unloadChunk(key);
+        });
+        dirtyChunks.clear();
+        // Newly nearby chunks: build a couple per frame so walking doesn't stutter
+        let budget = 2;
+        for (const key of buildQueue) {
+          if (budget-- <= 0) break;
+          buildQueue.delete(key);
+          if (!chunks.has(key)) rebuildChunk(key);
+        }
+        renderer.render(scene, camera);
+      }
+      animate();
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    </script>
+  </body>
+</html>

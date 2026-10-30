@@ -3,6 +3,7 @@
 This repository contains the backend and frontend files for **Kyuub.io**.
 
 Made in 2026, the game mimics the mechanics of a real voxel engine and runs on a lightweight server.
+The game will be a bit laggy, I'm still trying to find a way to fix it.
 
 ---
 

@@ -703,7 +703,7 @@ function rebuildChunk(key) {
         lastSent.time = now;
       }
       // --- 3. WEBSOCKET CONNECTION ---
-      const socket = new WebSocket(`wss://kyuube.loophole.site`); // you can replace this with "${serverIP}:9080" because the old server can bot be ran by the dev, or the player (you, editing this, right now.)
+      const socket = new WebSocket(`https://kyuube.loophole.site`); // you can replace this with "${serverIP}:9080" because the old server can bot be ran by the dev, or the player (you, editing this, right now.)
 
       function sendEdit(action, x, y, z, type) {
         if (socket.readyState === WebSocket.OPEN) {

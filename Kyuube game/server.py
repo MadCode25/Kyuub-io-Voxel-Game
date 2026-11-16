@@ -466,8 +466,9 @@ async def main():
     saver = asyncio.create_task(autosave_loop())
     
     try:
-        async with websockets.serve(handle_client, "0.0.0.0", 9080):
-            log.info("Kyuub server listening locally on ws://0.0.0.0:9080")
+        async with websockets.serve(handle_client, "0.0.0.0", 9081):
+            log.info("Kyuub server listening on ws://0.0.0.0:9080")
+            log.info("This is local edition. It will not go on the internet. It is for devices in your Network.")
             await asyncio.Future()
     finally:
         # Clean up and force write world snapshot to disk if the server closes

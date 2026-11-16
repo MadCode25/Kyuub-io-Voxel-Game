@@ -1,0 +1,6 @@
+[MainGame]
+VERSION_CURR = 2.0.7
+DEFAULT_SDRESS = kyuube.loophole.site
+
+[GHI]
+SERVER_DM = Disconnected. Refresh to reconnect
